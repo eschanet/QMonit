@@ -33,7 +33,7 @@ err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 
 # pprint(siteResourceStats0)
 
-client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, 'admin', 'BachEscherGoedel', 'scratch', True, False)
+client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, 'admin', 'BachEscherGoedel', 'prod', True, False)
 
 # pprint(siteResourceStats0['TRIUMF_DOCKER_UCORE'])
 

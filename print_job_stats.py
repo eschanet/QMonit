@@ -32,7 +32,6 @@ err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 
 # pprint(siteResourceStats0)
 
-# client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, 'admin', 'BachEscherGoedel', 'prod', True, False)
 
 # pprint(siteResourceStats0['TRIUMF_DOCKER_UCORE'])
 
@@ -71,13 +70,9 @@ for site, site_result in siteResourceStats.iteritems():
             points_list.append(json_body)
         else:
             print("ERROR  -  Site %s not in panda resources"%site)
-            print(site)
 
-            pprint(value)
 
         # pprint(json_body)
 
 # print("Number of points to be uploaded")
 # pprint(points_list)
-
-#client.write_points(points=points_list, time_precision="ms")
