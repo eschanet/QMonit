@@ -7,4 +7,5 @@ source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
 lsetup python
 
 #execute script
-python /afs/cern.ch/user/e/eschanet/qualitask/get_job_stats.py
+cd /afs/cern.ch/user/e/eschanet/qualitask/
+python get_job_stats.py
