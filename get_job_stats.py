@@ -61,7 +61,7 @@ for site, site_result in siteResourceStats.iteritems():
                 resource_factor = 8.0
             else:
                 resource_factor = 1.0
-
+            value["resource_factor"] = resource_factor
             json_body = {   "measurement": "jobs",
                             "tags": {
                                 "atlas_site": atlas_site,
@@ -69,8 +69,7 @@ for site, site_result in siteResourceStats.iteritems():
                                 "resource" : core,
                                 "type" : type,
                                 "cloud" : cloud,
-                                "site_state" : site_state,
-                                "resource_factor" : resource_factor
+                                "site_state" : site_state
                             },
                             "time" : current_time,
                             "fields" : value
