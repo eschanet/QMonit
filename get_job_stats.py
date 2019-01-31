@@ -42,36 +42,43 @@ points_list = []
 for site, site_result in siteResourceStats.iteritems():
 
     for core, value in site_result.iteritems():
-        current_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
 
-        # print(site)
-        #
-        # pprint(value)
+        for  job_state, njobs in value.iteritems():
 
-        if site in panda_resources:
-            queue = panda_resources[site]
+            current_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
 
-            atlas_site = panda_queues[queue]["atlas_site"]
-            type = panda_queues[queue]["type"]
-            cloud = panda_queues[queue]["cloud"]
-            state = panda_queues[queue]["state"]
+            # print(site)
+            #
+            # pprint(value)
 
-            json_body = {   "measurement": "jobs",
-                            "tags": {
-                                "atlas_site": atlas_site,
-                                "panda_queue" : site,
-                                "resource" : core,
-                                "type" : type,
-                                "cloud" : cloud,
-                                "state" : state
-                            },
-                            "time" : current_time,
-                            "fields" : value
-                        }
+            if site in panda_resources:
+                queue = panda_resources[site]
 
-            points_list.append(json_body)
-        else:
-            print("ERROR  -  Site %s not in panda resources"%site)
+                atlas_site = panda_queues[queue]["atlas_site"]
+                type = panda_queues[queue]["type"]
+                cloud = panda_queues[queue]["cloud"]
+                site_state = panda_queues[queue]["state"]
+
+                json_body = {   "measurement": "jobs",
+                                "tags": {
+                                    "atlas_site": atlas_site,
+                                    "panda_queue" : site,
+                                    "resource" : core,
+                                    "type" : type,
+                                    "cloud" : cloud,
+                                    "site_state" : site_state,
+                                    "job_state" : job_state
+                                },
+                                "time" : current_time,
+                                "fields" : {
+                                    "jobs" : njobs
+                                }
+                            }
+
+                points_list.append(json_body)
+
+            else:
+                print("ERROR  -  Site %s not in panda resources"%site)
 
 
         # pprint(json_body)
