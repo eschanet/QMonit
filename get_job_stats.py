@@ -43,48 +43,43 @@ for site, site_result in siteResourceStats.iteritems():
 
     for core, value in site_result.iteritems():
 
-        for  job_state, njobs in value.iteritems():
+        current_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
 
-            current_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+        # print(site)
+        #
+        # pprint(value)
 
-            # print(site)
-            #
-            # pprint(value)
+        if site in panda_resources:
+            queue = panda_resources[site]
 
-            if site in panda_resources:
-                queue = panda_resources[site]
+            atlas_site = panda_queues[queue]["atlas_site"]
+            type = panda_queues[queue]["type"]
+            cloud = panda_queues[queue]["cloud"]
+            site_state = panda_queues[queue]["state"]
 
-                atlas_site = panda_queues[queue]["atlas_site"]
-                type = panda_queues[queue]["type"]
-                cloud = panda_queues[queue]["cloud"]
-                site_state = panda_queues[queue]["state"]
-                
-                if "MCORE" in core:
-                    resource_factor = 8.0
-                else:
-                    resource_factor = 1.0
-                
-                json_body = {   "measurement": "jobs",
-                                "tags": {
-                                    "atlas_site": atlas_site,
-                                    "panda_queue" : site,
-                                    "resource" : core,
-                                    "type" : type,
-                                    "cloud" : cloud,
-                                    "site_state" : site_state,
-                                    "job_state" : job_state
-                                },
-                                "time" : current_time,
-                                "fields" : {
-                                    "jobs" : njobs,
-                                    "resource_factor" : resource_factor
-                                }
-                            }
-
-                points_list.append(json_body)
-
+            if "MCORE" in core:
+                resource_factor = 8.0
             else:
-                print("ERROR  -  Site %s not in panda resources"%site)
+                resource_factor = 1.0
+
+            json_body = {   "measurement": "jobs",
+                            "tags": {
+                                "atlas_site": atlas_site,
+                                "panda_queue" : site,
+                                "resource" : core,
+                                "type" : type,
+                                "cloud" : cloud,
+                                "site_state" : site_state,
+                                "resource_factor" : resource_factor
+                            },
+                            "time" : current_time,
+                            "fields" : value
+                        }
+
+            points_list.append(json_body)
+
+        else:
+            print("ERROR  -  Site %s not in panda resources"%site)
 
 
         # pprint(json_body)
