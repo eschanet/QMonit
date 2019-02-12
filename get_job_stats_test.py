@@ -6,7 +6,8 @@ from pprint import pprint
 import json,sys
 import requests
 import cPickle as pickle
-from datetime import datetime
+from datetime import datetime,timedelta
+import hashlib
 
 from influxdb import InfluxDBClient
 import Client
@@ -49,14 +50,15 @@ current_time = current_time - timedelta(minutes=current_time.minute % 10,
                              seconds=current_time.second,
                              microseconds=current_time.microsecond)
 
-unix = unix_time_nanos(current_time)
+unix = int(unix_time_nanos(current_time))
 
 for site, site_result in siteResourceStats.iteritems():
 
     for core, value in site_result.iteritems():
-
-
-        unix += 1
+        m = hashlib.md5()
+        m.update(site + core)
+        
+        time = unix + int(str(int(m.hexdigest(), 16))[0:9])
 
         # print(site)
         #
@@ -84,7 +86,7 @@ for site, site_result in siteResourceStats.iteritems():
                                 "cloud" : cloud,
                                 "site_state" : site_state
                             },
-                            "time" : current_time,
+                            "time" : time,
                             "fields" : value
                         }
 
@@ -99,4 +101,4 @@ for site, site_result in siteResourceStats.iteritems():
 # print("Number of points to be uploaded")
 # pprint(points_list)
 
-client.write_points(points=points_list, time_precision="ns")
+client.write_points(points=points_list, time_precision="n")
