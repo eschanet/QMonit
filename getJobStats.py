@@ -12,8 +12,6 @@ import hashlib
 from influxdb import InfluxDBClient
 import Client
 
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 baseURL = 'http://pandaserver.cern.ch:25080/server/panda'
 
 url_cloudJobs  = baseURL + '/getJobStatistics'
