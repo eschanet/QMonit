@@ -6,7 +6,8 @@ from pprint import pprint
 import json,sys
 import requests
 import cPickle as pickle
-from datetime import datetime
+from datetime import datetime,timedelta
+import hashlib
 
 from influxdb import InfluxDBClient
 import Client
@@ -28,26 +29,34 @@ with open('pandaqueue.json') as pandaqueue:
 
 with open('pandaresource.json') as pandaresource:
     panda_resources = json.load(pandaresource)
-#-------------------------------------------------------------------------------
-err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 
-# pprint(siteResourceStats0)
+err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 
 client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, 'admin', 'BachEscherGoedel', 'prod', True, False)
 
-# pprint(siteResourceStats0['TRIUMF_DOCKER_UCORE'])
-
 points_list = []
+
+# Explicitly set timestamp in InfluxDB point. Avoids having multiple entries per 10 minute interval.
+epoch = datetime.utcfromtimestamp(0)
+def unix_time_nanos(dt):
+    return (dt - epoch).total_seconds() * 1e9
+
+current_time = datetime.utcnow()
+current_time = current_time - timedelta(minutes=current_time.minute % 10,
+                             seconds=current_time.second,
+                             microseconds=current_time.microsecond)
+
+unix = int(unix_time_nanos(current_time))
 
 for site, site_result in siteResourceStats.iteritems():
 
     for core, value in site_result.iteritems():
 
-        current_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-
-        # print(site)
-        #
-        # pprint(value)
+        # simple hack to protect against duplicate entries
+        # each site-core combination will have its unique **hash**
+        m = hashlib.md5()
+        m.update(site + core)
+        time = unix + int(str(int(m.hexdigest(), 16))[0:9])
 
         if site in panda_resources:
             queue = panda_resources[site]
@@ -71,7 +80,7 @@ for site, site_result in siteResourceStats.iteritems():
                                 "cloud" : cloud,
                                 "site_state" : site_state
                             },
-                            "time" : current_time,
+                            "time" : time,
                             "fields" : value
                         }
 
@@ -80,10 +89,4 @@ for site, site_result in siteResourceStats.iteritems():
         else:
             print("ERROR  -  Site %s not in panda resources"%site)
 
-
-        # pprint(json_body)
-
-# print("Number of points to be uploaded")
-# pprint(points_list)
-
-client.write_points(points=points_list, time_precision="ms")
+client.write_points(points=points_list, time_precision="n")
