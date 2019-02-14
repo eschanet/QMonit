@@ -58,12 +58,12 @@ for site, site_result in siteResourceStats.iteritems():
 
     for core, value in site_result.iteritems():
 
-        for job_status in value:
+        for job_status in value,keys():
 
             # simple hack to protect against duplicate entries
             # each site-core combination will have its unique **hash**
             m = hashlib.md5()
-            m.update(site + core)
+            m.update(site + core + job_status)
             time = unix + int(str(int(m.hexdigest(), 16))[0:9])
 
             if site in panda_resources:
