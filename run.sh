@@ -8,3 +8,5 @@ lsetup python
 #execute script
 cd /afs/cern.ch/user/e/eschanet/qualitask/
 python getJobStats.py
+
+python getJobStatsFlat.py
