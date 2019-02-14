@@ -8,9 +8,17 @@ import requests
 import cPickle as pickle
 from datetime import datetime,timedelta
 import hashlib
+import ConfigParser
 
 from influxdb import InfluxDBClient
 import Client
+
+config = ConfigParser.ConfigParser()
+config.read("config.cfg")
+
+password = config.get("credentials", "password")
+username = config.get("credentials", "username")
+database = config.get("credentials", "database")
 
 baseURL = 'http://pandaserver.cern.ch:25080/server/panda'
 
@@ -30,11 +38,11 @@ with open('pandaresource.json') as pandaresource:
 
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 
-client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, 'admin', 'BachEscherGoedel', 'prod', True, False)
+client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, database, True, False)
 
 points_list = []
 
-# Explicitly set timestamp in InfluxDB point. Avoids having multiple entries per 10 minute interval.
+# Explicitly set timestamp in InfluxDB point. Avoids having multiple entries per 10 minute interval (can happen sometimes with acron)
 epoch = datetime.utcfromtimestamp(0)
 def unix_time_nanos(dt):
     return (dt - epoch).total_seconds() * 1e9
