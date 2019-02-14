@@ -58,7 +58,7 @@ for site, site_result in siteResourceStats.iteritems():
 
     for core, value in site_result.iteritems():
 
-        for job_status in value,keys():
+        for job_status in value.keys():
 
             # simple hack to protect against duplicate entries
             # each site-core combination will have its unique **hash**
