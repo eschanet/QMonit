@@ -38,7 +38,7 @@ with open('pandaresource.json') as pandaresource:
 
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 
-client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "scratch", True, False)
+client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
 
 points_list = []
 
