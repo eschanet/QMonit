@@ -58,7 +58,7 @@ for site, site_result in siteResourceStats.iteritems():
 
     for core, value in site_result.iteritems():
 
-        for job_status, jobs in value.iteritems():
+        for job_status in value:
 
             # simple hack to protect against duplicate entries
             # each site-core combination will have its unique **hash**
@@ -73,7 +73,6 @@ for site, site_result in siteResourceStats.iteritems():
                 type = panda_queues[queue]["type"]
                 cloud = panda_queues[queue]["cloud"]
                 site_state = panda_queues[queue]["state"]
-                job_status = panda_queues[queue]["job_status"]
 
                 if "MCORE" in core:
                     resource_factor = 8.0
@@ -92,7 +91,7 @@ for site, site_result in siteResourceStats.iteritems():
                                 },
                                 "time" : time,
                                 "fields" : {
-                                    "jobs" : jobs
+                                    "jobs" : value[job_status]
                                 }
                             }
 
