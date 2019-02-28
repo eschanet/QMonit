@@ -82,7 +82,10 @@ for site, site_result in siteResourceStats.iteritems():
             site_state = panda_queues[queue]["state"]
 
             if "MCORE" in core:
-                resource_factor = 8.0
+                if panda_queues[queue]["corecount"]:
+                    resource_factor = float(panda_queues[queue]["corecount"])
+                else:
+                    resource_factor = 8.0
             else:
                 resource_factor = 1.0
             if job_status == "running":
