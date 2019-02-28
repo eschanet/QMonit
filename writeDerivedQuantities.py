@@ -6,18 +6,23 @@ from pprint import pprint
 import json,sys
 import requests
 from datetime import datetime,timedelta
+import time
+import dateutil.parser
 import hashlib
 import ConfigParser
 
 from influxdb import InfluxDBClient
 import Client
 
+epoch = datetime.utcfromtimestamp(0)
+def unix_time_nanos(dt):
+    return (dt - epoch).total_seconds() * 1e9
 
-def getAverageJobs(ten_min_units, values, index):
+def getAverageJobs(time_intervals, values, index):
     total_jobs = 0
-    for value in values[:ten_min_units]:
+    for value in values[:time_intervals]:
         total_jobs += value[index]
-    return float(total_jobs) / ten_min_units
+    return float(total_jobs) / time_intervals
 
 def constructValuesDictFromLists(columns,values):
     d = dict(zip(columns, values))
@@ -28,6 +33,17 @@ def correctTypes(fields):
     if not isinstance(fields['resource_factor'], float):
         fields['resource_factor'] = float(fields['resource_factor'])
     return fields
+
+def getUnixFromTimeStamp(time):
+    time = time.replace('T', ' ').replace('Z','')
+    hash = time[-9:]
+    _time = time[:-10]
+    try:
+        dt = datetime.strptime(_time, '%Y-%m-%d %H:%M:%S')
+        return int(unix_time_nanos(dt)) + int(hash)
+    except ValueError:
+        # print("Oh, I can't do this!")
+        return 0
 
 config = ConfigParser.ConfigParser()
 config.read("config.cfg")
@@ -41,6 +57,9 @@ client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "moni
 rs_distinct_sets = client.query('''select * from "10m"."jobs" group by panda_queue, resource limit 1''')
 rs_result = client.query('''select * from "10m"."jobs" where "job_status" = 'running' and time > now() - 24h group by * ''')
 
+#for 1w ratio, I don't care if I get a new value only once per hour...
+rs_result_1w = client.query('''select * from "1h"."jobs" where "job_status" = 'running' and time > now() - 1w group by * ''')
+
 points_list = []
 
 # print(rs_result.keys())
@@ -50,18 +69,22 @@ for rs in rs_distinct_sets.keys():
 
     # points = list(rs_result.get_points(measurement='jobs', tags={'panda_queue': rs['panda_queue'], 'resource': rs['resource'] }))
     raw_dict = rs_result.raw
+    raw_dict_1w = rs_result_1w.raw
     series = raw_dict['series']
+    series_1w = raw_dict_1w['series']
 
     filtered_points = [p for p in series if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource']]
+    filtered_points_1w = [p for p in series_1w if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource']]
 
-    if len(filtered_points) == 0:
+    if len(filtered_points) == 0 or len(filtered_points_1w) == 0:
         continue
-    elif len(filtered_points) > 1:
+    elif len(filtered_points) > 1 or len(filtered_points_1w) > 1:
         raise ValueError('Uhh, oh, got more than one point? This is weird!')
 
     filtered_points = filtered_points[0]
 
     values = filtered_points['values']
+    values_1w = filtered_points['values']
     tags = filtered_points['tags']
     columns = filtered_points['columns']
 
@@ -76,22 +99,27 @@ for rs in rs_distinct_sets.keys():
     fields[u'avg_6h'] = getAverageJobs(36, values, columns.index('jobs'))
     fields[u'avg_12h'] = getAverageJobs(72, values, columns.index('jobs'))
     fields[u'avg_24h'] = getAverageJobs(144, values, columns.index('jobs'))
-
+    fields[u'avg_1w'] = getAverageJobs(168, values_1w, columns.index('jobs'))
 
     fields = correctTypes(fields)
+    time = getUnixFromTimeStamp(latest_value[columns.index('time')])
 
+    if time == 0:
+        # print("Can't do this: ")
+        # pprint(tags)
+        continue
 
-
-    json_body = {   "measurement": u'test_jobs_derived_quantities',
+    json_body = {   "measurement": u'jobs',
                     "tags": tags,
-                    "time" : latest_value[columns.index('time')],
+                    "time" : time,
                     "fields" : fields
                 }
 
-    if tags['panda_queue'] == 'LRZ-LMU_UCORE':
-        debug = json_body
+    # if tags['panda_queue'] == 'LRZ-LMU_UCORE':
+    #     debug = json_body
+
     points_list.append(json_body)
 
-pprint(debug)
+# pprint(debug)
 
 client.write_points(points=points_list, time_precision="n")
