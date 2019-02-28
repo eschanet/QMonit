@@ -1,4 +1,4 @@
-#!/usr/bin/python3.4
+#!/usr/bin/python
 
 from __future__ import print_function
 
@@ -30,10 +30,10 @@ bigpandaURL = 'https://bigpanda.cern.ch/dash/production/?cloudview=world&json'
 
 TIMEOUT = 20
 
-with open('pandaqueue.json') as pandaqueue:
+with open('pandaqueue_scraped.json') as pandaqueue:
     panda_queues = json.load(pandaqueue)
 
-with open('pandaresource.json') as pandaresource:
+with open('pandaqueue_actual_map.json') as pandaresource:
     panda_resources = json.load(pandaresource)
 
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
@@ -66,43 +66,48 @@ for site, site_result in siteResourceStats.iteritems():
             m.update(site + core + job_status)
             time = unix + int(str(int(m.hexdigest(), 16))[0:9])
 
-            if site in panda_resources:
-                queue = panda_resources[site]
-
-                atlas_site = panda_queues[queue]["atlas_site"]
-                type = panda_queues[queue]["type"]
-                cloud = panda_queues[queue]["cloud"]
-                site_state = panda_queues[queue]["state"]
-
-                if "MCORE" in core:
-                    resource_factor = 8.0
-                else:
-                    resource_factor = 1.0
-                if job_status == "running":
-                    n_jobs = value[job_status]*int(resource_factor)
-                else:
-                    n_jobs = value[job_status]
-
-                json_body = {   "measurement": "jobs",
-                                "tags": {
-                                    "atlas_site": atlas_site,
-                                    "panda_queue" : site,
-                                    "resource" : core,
-                                    "type" : type,
-                                    "cloud" : cloud,
-                                    "site_state" : site_state,
-                                    "job_status" : job_status
-                                },
-                                "time" : time,
-                                "fields" : {
-                                    "jobs" : n_jobs,
-                                    "resource_factor" : resource_factor
-                                }
-                            }
-
-                points_list.append(json_body)
-
-            else:
+            if not site in panda_resources:
                 print("ERROR  -  Site %s not in panda resources"%site)
+                continue
+
+            queue = panda_resources[site]
+
+            if not queue in panda_queues:
+                print("ERROR  -  Queue %s not in panda queues"%queue)
+                continue
+
+            atlas_site = panda_queues[queue]["atlas_site"]
+            type = panda_queues[queue]["type"]
+            cloud = panda_queues[queue]["cloud"]
+            site_state = panda_queues[queue]["state"]
+
+            if "MCORE" in core:
+                resource_factor = 8.0
+            else:
+                resource_factor = 1.0
+            if job_status == "running":
+                n_jobs = value[job_status]*int(resource_factor)
+            else:
+                n_jobs = value[job_status]
+
+            json_body = {   "measurement": "jobs",
+                            "tags": {
+                                "atlas_site": atlas_site,
+                                "panda_queue" : site,
+                                "resource" : core,
+                                "type" : type,
+                                "cloud" : cloud,
+                                "site_state" : site_state,
+                                "job_status" : job_status
+                            },
+                            "time" : time,
+                            "fields" : {
+                                "jobs" : n_jobs,
+                                "resource_factor" : resource_factor
+                            }
+                        }
+
+            points_list.append(json_body)
+
 
 client.write_points(points=points_list, time_precision="n")
