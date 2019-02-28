@@ -7,6 +7,10 @@ lsetup python
 
 #execute script
 cd /afs/cern.ch/user/e/eschanet/qualitask/
-#python getJobStats.py
 
+#get data from panda and write to influxdb
 python getJobStatsFlat.py
+
+#keep load of influx and compute interesting quantities offline
+#download data, compute quantities, re-upload with same timestamp
+python writeDerivedQuantities.py
