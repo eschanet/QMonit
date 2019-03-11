@@ -58,7 +58,6 @@ rs_distinct_sets = client.query('''select * from "10m"."jobs" group by panda_que
 rs_result = client.query('''select * from "10m"."jobs" where "job_status" = 'running' and time > now() - 24h group by * ''')
 
 #for 1w ratio, I don't care if I get a new value only once per hour...
-rs_result_1w = client.query('''select * from "1h"."jobs" where "job_status" = 'running' and time > now() - 1w group by * ''')
 
 points_list = []
 
@@ -69,22 +68,18 @@ for rs in rs_distinct_sets.keys():
 
     # points = list(rs_result.get_points(measurement='jobs', tags={'panda_queue': rs['panda_queue'], 'resource': rs['resource'] }))
     raw_dict = rs_result.raw
-    raw_dict_1w = rs_result_1w.raw
     series = raw_dict['series']
-    series_1w = raw_dict_1w['series']
 
     filtered_points = [p for p in series if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource']]
-    filtered_points_1w = [p for p in series_1w if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource']]
 
-    if len(filtered_points) == 0 or len(filtered_points_1w) == 0:
+    if len(filtered_points) == 0:
         continue
-    elif len(filtered_points) > 1 or len(filtered_points_1w) > 1:
-        raise ValueError('Uhh, oh, got more than one point? This is weird!')
+    elif len(filtered_points) > 1:
+        print('Uhh, oh, got more than one point? This is weird! I will use the first one and hope this is what you meant to do.')
 
     filtered_points = filtered_points[0]
 
     values = filtered_points['values']
-    values_1w = filtered_points['values']
     tags = filtered_points['tags']
     columns = filtered_points['columns']
 
@@ -99,7 +94,6 @@ for rs in rs_distinct_sets.keys():
     fields[u'avg_6h'] = getAverageJobs(36, values, columns.index('jobs'))
     fields[u'avg_12h'] = getAverageJobs(72, values, columns.index('jobs'))
     fields[u'avg_24h'] = getAverageJobs(144, values, columns.index('jobs'))
-    fields[u'avg_1w'] = getAverageJobs(168, values_1w, columns.index('jobs'))
 
     fields = correctTypes(fields)
     time = getUnixFromTimeStamp(latest_value[columns.index('time')])
