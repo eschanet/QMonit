@@ -141,12 +141,8 @@ def get_list_to_upload(data):
             if len(temp_data) == 0:
                 continue
 
-            add_point = ('''INSERT INTO jobs (atlas_site, cloud, site_state, tier, type, panda_queue, resource) VALUES ("{atlas_site}", "{cloud}", "{site_state}", "{tier}", "{type}", "{panda_queue}", "{resource}") ON DUPLICATE KEY UPDATE '''.format(
+            add_point = ('''INSERT INTO jobs (atlas_site, panda_queue, resource) VALUES ("{atlas_site}", "{panda_queue}", "{resource}") ON DUPLICATE KEY UPDATE '''.format(
                         atlas_site = tags["atlas_site"],
-                        cloud = tags["cloud"],
-                        site_state = tags["site_state"],
-                        tier = tags["tier"],
-                        type = tags["type"],
                         panda_queue = panda_queue,
                         resource = resource))
 
