@@ -79,7 +79,7 @@ for site, site_result in siteResourceStats.iteritems():
             atlas_site = panda_queues[queue]["atlas_site"]
             type = panda_queues[queue]["type"]
             cloud = panda_queues[queue]["cloud"]
-            site_state = panda_queues[queue]["state"]
+            site_state = panda_queues[queue]["status"]
             tier = panda_queues[queue]["tier"]
 
             if "MCORE" in core:
