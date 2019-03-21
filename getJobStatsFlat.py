@@ -89,10 +89,11 @@ for site, site_result in siteResourceStats.iteritems():
                     resource_factor = 8.0
             else:
                 resource_factor = 1.0
-            if job_status == "running":
-                n_jobs = value[job_status]*int(resource_factor)
-            else:
-                n_jobs = value[job_status]
+
+            # if job_status == "running":
+            #     n_jobs = value[job_status]*int(resource_factor)
+            # else:
+            n_jobs = value[job_status]
 
             json_body = {   "measurement": "jobs",
                             "tags": {
