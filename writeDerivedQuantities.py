@@ -66,7 +66,7 @@ def getUnixFromTimeStamp(time):
     except ValueError:
         return 0
 
-def get_derived_quantities(distinct_sets, series):
+def get_derived_quantities(distinct_sets, series, series_30d):
 
     mysql_data = defaultdict(lambda: defaultdict(dict))
 
@@ -76,7 +76,7 @@ def get_derived_quantities(distinct_sets, series):
         if args.debug and not rs['panda_queue'] == "AGLT2_UCORE":
             continue
 
-        data = get_derived_quantities_for_keyset(rs, series)
+        data = get_derived_quantities_for_keyset(rs, series, series_30d)
 
         if data is None:
             mysql_data[rs["panda_queue"]][rs["resource"]][rs["job_status"]] = None
@@ -91,26 +91,34 @@ def get_derived_quantities(distinct_sets, series):
 
     return mysql_data
 
-def get_derived_quantities_for_keyset(rs, series):
+def get_derived_quantities_for_keyset(rs, series, series_30d):
     logger.debug('Queue: %s     Resource: %s      State: %s' %(rs["panda_queue"],rs["resource"],rs["job_status"]))
 
     filtered_points = [p for p in series if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource'] and p['tags']['job_status'] == rs['job_status']]
+    filtered_points_30d = [p for p in series_30d if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource'] and p['tags']['job_status'] == rs['job_status']]
 
     if len(filtered_points) == 0:
-        logger.debug('Got no points for this set of keys.')
+        logger.debug('Got no points for this 10m set of keys.')
         return None
-    elif len(filtered_points) > 1:
+    if len(filtered_points_30d) == 0:
+        logger.debug('Got no points for this 1h set of keys.')
+        return None
+    elif len(filtered_points) > 1 or len(filtered_points_30d) > 1:
         logger.debug('Uhh, oh, got more than one point? This is weird! I will use the first one and hope this is what you meant to do.')
         # print(filtered_points[0])
         # print(filtered_points[1])
 
     filtered_points = filtered_points[0]
+    filtered_points_30d = filtered_points_30d[0]
 
     values = filtered_points['values']
+    values_30d = filtered_points_30d['values']
     tags = filtered_points['tags']
     columns = filtered_points['columns']
+    columns_30d = filtered_points_30d['columns']
 
     values.reverse() #reverse in place, want to have latest points first
+    values_30d.reverse() #reverse in place, want to have latest points first
 
     #get me the last (most recent) point, because this is the one I want to overwrite.
     latest_value = values[0]
@@ -121,7 +129,10 @@ def get_derived_quantities_for_keyset(rs, series):
     data['avg6h'] = get_average_jobs(36, values, columns.index('jobs'))
     data['avg12h'] = get_average_jobs(72, values, columns.index('jobs'))
     data['avg24h'] = get_average_jobs(144, values, columns.index('jobs'))
+    data['avg7d'] = get_average_jobs(168, values_30d, columns_30d.index('jobs'))
+    data['avg30d'] = get_average_jobs(720, values_30d, columns_30d.index('jobs'))
 
+    # print(data)
     return {'tags':tags, 'values':data}
 
 def get_list_to_upload(data):
@@ -136,10 +147,8 @@ def get_list_to_upload(data):
                 else:
                     temp_data[job_status+"_jobs"] = job_data['current']
                     if job_status in ['assigned', 'activated', 'failed', 'running']:
-                        temp_data["avg1h_"+job_status+"_jobs"] = job_data['avg1h']
-                        temp_data["avg6h_"+job_status+"_jobs"] = job_data['avg6h']
-                        temp_data["avg12h_"+job_status+"_jobs"] = job_data['avg12h']
-                        temp_data["avg24h_"+job_status+"_jobs"] = job_data['avg24h']
+                        for average in ["avg1h","avg6h","avg12h","avg24h","avg7d","avg30d"]:
+                            temp_data[average+"_"+job_status+"_jobs"] = job_data[average]
 
             if len(temp_data) == 0:
                 continue
@@ -170,10 +179,14 @@ def run():
 
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
     rs_distinct_sets = client.query('''select * from "10m"."jobs" group by panda_queue, resource, job_status limit 1''')
-    rs_result = client.query('''select * from "10m"."jobs" where time > now() - 24h group by panda_queue, resource, job_status ''')
 
-    raw_dict = rs_result.raw
-    series = raw_dict['series']
+    rs_result_24h = client.query('''select * from "10m"."jobs" where time > now() - 24h group by panda_queue, resource, job_status ''')
+    raw_dict_24h = rs_result_24h.raw
+    series_24h = raw_dict_24h['series']
+
+    rs_result_30d = client.query('''select * from "1h"."jobs" where time > now() - 30d group by panda_queue, resource, job_status ''')
+    raw_dict_30d = rs_result_30d.raw
+    series_30d = raw_dict_30d['series']
 
     logger.info('Got data from InfluxDB.')
     logger.info('Constructing MySQL connector.')
@@ -184,7 +197,7 @@ def run():
 
     logger.info('Building data.')
 
-    data = get_derived_quantities(rs_distinct_sets, series)
+    data = get_derived_quantities(rs_distinct_sets, series_24h, series_30d)
 
     for point in get_list_to_upload(data):
         if args.debug:
@@ -192,7 +205,7 @@ def run():
         if not args.skipSubmit:
             cursor.execute(point)
 
-    # client.write_points(points=points_list, time_precision="n")
+        # client.write_points(points=points_list, time_precision="n")
 
     if not args.skipSubmit:
         cnx.commit()
