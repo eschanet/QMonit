@@ -23,7 +23,6 @@ import mysql.connector
 
 parser = argparse.ArgumentParser(description="Derived quantities writer")
 parser.add_argument('--debug', action='store_true', help='print debug messages')
-parser.add_argument('--skipSubmit', action='store_true', help='do not upload to DB')
 args = parser.parse_args()
 
 if args.debug:
@@ -73,7 +72,7 @@ def get_derived_quantities(distinct_sets, series):
     for rs in distinct_sets.keys():
         rs = rs[1] #rs is a tuple
 
-        if args.debug and not rs['panda_queue'] == "AGLT2_UCORE":
+        if args.debug and not (rs['panda_queue'] == 'AGLT2_HOSPITAL' and rs['resource'] == 'MCORE'):
             continue
 
         data = get_derived_quantities_for_keyset(rs, series)
@@ -101,8 +100,6 @@ def get_derived_quantities_for_keyset(rs, series):
         return None
     elif len(filtered_points) > 1:
         logger.debug('Uhh, oh, got more than one point? This is weird! I will use the first one and hope this is what you meant to do.')
-        # print(filtered_points[0])
-        # print(filtered_points[1])
 
     filtered_points = filtered_points[0]
 
@@ -170,7 +167,7 @@ def run():
 
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
     rs_distinct_sets = client.query('''select * from "10m"."jobs" group by panda_queue, resource, job_status limit 1''')
-    rs_result = client.query('''select * from "10m"."jobs" where time > now() - 24h group by panda_queue, resource, job_status ''')
+    rs_result = client.query('''select * from "10m"."jobs" where time > now() - 24h group by * ''')
 
     raw_dict = rs_result.raw
     series = raw_dict['series']
@@ -178,26 +175,13 @@ def run():
     logger.info('Got data from InfluxDB.')
     logger.info('Constructing MySQL connector.')
 
-    if not args.skipSubmit:
-        cnx = mysql.connector.connect(user='monit', password=password, host='dbod-sql-graf.cern.ch', port=5501 ,database='monit_jobs')
-        cursor = cnx.cursor()
-
     logger.info('Building data.')
 
     data = get_derived_quantities(rs_distinct_sets, series)
 
     for point in get_list_to_upload(data):
-        if args.debug:
-            print(point)
-        if not args.skipSubmit:
-            cursor.execute(point)
+        print(data)
 
-    # client.write_points(points=points_list, time_precision="n")
-
-    if not args.skipSubmit:
-        cnx.commit()
-        cursor.close()
-        cnx.close()
 
 
 if __name__== "__main__":
