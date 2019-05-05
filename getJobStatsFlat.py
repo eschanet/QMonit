@@ -81,6 +81,8 @@ for site, site_result in siteResourceStats.iteritems():
             cloud = panda_queues[queue]["cloud"]
             site_state = panda_queues[queue]["status"]
             tier = panda_queues[queue]["tier"]
+            pilot_manager = panda_queues[queue]["pilot_manager"]
+            pilot_version = panda_queues[queue]["pilot_version"]
 
             if "MCORE" in core:
                 if panda_queues[queue]["corecount"]:
@@ -104,7 +106,9 @@ for site, site_result in siteResourceStats.iteritems():
                                 "cloud" : cloud,
                                 "site_state" : site_state,
                                 "job_status" : job_status,
-                                "tier" : tier
+                                "tier" : tier,
+                                "pilot_manager" : pilot_manager,
+                                "pilot_version" : pilot_version,
                             },
                             "time" : time,
                             "fields" : {
