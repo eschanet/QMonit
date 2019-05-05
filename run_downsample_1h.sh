@@ -9,4 +9,4 @@ lsetup python
 cd /afs/cern.ch/user/e/eschanet/qualitask/
 
 #new manual downsampling
-python downsample.y -average 1h
+python downsample.py -average 1h
