@@ -41,11 +41,17 @@ else:
 unix = int(unix_time_nanos(current_time))
 
 def get_average(time_intervals, values, index):
+
     total_jobs = 0
     for value in values[:time_intervals]:
         total_jobs += value[index]
 
-    mean = float(total_jobs) / time_intervals
+    try:
+        mean = float(total_jobs) / len(values[:time_intervals])
+    except:
+        logger.warning('Got unexpected averaged number, returning 0.0')
+        return 0.0
+
     if isinstance(mean, float):
         return round(mean,2)
     else:
@@ -65,9 +71,11 @@ def run():
 
     if args.average == '1h':
         retention = '10m'
+        delta = '2h'
         time_units = 6
     elif args.average == '1d':
         retention = '1h'
+        delta = '2d'
         time_units = 24
     else:
         return 0
@@ -75,7 +83,7 @@ def run():
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
     rs_distinct_sets = client.query('''select * from "{}"."jobs" group by panda_queue, resource, job_status limit 1'''.format(retention))
 
-    rs_result = client.query('''select * from "{}"."jobs" where time > now() - {} group by panda_queue, resource, job_status '''.format(retention,args.average))
+    rs_result = client.query('''select * from "{}"."jobs" where time > now() - {} group by panda_queue, resource, job_status '''.format(retention,delta))
     raw_dict = rs_result.raw
     series = raw_dict['series']
 
@@ -83,7 +91,7 @@ def run():
     logger.info('Averaging now.')
 
 
-    uploader = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "test", True, False)
+    # uploader = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "test", True, False)
 
     points_list = []
     for rs in rs_distinct_sets.keys():
@@ -132,7 +140,7 @@ def run():
         data.pop('jobs', None)
         data.pop('resource_factor', None)
 
-        json_body = {   "measurement": "job count",
+        json_body = {   "measurement": "jobs",
                         "tags": data,
                         "time" : time,
                         "fields" : {
@@ -143,7 +151,7 @@ def run():
 
         points_list.append(json_body)
 
-    uploader.write_points(points=points_list, time_precision="n", retention_policy=args.average)
+    client.write_points(points=points_list, time_precision="n", retention_policy=args.average)
 
 if __name__== "__main__":
     run()
