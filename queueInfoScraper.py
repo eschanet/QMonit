@@ -36,6 +36,5 @@ def run():
     saved = save_json_to_file("pandaqueue_actual_map.json",panda_resources)
 
 
-
 if __name__== "__main__":
     run()

@@ -36,6 +36,12 @@ with open('pandaqueue_scraped.json') as pandaqueue:
 with open('pandaqueue_actual_map.json') as pandaresource:
     panda_resources = json.load(pandaresource)
 
+with open('sites_scraped.json') as siteresource:
+    site_resources = json.load(siteresource)
+
+with open('ddm_scraped.json') as ddmresource:
+    ddm_resources = json.load(ddmresource)
+
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 
 client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
@@ -83,6 +89,24 @@ for site, site_result in siteResourceStats.iteritems():
             tier = panda_queues[queue]["tier"]
             pilot_manager = panda_queues[queue]["pilot_manager"]
             pilot_version = panda_queues[queue]["pilot_version"]
+            harvester = panda_queues[queue]["harvester"]
+            harvester_workflow = panda_queues[queue]["workflow"]
+
+            #information about frontier
+            frontier_list = site_resources.get(atlas_site, {}).get("fsconf", {}).get("frontier", [])
+            if len(frontier_list) > 0:
+                frontier = frontier_list[0]
+            else:
+                frontier = ''
+
+            #information about nucleus
+            data_policies = site_resources.get(atlas_site,{}).get("datapolicies",[])
+            # if len(data_policies) > 0:
+            #     frontier = frontier_list[0]
+            # else:
+            #     frontier = ''
+
+
 
             if "MCORE" in core:
                 if panda_queues[queue]["corecount"]:
@@ -109,6 +133,11 @@ for site, site_result in siteResourceStats.iteritems():
                                 "tier" : tier,
                                 "pilot_manager" : pilot_manager,
                                 "pilot_version" : pilot_version,
+                                "frontier" : frontier,
+                                "harvester" : harvester,
+                                "workflow" : harvester_workflow,
+                                # "fts_server" : fts_server,
+                                # "data_policies" : data_policies,
                             },
                             "time" : time,
                             "fields" : {
