@@ -10,3 +10,9 @@ cd /afs/cern.ch/user/e/eschanet/qualitask/
 
 #get updated DAOD datadisk info
 python get_daods_datadisk.py
+
+#get DDM Information
+python DDMInfoScraper.py
+
+#get ATLAS site info
+python siteInfoScraper.py
