@@ -82,32 +82,42 @@ for site, site_result in siteResourceStats.iteritems():
                 print("ERROR  -  Queue %s not in panda queues"%queue)
                 continue
 
-            atlas_site = panda_queues[queue]["atlas_site"]
-            type = panda_queues[queue]["type"]
-            cloud = panda_queues[queue]["cloud"]
-            site_state = panda_queues[queue]["status"]
-            tier = panda_queues[queue]["tier"]
-            pilot_manager = panda_queues[queue]["pilot_manager"]
-            pilot_version = panda_queues[queue]["pilot_version"]
-            harvester = panda_queues[queue]["harvester"]
-            harvester_workflow = panda_queues[queue]["workflow"]
+            atlas_site = panda_queues.get(queue,{}).get("atlas_site","None")
+            type = panda_queues.get(queue,{}).get("type","None")
+            cloud = panda_queues.get(queue,{}).get("cloud","None")
+            site_state = panda_queues.get(queue,{}).get("status","None")
+            tier = panda_queues.get(queue,{}).get("tier","None")
+            pilot_manager = panda_queues.get(queue,{}).get("pilot_manager","None")
+            pilot_version = panda_queues.get(queue,{}).get("pilot_version","None")
+            harvester = panda_queues.get(queue,{}).get("harvester","None")
+            harvester_workflow = panda_queues.get(queue,{}).get("workflow","None")
+            container_type = panda_queues.get(queue,{}).get("container_type","None")
 
             #information about frontier
             frontier_list = site_resources.get(atlas_site, {}).get("fsconf", {}).get("frontier", [])
             if len(frontier_list) > 0:
                 frontier = frontier_list[0]
+                if len(frontier) > 0:
+                    frontier = frontier[0]
+                    frontier = frontier.split(':')[1].replace("//","")
             else:
                 frontier = ''
 
             #information about nucleus
             data_policies = site_resources.get(atlas_site,{}).get("datapolicies",[])
-            # if len(data_policies) > 0:
-            #     frontier = frontier_list[0]
-            # else:
-            #     frontier = ''
+            if "Nucleus" in data_policies:
+                nucleus = atlas_site
+            else:
+                nucleus = 'None'
 
+            # FTS server information
+            fts_servers = ddm_resources.get(atlas_site,{}).get("servedrestfts",{}).get("MASTER",{})
+            if len(fts_servers) > 0:
+                fts_server = fts_servers[0].split(':')[1].replace("//","")
+            else:
+                fts_server = ''
 
-
+            #Resource factor
             if "MCORE" in core:
                 if panda_queues[queue]["corecount"]:
                     resource_factor = float(panda_queues[queue]["corecount"])
@@ -119,26 +129,35 @@ for site, site_result in siteResourceStats.iteritems():
             # if job_status == "running":
             #     n_jobs = value[job_status]*int(resource_factor)
             # else:
+
             n_jobs = value[job_status]
 
+            tags = {
+                "atlas_site": atlas_site,
+                "panda_queue" : site,
+                "resource" : core,
+                "type" : type,
+                "cloud" : cloud,
+                "site_state" : site_state,
+                "job_status" : job_status,
+                "tier" : tier,
+                "pilot_manager" : pilot_manager,
+                "pilot_version" : pilot_version,
+                "frontier" : frontier,
+                "harvester" : harvester,
+                "workflow" : harvester_workflow,
+                "fts_server" : fts_server,
+                "nucleus" : nucleus,
+                "container_type": container_type,
+            }
+
+            #give some useful default values
+            for key in tags:
+                if tags[key] == "":
+                    tags[key] = "No value"
+
             json_body = {   "measurement": "jobs",
-                            "tags": {
-                                "atlas_site": atlas_site,
-                                "panda_queue" : site,
-                                "resource" : core,
-                                "type" : type,
-                                "cloud" : cloud,
-                                "site_state" : site_state,
-                                "job_status" : job_status,
-                                "tier" : tier,
-                                "pilot_manager" : pilot_manager,
-                                "pilot_version" : pilot_version,
-                                "frontier" : frontier,
-                                "harvester" : harvester,
-                                "workflow" : harvester_workflow,
-                                # "fts_server" : fts_server,
-                                # "data_policies" : data_policies,
-                            },
+                            "tags": tags,
                             "time" : time,
                             "fields" : {
                                 "jobs" : n_jobs,

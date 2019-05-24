@@ -26,7 +26,12 @@ def run():
     # Also need to get DDM information
     url = "http://atlas-agis-api.cern.ch/request/ddmendpoint/query/list/?json&"
     ddm_info = get_json_from_url(url)
-    saved = save_json_to_file("ddm_scraped.json",ddm_info)
+
+    json_info = {}
+    for d in ddm_info:
+        json_info[d["site"]] = d
+    saved = save_json_to_file("ddm_scraped.json",json_info)
+
 
 
 if __name__== "__main__":
