@@ -88,7 +88,7 @@ def run():
         except:
             logger.warning("Datadisk not found for: %s, %s" % (atlas_site, datadisk_names))
             datadisk_name = "NONE"
-            datadisk_size = 0
+            datadisk_size = 0.0
             datadisk_files = 0
 
         add_point = ('''INSERT INTO jobs (panda_queue, resource) VALUES ("{panda_queue}", "{resource}") ON DUPLICATE KEY UPDATE atlas_site="{atlas_site}", type="{type}", cloud="{cloud}", site_state="{site_state}", tier="{tier}",resource_factor="{resource_factor}", datadisk_name="{datadisk_name}", datadisk_occupied_gb="{datadisk_size}", datadisk_files="{datadisk_files}"'''.format(

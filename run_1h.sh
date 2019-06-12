@@ -16,3 +16,6 @@ python DDMInfoScraper.py
 
 #get ATLAS site info
 python siteInfoScraper.py
+
+#write datadisk time-series info
+python writeDatadiskInfo.py

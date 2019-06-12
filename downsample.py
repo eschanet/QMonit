@@ -24,6 +24,7 @@ import mysql.connector
 parser = argparse.ArgumentParser(description="Derived quantities writer")
 parser.add_argument('--debug', action='store_true', help='print debug messages')
 parser.add_argument('-average', default='1h', help='How much time to average over')
+parser.add_argument('-measurement', default='jobs', help='What measurement to average')
 args = parser.parse_args()
 
 if args.debug:
