@@ -13,6 +13,7 @@ import logging
 from commonHelpers.logger import logger
 logger = logger.getChild("mephisto")
 
+from influxdb import InfluxDBClient
 import mysql.connector
 
 parser = argparse.ArgumentParser(description="Derived quantities writer")
@@ -108,8 +109,6 @@ def run():
             print(atlas_site)
 
         write_cursor.execute(add_point)
-
-    # client.write_points(points=points_list, time_precision="n")
 
     writer.commit()
     read_cursor.close()
