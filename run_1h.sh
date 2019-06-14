@@ -9,13 +9,13 @@ lsetup python
 cd /afs/cern.ch/user/e/eschanet/qualitask/
 
 #get updated DAOD datadisk info
-python get_daods_datadisk.py
+python downloadDatadiskInfo.py
 
 #get DDM Information
-python DDMInfoScraper.py
+python downloadDDMInfo.py
 
 #get ATLAS site info
-python siteInfoScraper.py
+python downloadSiteInfo.py
 
 #write datadisk time-series info
 python writeDatadiskInfo.py

@@ -9,7 +9,7 @@ lsetup python
 cd /afs/cern.ch/user/e/eschanet/qualitask/
 
 #get updated queue info from AGIS
-python queueInfoScraper.py
+python downloadQueueInfo.py
 
 #use the updated queue info and write it into MySQL database
 python writeQueueInfoMYSQL.py
