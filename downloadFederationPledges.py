@@ -14,7 +14,11 @@ def run():
 
     json_info = {}
     for d in pledge_info:
-        json_info[d["Federation"]] = d
+        #check if field already exists
+        if d["Federation"] in json_info:
+            json_info[d["Federation"]].append(d)
+        else:
+            json_info[d["Federation"]] = [d]
     saved = fh.save_json_to_file("federation_pledges_scraped.json",json_info)
 
 

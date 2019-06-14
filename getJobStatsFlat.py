@@ -84,6 +84,7 @@ for site, site_result in siteResourceStats.iteritems():
                 print("ERROR  -  Queue %s not in panda queues"%queue)
                 continue
 
+            #information taken from main AGIS json
             atlas_site = panda_queues.get(queue,{}).get("atlas_site","None")
             type = panda_queues.get(queue,{}).get("type","None")
             cloud = panda_queues.get(queue,{}).get("cloud","None")
@@ -95,6 +96,12 @@ for site, site_result in siteResourceStats.iteritems():
             harvester_workflow = panda_queues.get(queue,{}).get("workflow","None")
             container_type = panda_queues.get(queue,{}).get("container_type","None")
 
+            #information from wlcg rebus
+            federation = federations_resource.get(atlas_site,{}).get("Federation","None")
+            pledge = ""
+            for pledge_type,pledge_unit in zip(pledges_resources.get(federation,{}).get("PledgeType","None"),pledges_resources.get(federation,{}).get("PledgeUnit","None")):
+                pledge = "%s (%s);" % (pledge_type, pledge_unit)
+                
             #information about frontier
             frontier_list = site_resources.get(atlas_site, {}).get("fsconf", {}).get("frontier", [])
             if len(frontier_list) > 0:
@@ -128,10 +135,6 @@ for site, site_result in siteResourceStats.iteritems():
             else:
                 resource_factor = 1.0
 
-            # if job_status == "running":
-            #     n_jobs = value[job_status]*int(resource_factor)
-            # else:
-
             n_jobs = value[job_status]
 
             tags = {
@@ -151,6 +154,8 @@ for site, site_result in siteResourceStats.iteritems():
                 "fts_server" : fts_server,
                 "nucleus" : nucleus,
                 "container_type": container_type,
+                "federation" : federation,
+                "pledge_type" : pledge,
             }
 
             #give some useful default values
