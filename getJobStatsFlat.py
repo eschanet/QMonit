@@ -13,39 +13,41 @@ import ConfigParser
 from influxdb import InfluxDBClient
 import Client
 
+#do some configurations
 config = ConfigParser.ConfigParser()
 config.read("config.cfg")
 
+#get credentials
 password = config.get("credentials", "password")
 username = config.get("credentials", "username")
 database = config.get("credentials", "database")
 
+#define my urls
 baseURL = 'http://pandaserver.cern.ch:25080/server/panda'
-
 url_cloudJobs  = baseURL + '/getJobStatistics'
 url_siteJobs   = baseURL + '/getJobStatisticsPerSiteResource'
 url_bamboo     = baseURL + '/getJobStatisticsForBamboo'
-
 bigpandaURL = 'https://bigpanda.cern.ch/dash/production/?cloudview=world&json'
 
-TIMEOUT = 20
-
+#let's load some of the information that has been scraped previously
 with open('pandaqueue_scraped.json') as pandaqueue:
     panda_queues = json.load(pandaqueue)
-
 with open('pandaqueue_actual_map.json') as pandaresource:
     panda_resources = json.load(pandaresource)
-
 with open('sites_scraped.json') as siteresource:
     site_resources = json.load(siteresource)
-
 with open('ddm_scraped.json') as ddmresource:
     ddm_resources = json.load(ddmresource)
+with open('federation_pledges_scraped.json') as pledgesresource:
+    pledges_resources = json.load(pledgesresource)
+with open('federations_scraped.json') as federationsresource:
+    federations_resource = json.load(federationsresource)
 
+#get the actual job numbers from panda
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 
+#idb client instance for uploading data later on
 client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
-
 points_list = []
 
 # Explicitly set timestamp in InfluxDB point. Avoids having multiple entries per 10 minute interval (can happen sometimes with acron)
@@ -57,9 +59,9 @@ current_time = datetime.utcnow()
 current_time = current_time - timedelta(minutes=current_time.minute % 10,
                              seconds=current_time.second,
                              microseconds=current_time.microsecond)
-
 unix = int(unix_time_nanos(current_time))
 
+#unique data point is characterised by pqueue, resource type and job status
 for site, site_result in siteResourceStats.iteritems():
 
     for core, value in site_result.iteritems():
