@@ -99,8 +99,12 @@ for site, site_result in siteResourceStats.iteritems():
             #information from wlcg rebus
             federation = federations_resource.get(atlas_site,{}).get("Federation","None")
             pledge = ""
-            for pledge_type,pledge_unit in zip(pledges_resources.get(federation,{}).get("PledgeType","None"),pledges_resources.get(federation,{}).get("PledgeUnit","None")):
-                pledge = "%s (%s);" % (pledge_type, pledge_unit)
+            for pledge_types,pledge_units in zip(pledges_resources.get(federation,{}),pledges_resources.get(federation,{})):
+                pledge_type = pledge_types.get("PledgeType","None")
+                pledge_unit = pledge_units.get("PledgeUnit","None")
+                pledge += "%s (%s);" % (pledge_type, pledge_unit)
+            if len(pledge)>1: #not sure if needed? is below safe for empty strings?
+                pledge = pledge[:-1]
                 
             #information about frontier
             frontier_list = site_resources.get(atlas_site, {}).get("fsconf", {}).get("frontier", [])
