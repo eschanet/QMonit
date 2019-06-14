@@ -19,3 +19,9 @@ python downloadSiteInfo.py
 
 #write datadisk time-series info
 python writeDatadiskInfo.py
+
+#get some information from wlcg rebus
+#first the actual federations map
+python downloadFederationMap.py
+#next the federation pledges
+python downloadFederationPledges.py
