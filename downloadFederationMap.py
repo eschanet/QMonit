@@ -16,7 +16,7 @@ def run():
     for d in federation_info:
         json_info[d["Site"]] = d
     saved = fh.save_json_to_file("federations_scraped.json",json_info)
-
+    
 
 if __name__== "__main__":
     run()
