@@ -21,6 +21,16 @@ class Scraper(object):
             if error.errno != 17:
                 raise
 
+    @classmethod
+    def save_json_to_file(filename,data):
+        try:
+            with open(filename, 'w') as f:
+                json.dump(data, f)
+            return True
+        except IOError:
+            print("Got an error saving to file.")
+            return False
+
 
     @abc.abstractmethod
     def write(self, data, path, *args, **kwargs):
