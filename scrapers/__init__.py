@@ -9,14 +9,12 @@ import abc
 class Scraper(object):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, url, output_path, output_file, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """Initializing the scraper object."""
-        self.url = url
-        self.output_file = output_file
-        self.output_path = output_path
+
 
     @classmethod
-    def create_dir(path):
+    def create_dir(self,path):
         """Create directory with path.
 
         :param path: directory path"""
@@ -27,7 +25,7 @@ class Scraper(object):
             if error.errno != 17:
                 raise
 
-    def save_data(file,data):
+    def save(self,file,data):
         try:
             with open(file, 'w') as f:
                 json.dump(data, f)
@@ -36,7 +34,7 @@ class Scraper(object):
             print("Got an error saving to file.")
             return False
 
-    def download(url):
+    def download(self,url):
         """Download JSON data from url.
 
         :param url: the url containing the JSON to be downloaded."""
