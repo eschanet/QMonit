@@ -9,7 +9,6 @@ import abc
 class Scraper(object):
     __metaclass__ = abc.ABCMeta
 
-    @abc.abstractmethod
     def __init__(self, url, output_path, output_file, *args, **kwargs):
         """Initializing the scraper object."""
         self.url = url
