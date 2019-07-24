@@ -105,7 +105,7 @@ for site, site_result in siteResourceStats.iteritems():
                 pledge += "%s (%s);" % (pledge_type, pledge_unit)
             if len(pledge)>1: #not sure if needed? is below safe for empty strings?
                 pledge = pledge[:-1]
-                
+
             #information about frontier
             frontier_list = site_resources.get(atlas_site, {}).get("fsconf", {}).get("frontier", [])
             if len(frontier_list) > 0:
@@ -138,6 +138,9 @@ for site, site_result in siteResourceStats.iteritems():
                     resource_factor = 8.0
             else:
                 resource_factor = 1.0
+
+            # Corepower
+            corepower = float(panda_queues.get(queue,{}).get("corepower","1.0"))
 
             n_jobs = value[job_status]
 
@@ -172,7 +175,8 @@ for site, site_result in siteResourceStats.iteritems():
                             "time" : time,
                             "fields" : {
                                 "jobs" : n_jobs,
-                                "resource_factor" : resource_factor
+                                "resource_factor" : resource_factor,
+                                "corepower" : corepower
                             }
                         }
 
