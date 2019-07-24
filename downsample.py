@@ -120,6 +120,7 @@ def run():
         #get averaged values
         averaged_jobs = get_average(time_units, values, columns.index('jobs'))
         averaged_cpu = get_average(time_units, values, columns.index('resource_factor'))
+        averaged_corepower = get_average(time_units, values, columns.index('corepower'))
 
         #construct rest of the data dict
         data = dict(zip(columns, latest_value))
@@ -140,13 +141,16 @@ def run():
         data.pop('time', None)
         data.pop('jobs', None)
         data.pop('resource_factor', None)
+        data.pop('corepower', None)
 
         json_body = {   "measurement": "jobs",
                         "tags": data,
                         "time" : time,
                         "fields" : {
                             "jobs" : averaged_jobs,
-                            "resource_factor" : averaged_cpu
+                            "resource_factor" : averaged_cpu,
+                            "corepower" : averaged_corepower
+
                         }
                     }
 
