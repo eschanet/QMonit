@@ -42,6 +42,8 @@ with open('federation_pledges_scraped.json') as pledgesresource:
     pledges_resources = json.load(pledgesresource)
 with open('federations_scraped.json') as federationsresource:
     federations_resource = json.load(federationsresource)
+with open('benchmarks_elasticsearch_scraped.json') as benchmarksresource:
+    benchmarks_resource = json.load(benchmarksresource)
 
 #get the actual job numbers from panda
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
@@ -142,6 +144,9 @@ for site, site_result in siteResourceStats.iteritems():
             # Corepower
             corepower = float(panda_queues.get(queue,{}).get("corepower","1.0"))
 
+            # Benchmarked HS06
+            benchmark_corepower = float(benchmarks_resource.get(queue,0.0))
+
             n_jobs = value[job_status]
 
             tags = {
@@ -176,7 +181,8 @@ for site, site_result in siteResourceStats.iteritems():
                             "fields" : {
                                 "jobs" : n_jobs,
                                 "resource_factor" : resource_factor,
-                                "corepower" : corepower
+                                "corepower" : corepower,
+                                "HS06_benchmark" : benchmark_corepower,
                             }
                         }
 
