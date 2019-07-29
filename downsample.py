@@ -44,11 +44,17 @@ unix = int(unix_time_nanos(current_time))
 def get_average(time_intervals, values, index):
 
     total_jobs = 0
-    for value in values[:time_intervals]:
-        total_jobs += value[index]
+
+    # create list first
+    to_sum = [value[index] for value in values[:time_intervals] if not value[index] is None]
+    total_jobs = sum(to_sum)
+
+    # total_jobs = sum(values[:time_intervals])
+    # for value in values[:time_intervals]:
+    #     total_jobs += value[index]
 
     try:
-        mean = float(total_jobs) / len(values[:time_intervals])
+        mean = float(total_jobs) / len(to_sum)
     except:
         logger.warning('Got unexpected averaged number, returning 0.0')
         return 0.0
@@ -121,6 +127,7 @@ def run():
         averaged_jobs = get_average(time_units, values, columns.index('jobs'))
         averaged_cpu = get_average(time_units, values, columns.index('resource_factor'))
         averaged_corepower = get_average(time_units, values, columns.index('corepower'))
+        averaged_HS06_benchmark = get_average(time_units, values, columns.index('HS06_benchmark'))
 
         #construct rest of the data dict
         data = dict(zip(columns, latest_value))
@@ -142,6 +149,7 @@ def run():
         data.pop('jobs', None)
         data.pop('resource_factor', None)
         data.pop('corepower', None)
+        data.pop('HS06_benchmark', None)
 
         json_body = {   "measurement": "jobs",
                         "tags": data,
@@ -149,8 +157,8 @@ def run():
                         "fields" : {
                             "jobs" : averaged_jobs,
                             "resource_factor" : averaged_cpu,
-                            "corepower" : averaged_corepower
-
+                            "corepower" : averaged_corepower,
+                            "HS06_benchmark" : averaged_HS06_benchmark
                         }
                     }
 
