@@ -25,3 +25,6 @@ python writeDatadiskInfo.py
 python downloadFederationMap.py
 #next the federation pledges
 python downloadFederationPledges.py
+
+#download ES benchmark data
+python downloadElasticSearch.py
