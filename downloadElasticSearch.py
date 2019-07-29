@@ -32,45 +32,41 @@ def run():
     res = es.search(
                 index="benchmarks-*",
                 body={
+                    "size" : 10000,
                     "query" : {
-                        "range" : {
-                            "timestamp" : {
-                                "gte" : "now-1000d/d",
-                                "lt" :  "now/d"
-                            }
-                        }
+                        "match_all" : {},
+                        # "bool" : {
+                        #     "must" : {
+                        #         "match" : {
+                        #             "metadata.PanDAQueue" : "ANALY_LRZ",
+                        #             "metadata.PanDAQueue" : "ANALY_CPPM"
+                        #
+                        #         }
+                        #     }
+                        # }
                     },
-                    "size": 10000,
-                    "aggs": {
-                        "pq_agg": {
-                            "terms": {
-                                "field": "metadata.PanDAQueue"
-                            },
-                            "aggs": {
-                                "group_docs": {
-                                    "top_hits": {
-                                        "size": 1,
-                                        "sort": [
-                                        {
-                                            "timestamp": {
-                                                "order": "desc"
-                                            }
-                                        }
-                                        ]
-                                    }
-                                }
-                            }
+                    "collapse": {
+                        "field": "metadata.PanDAQueue",
+                        "inner_hits": {
+                            "name": "most_recent",
+                            "size": 1,
+                            "sort": [{"timestamp": "desc"}]
                         }
                     }
                 },
                 filter_path=[""])
 
     for hit in res['hits']['hits']:
+        # pprint(hit)
         pq = hit.get('_source',{}).get('metadata',{}).get('PanDAQueue',None)
         if pq:
-            results[pq] = hit.get('_source',{}).get('profiles',{}).get('fastBmk',{}).get('value',0.0)
+            latest_list = hit.get('inner_hits',{}).get('most_recent',{}).get('hits',{}).get('hits',[])
+            if len(latest_list) > 0:
+                results[pq] = latest_list[0].get('_source',{}).get('profiles',{}).get('fastBmk',{}).get('value',0.0)
 
+    # pprint(results)
     saved = fh.save_json_to_file("benchmarks_elasticsearch_scraped.json",results)
+    # saved = fh.save_json_to_file("test.json",results)
 
 
 if __name__== "__main__":
