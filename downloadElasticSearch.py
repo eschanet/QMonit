@@ -76,6 +76,8 @@ def run():
         values=[]
         for d in latest_list:
             date = datetime.datetime.strptime( d.get('_source',{}).get('timestamp',""), '%Y-%m-%dT%H:%M:%SZ')
+            if (date > (datetime.datetime.now() - datetime.timedelta(days=2))) and len(values) > 25:
+                continue
             if (date < (datetime.datetime.now() - datetime.timedelta(days=7))) or len(values) < 5:
                 #we are within the last 7 days and haven't got 5 days outside of 7d yet
                 values.append(d)
