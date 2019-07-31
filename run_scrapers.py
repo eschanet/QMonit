@@ -25,11 +25,16 @@ def run():
 
     if args.interval == '10m':
         # Now run all the scrapers that should run in 10min intervals
-        # First panda queue names map
+        # First the PQ AGIS information
         agis = scrapers.AGIS()
         raw_data = agis.download(url="http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf.all")
         json_data = agis.convert(data=raw_data,pq_field="panda_resource")
         saved = agis.save(file="scraped_agis_pandaqueue.json",data=json_data)
+
+        # Next the ATLAS sites AGIS information
+        raw_data = agis.download(url="http://atlas-agis-api.cern.ch/request/site/query/list/?json&")
+        json_data = agis.convert(data=raw_data,pq_field="name")
+        saved = agis.save(file="scraped_agis_sites.json",data=json_data)
 
     elif args.interval == '1h':
         # Run all the scrapers that only need to be run once per hour (because they don't change too often)
