@@ -14,9 +14,6 @@ class AGIS(Scraper):
 
         :param data: data to be converted in the desired format"""
 
-        # We need a map between PQ names and the names that are used elsewhere. Weirdly enough, there are different variationsself.
-        pqs = pq_map.PQ_names_map()
-
         json_data={}
 
         for key,d in data.items():
