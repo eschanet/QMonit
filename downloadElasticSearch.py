@@ -76,17 +76,26 @@ def run():
         values=[]
         for d in latest_list:
             date = datetime.datetime.strptime( d.get('_source',{}).get('timestamp',""), '%Y-%m-%dT%H:%M:%SZ')
-            if (date > (datetime.datetime.now() - datetime.timedelta(days=2))) and len(values) > 25:
-                continue
-            if (date < (datetime.datetime.now() - datetime.timedelta(days=7))) or len(values) < 5:
-                #we are within the last 7 days and haven't got 5 days outside of 7d yet
+            two_days_ago = datetime.datetime.now() - datetime.timedelta(days=2)
+            seven_days_ago = datetime.datetime.now() - datetime.timedelta(days=7)
+
+            if date > two_days_ago:
+                # we are within the last two days, so we take all the measurements we can get!
                 values.append(d)
+            elif (date < two_days_ago) and (date > seven_days_ago):
+                # we are between 2 and 7 days ago, so take only values if we don't have 25 values already
+                if len(values) < 30 :
+                    values.append(d)
+            elif date < seven_days_ago:
+                # we are further away than 7 days, so take a maximum of 5 values from here if we don't have 5 yet
+                if len(values) < 10:
+                    values.append(d)
 
         to_average = [i.get('_source',{}).get('profiles',{}).get('fastBmk',{}).get('value',0.0) for i in values]
-        results[pq] = float(sum(to_average))/len(to_average)
+        results[pq] = {"avg_value" : float(sum(to_average))/len(to_average), "measurements" : len(to_average) }
         # print(len(to_average))
 
-    # pprint(results)
+    pprint(results)
     saved = fh.save_json_to_file("benchmarks_elasticsearch_scraped.json",results)
     # saved = fh.save_json_to_file("test.json",results)
 
