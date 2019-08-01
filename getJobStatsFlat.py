@@ -145,7 +145,7 @@ for site, site_result in siteResourceStats.iteritems():
             corepower = float(panda_queues.get(queue,{}).get("corepower","1.0"))
 
             # Benchmarked HS06
-            benchmark_corepower = float(benchmarks_resource.get(queue,0.0))
+            benchmark_corepower = float(benchmarks_resource.get(queue,{}).get("avg_value",0.0))
 
             n_jobs = value[job_status]
 
