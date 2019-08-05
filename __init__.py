@@ -2,7 +2,6 @@
 import sys
 assert sys.version_info == (2,7), "QMonit needs python 2.7 - if you are in an slc environment consider using 'lsetup python'"
 
-# user shouldn't use ROOT5
 from .commonHelpers.logger import logger
 logger = logger.getChild(__name__)
 
