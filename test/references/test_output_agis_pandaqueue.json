@@ -1,0 +1,735 @@
+{
+  "AGLT2_HOSPITAL": {
+    "accesscontrol": "",
+    "acopytools": {
+      "pl": [
+        "rucio"
+      ],
+      "pr": [
+        "rucio",
+        "xrdcp"
+      ],
+      "pw": [
+        "rucio",
+        "gfalcopy"
+      ]
+    },
+    "allowdirectaccess": true,
+    "allowedgroups": null,
+    "allowednode": "",
+    "allowfax": false,
+    "allowjem": true,
+    "appdir": "",
+    "aprotocols": {},
+    "astorages": {
+      "es_events": [
+        "CERN-PROD_ES"
+      ],
+      "es_failover": [
+        "CERN-PROD_ES"
+      ],
+      "pls": [
+        "OSIRIS_LOG"
+      ],
+      "pr": [
+        "BNL-OSG2_DATADISK",
+        "MWT2_DATADISK",
+        "TRIUMF-LCG2_DATADISK",
+        "CA-VICTORIA-WESTGRID-T2_DATADISK"
+      ],
+      "pw": [
+        "AGLT2_DATADISK",
+        "AGLT2_CALIBDISK",
+        "AGLT2_LOCALGROUPDISK",
+        "AGLT2_SCRATCHDISK"
+      ],
+      "read_lan": [
+        "BNL-OSG2_DATADISK",
+        "MWT2_DATADISK",
+        "TRIUMF-LCG2_DATADISK",
+        "CA-VICTORIA-WESTGRID-T2_DATADISK"
+      ],
+      "write_lan": [
+        "AGLT2_DATADISK",
+        "AGLT2_CALIBDISK",
+        "AGLT2_LOCALGROUPDISK",
+        "AGLT2_SCRATCHDISK"
+      ],
+      "write_lan_analysis": [
+        "AGLT2_SCRATCHDISK"
+      ]
+    },
+    "astorages0": {
+      "es_events": {
+        "CERN-PROD": [
+          "CERN-PROD_ES"
+        ]
+      },
+      "es_failover": {
+        "CERN-PROD": [
+          "CERN-PROD_ES"
+        ]
+      },
+      "pls": {
+        "AGLT2": [
+          "OSIRIS_LOG"
+        ]
+      },
+      "read_lan": {
+        "BNL-ATLAS": [
+          "BNL-OSG2_DATADISK"
+        ],
+        "CA-VICTORIA-WESTGRID-T2": [
+          "CA-VICTORIA-WESTGRID-T2_DATADISK"
+        ],
+        "MWT2": [
+          "MWT2_DATADISK"
+        ],
+        "TRIUMF-LCG2": [
+          "TRIUMF-LCG2_DATADISK"
+        ]
+      },
+      "write_lan": {
+        "AGLT2": [
+          "AGLT2_DATADISK",
+          "AGLT2_CALIBDISK",
+          "AGLT2_LOCALGROUPDISK",
+          "AGLT2_SCRATCHDISK"
+        ]
+      },
+      "write_lan_analysis": {
+        "AGLT2": [
+          "AGLT2_SCRATCHDISK"
+        ]
+      }
+    },
+    "atlas_site": "AGLT2",
+    "autosetup_post": "",
+    "autosetup_pre": "",
+    "availablecpu": null,
+    "availablestorage": null,
+    "cachedse": null,
+    "capability": "mcore",
+    "catchall": "es_to_zip",
+    "ceinfo": null,
+    "cloud": "US",
+    "cloudrshare": 20,
+    "cloudrshares": {
+      "analysis": {
+        "capabilities": {
+          "score": 100
+        },
+        "value": 20
+      },
+      "production": {
+        "capabilities": {
+          "himem": 10,
+          "mcore": 20,
+          "score": 70
+        },
+        "value": 80
+      }
+    },
+    "cmd": "None",
+    "cmtconfig": "i686-slc5-gcc43-opt",
+    "comment": "no active blacklisting rules defined",
+    "comment_": "no active blacklisting rules defined",
+    "container_options": "",
+    "container_type": "singularity:pilot",
+    "copyprefix": "OLDMOVERDEPRECATED",
+    "copyprefixin": "OLDMOVERDEPRECATED",
+    "copyprefixin_fax_direct": "OLDMOVERDEPRECATED",
+    "copyprefixin_fax_xrdcp": "OLDMOVERDEPRECATED",
+    "copysetup": "OLDMOVERDEPRECATED",
+    "copysetup_fax_direct": "OLDMOVERDEPRECATED",
+    "copysetup_fax_xrdcp": "OLDMOVERDEPRECATED",
+    "copysetupin": "OLDMOVERDEPRECATED",
+    "copysetupin_fax_direct": "OLDMOVERDEPRECATED",
+    "copysetupin_fax_xrdcp": "OLDMOVERDEPRECATED",
+    "copytool": "lsm",
+    "copytoolin": "OLDMOVERDEPRECATED",
+    "copytools": {
+      "gfalcopy": {
+        "setup": ""
+      },
+      "rucio": {
+        "setup": ""
+      },
+      "xrdcp": {
+        "setup": "$VO_ATLAS_SW_DIR/local/xrootdsetup.sh"
+      }
+    },
+    "corecount": 8,
+    "corepower": 10.960000000000001,
+    "corepower_data": {
+      "corepower": 10.960000000000001,
+      "corepower_on": true,
+      "parent_corepower": 0.0,
+      "parent_corepower_on": false,
+      "parent_rc_site_corepower": 10.960000000000001,
+      "parent_site_corepower": 10.0,
+      "parent_site_corepower_on": false
+    },
+    "country": "USA",
+    "countrygroup": "",
+    "datadir": "None",
+    "ddm": "",
+    "ddmendpoints": [],
+    "defaulttoken": null,
+    "deprecate_oldmover": true,
+    "depthboost": null,
+    "description": "AGLT2 HOSPITAL queue",
+    "direct_access_lan": true,
+    "direct_access_wan": true,
+    "dn": null,
+    "dq2url": "",
+    "email": "",
+    "environ": "None",
+    "envsetup": "source /etc/osg/wn-client/setup.sh;",
+    "envsetupin": "",
+    "errinfo": null,
+    "fairsharepolicy": "",
+    "faxredirector": "atlas-xrd-central.usatlas.org:1094",
+    "gatekeeper": "None",
+    "glexec": "",
+    "globusadd": "",
+    "gocname": "AGLT2",
+    "gstat": "AGLT2",
+    "harvester": "CERN_central_A",
+    "harvester_template": "",
+    "hc_param": "AutoExclusion",
+    "hc_suite": [
+      "PFT"
+    ],
+    "idlepilotsupression": null,
+    "ignore_swreleases": false,
+    "is_analysis": true,
+    "is_atlas": true,
+    "is_cvmfs": true,
+    "is_default": false,
+    "is_direct": true,
+    "is_pledged": true,
+    "is_production": true,
+    "is_virtual": false,
+    "jdl": "AGLT2_SL6-condor",
+    "jdladd": "None",
+    "jdltxt": null,
+    "jobmanager": "condor",
+    "jobseed": "std",
+    "last_modified": "2019-07-19T08:51:26.075970",
+    "lastmod": "2019-07-19T08:51:26.075970",
+    "lfchost": "ust2lfc.usatlas.bnl.gov",
+    "lfcpath": "",
+    "lfcprodpath": "",
+    "lfcregister": "server",
+    "localqueue": "",
+    "maxdiskio": 3000,
+    "maxdiskio_data": {
+      "maxdiskio": null,
+      "maxdiskio_on": false,
+      "parent_maxdiskio": null,
+      "parent_maxdiskio_on": false,
+      "parent_rc_site_maxdiskio": 3000,
+      "parent_site_maxdiskio": null,
+      "parent_site_maxdiskio_on": false
+    },
+    "maxinputsize": 122880,
+    "maxmemory": 72000,
+    "maxrss": 24000,
+    "maxswap": 0,
+    "maxtime": 258000,
+    "maxwdir": 120000,
+    "memory": 72000,
+    "minmemory": 0,
+    "minrss": 0,
+    "mintime": 0,
+    "multicloud": "WORLD",
+    "name": "default",
+    "nickname": "AGLT2_HOSPITAL",
+    "nodes": 118,
+    "nqueue": 0,
+    "objectstore": "",
+    "objectstores": [],
+    "objectstores_old": [],
+    "panda_resource": "AGLT2_HOSPITAL",
+    "panda_site": "GreatLakesT2",
+    "params": {
+      "analysis.direct_access_lan": false,
+      "analysis.direct_access_wan": false,
+      "analysis.maxrss": 2048,
+      "analysis.prodsourcelabel.ptest": [
+        "score",
+        "mcore"
+      ],
+      "analysis.prodsourcelabel.user": [
+        "score",
+        "himem"
+      ],
+      "production.prodsourcelabel.managed": [
+        "score",
+        "himem",
+        "mcore",
+        "mcorehimem"
+      ]
+    },
+    "parent": "GreatLakesT2_VIRTUAL",
+    "pcache": null,
+    "pilot_manager": "Harvester",
+    "pilot_version": "2",
+    "pilotlimit": null,
+    "pledgedcpu": null,
+    "pledgedstorage": null,
+    "priorityoffset": null,
+    "probe": null,
+    "proxy": "noimport",
+    "ptest": false,
+    "python_path": "/atlas/data08/OSG/APPSL6/atlas_app/python/python32bit-2.4/bin/python",
+    "queue": "None",
+    "queuehours": 0,
+    "queues": [
+      {
+        "ce_endpoint": "gate01.aglt2.org:9619",
+        "ce_flavour": "HTCONDOR-CE",
+        "ce_id": 18185,
+        "ce_jobmanager": "condor",
+        "ce_name": "AGLT2-CE-HTCONDOR-CE-gate01.aglt2.org",
+        "ce_queue_id": 14917,
+        "ce_queue_maxcputime": 0,
+        "ce_queue_maxwctime": 4300,
+        "ce_queue_name": "prod",
+        "ce_queue_status": "Production",
+        "ce_state": "ACTIVE",
+        "ce_status": "production",
+        "ce_version": "3.0.2"
+      }
+    ],
+    "rc": "US-AGLT2",
+    "rc_country": "USA",
+    "rc_site": "AGLT2",
+    "rc_site_state": "ACTIVE",
+    "recoverdir": "",
+    "region": "US",
+    "releases": null,
+    "resource_type": "GRID",
+    "retry": false,
+    "se": "OLDMOVERDEPRECATED",
+    "sein": "OLDMOVERDEPRECATED",
+    "seinopt": "OLDMOVERDEPRECATED",
+    "seopt": "OLDMOVERDEPRECATED",
+    "sepath": "OLDMOVERDEPRECATED",
+    "seprodpath": "OLDMOVERDEPRECATED",
+    "setokens": "OLDMOVERDEPRECATED",
+    "site": "GreatLakesT2",
+    "site_state": "ACTIVE",
+    "siteid": "AGLT2_HOSPITAL",
+    "sitershare": null,
+    "sitershares": null,
+    "space": 193469,
+    "special_par": "",
+    "stageinretry": 2,
+    "stageoutretry": 2,
+    "state": "ACTIVE",
+    "state_comment": "Object was cloned from AGLT2_SL7-condor via WebUI",
+    "state_update": "2019-06-12T18:48:24.691703",
+    "status": "online",
+    "system": "osg",
+    "tags": "",
+    "tier": "T2D",
+    "tier_level": 2,
+    "timefloor": 60,
+    "tmpdir": "/tmp",
+    "transferringlimit": null,
+    "tspace": "2015-01-22T10:00:20",
+    "type": "production",
+    "uconfig": {
+      "analysis": {
+        "direct_access_lan": false,
+        "direct_access_wan": false,
+        "maxrss": 2048,
+        "prodsourcelabel": {
+          "ptest": [
+            "score",
+            "mcore"
+          ],
+          "user": [
+            "score",
+            "himem"
+          ]
+        }
+      },
+      "production": {
+        "prodsourcelabel": {
+          "managed": [
+            "score",
+            "himem",
+            "mcore",
+            "mcorehimem"
+          ]
+        }
+      }
+    },
+    "use_newmover": true,
+    "use_pcache": false,
+    "validatedreleases": "14.5.0|14.5.2|15.2.0",
+    "version": null,
+    "vo_name": "atlas",
+    "wansinklimit": 0,
+    "wansourcelimit": 0,
+    "wnconnectivity": "http",
+    "wntmpdir": "/tmp",
+    "workflow": "pull",
+    "zip_time_gap": 900
+  },
+  "SLAC_ES": {
+    "accesscontrol": "",
+    "acopytools": {
+      "es_events": [
+        "lsm"
+      ],
+      "pl": [
+        "lsm"
+      ],
+      "pls": [
+        "lsm"
+      ],
+      "pr": [
+        "lsm"
+      ],
+      "pw": [
+        "lsm"
+      ]
+    },
+    "allowdirectaccess": false,
+    "allowedgroups": null,
+    "allowednode": "",
+    "allowfax": true,
+    "allowjem": false,
+    "appdir": "",
+    "aprotocols": {},
+    "astorages": {
+      "es_events": [
+        "SLACXRD_DATADISK"
+      ],
+      "pls": [
+        "SLACXRD_DATADISK"
+      ],
+      "pr": [
+        "SLACXRD_DATADISK",
+        "SLACXRD_SCRATCHDISK",
+        "SLACXRD_LOCALGROUPDISK"
+      ],
+      "pw": [
+        "SLACXRD_DATADISK",
+        "SLACXRD_SCRATCHDISK",
+        "SLACXRD_LOCALGROUPDISK"
+      ],
+      "read_lan": [
+        "SLACXRD_DATADISK",
+        "SLACXRD_SCRATCHDISK",
+        "SLACXRD_LOCALGROUPDISK"
+      ],
+      "write_lan": [
+        "SLACXRD_DATADISK",
+        "SLACXRD_SCRATCHDISK",
+        "SLACXRD_LOCALGROUPDISK"
+      ]
+    },
+    "astorages0": {
+      "es_events": {
+        "WT2": [
+          "SLACXRD_DATADISK"
+        ]
+      },
+      "pls": {
+        "WT2": [
+          "SLACXRD_DATADISK"
+        ]
+      },
+      "read_lan": {
+        "WT2": [
+          "SLACXRD_DATADISK",
+          "SLACXRD_SCRATCHDISK",
+          "SLACXRD_LOCALGROUPDISK"
+        ]
+      },
+      "write_lan": {
+        "WT2": [
+          "SLACXRD_DATADISK",
+          "SLACXRD_SCRATCHDISK",
+          "SLACXRD_LOCALGROUPDISK"
+        ]
+      }
+    },
+    "atlas_site": "WT2",
+    "autosetup_post": "",
+    "autosetup_pre": "",
+    "availablecpu": null,
+    "availablestorage": null,
+    "cachedse": null,
+    "capability": "mcore",
+    "catchall": "predefineseed=es,jobseed=es",
+    "ceinfo": null,
+    "cloud": "US",
+    "cloudrshare": 20,
+    "cloudrshares": {
+      "analysis": {
+        "capabilities": {
+          "score": 100
+        },
+        "value": 20
+      },
+      "production": {
+        "capabilities": {
+          "himem": 10,
+          "mcore": 20,
+          "score": 70
+        },
+        "value": 80
+      }
+    },
+    "cmd": "",
+    "cmtconfig": "",
+    "comment": "caused_merge_failures",
+    "comment_": "caused_merge_failures",
+    "container_options": "",
+    "container_type": "singularity:pilot",
+    "copyprefix": "OLDMOVERDEPRECATED",
+    "copyprefixin": "OLDMOVERDEPRECATED",
+    "copyprefixin_fax_direct": "OLDMOVERDEPRECATED",
+    "copyprefixin_fax_xrdcp": "OLDMOVERDEPRECATED",
+    "copysetup": "OLDMOVERDEPRECATED",
+    "copysetup_fax_direct": "OLDMOVERDEPRECATED",
+    "copysetup_fax_xrdcp": "OLDMOVERDEPRECATED",
+    "copysetupin": "OLDMOVERDEPRECATED",
+    "copysetupin_fax_direct": "OLDMOVERDEPRECATED",
+    "copysetupin_fax_xrdcp": "OLDMOVERDEPRECATED",
+    "copytool": "",
+    "copytoolin": "OLDMOVERDEPRECATED",
+    "copytools": {
+      "lsm": {
+        "setup": ""
+      }
+    },
+    "corecount": 4,
+    "corepower": 12.49,
+    "corepower_data": {
+      "corepower": 0.0,
+      "corepower_on": false,
+      "parent_corepower": 0.0,
+      "parent_corepower_on": false,
+      "parent_rc_site_corepower": 12.49,
+      "parent_site_corepower": 0.0,
+      "parent_site_corepower_on": false
+    },
+    "country": "USA",
+    "countrygroup": "",
+    "datadir": "",
+    "ddm": "SLACXRD_DATADISK",
+    "ddmendpoints": [],
+    "defaulttoken": null,
+    "deprecate_oldmover": true,
+    "depthboost": null,
+    "description": "Event service queue at SLAC",
+    "direct_access_lan": false,
+    "direct_access_wan": true,
+    "dn": null,
+    "dq2url": "",
+    "email": "",
+    "environ": "TMP=/scratch DATA=/nfs/slac/g/grid/osg/data",
+    "envsetup": "",
+    "envsetupin": "",
+    "errinfo": null,
+    "fairsharepolicy": "",
+    "faxredirector": "atlas-xrd-west.usatlas.org:1094",
+    "gatekeeper": "",
+    "glexec": "",
+    "globusadd": "",
+    "gocname": "WT2",
+    "gstat": "WT2",
+    "harvester": "CERN_central_A",
+    "harvester_template": "",
+    "hc_param": "AutoExclusion",
+    "hc_suite": [
+      "PFT_MCORE"
+    ],
+    "idlepilotsupression": null,
+    "ignore_swreleases": true,
+    "is_analysis": true,
+    "is_atlas": true,
+    "is_cvmfs": true,
+    "is_default": false,
+    "is_direct": true,
+    "is_pledged": true,
+    "is_production": true,
+    "is_virtual": false,
+    "jdl": "",
+    "jdladd": "",
+    "jdltxt": null,
+    "jobmanager": "",
+    "jobseed": "es",
+    "last_modified": "2019-07-09T09:11:15.677976",
+    "lastmod": "2019-07-09T09:11:15.677976",
+    "lfchost": "ust2lfc.usatlas.bnl.gov",
+    "lfcpath": "",
+    "lfcprodpath": "/grid/atlas/dq2",
+    "lfcregister": "server",
+    "localqueue": "",
+    "maxdiskio": null,
+    "maxdiskio_data": {
+      "maxdiskio": null,
+      "maxdiskio_on": false,
+      "parent_maxdiskio": null,
+      "parent_maxdiskio_on": false,
+      "parent_rc_site_maxdiskio": null,
+      "parent_site_maxdiskio": null,
+      "parent_site_maxdiskio_on": false
+    },
+    "maxinputsize": 30000,
+    "maxmemory": 6000,
+    "maxrss": 10000,
+    "maxswap": 0,
+    "maxtime": 28800,
+    "maxwdir": 40000,
+    "memory": 6000,
+    "minmemory": 0,
+    "minrss": 0,
+    "mintime": 0,
+    "multicloud": "WORLD",
+    "name": "default",
+    "nickname": "SLAC_ES-lsf",
+    "nodes": 2,
+    "nqueue": 0,
+    "objectstore": "",
+    "objectstores": [],
+    "objectstores_old": [
+      {
+        "ddmendpoint": "",
+        "os_access_key": "",
+        "os_bucket_endpoint": "/atlas_logs",
+        "os_bucket_id": 1,
+        "os_bucket_name": "http",
+        "os_endpoint": "http://cephgw.usatlas.bnl.gov:8443/",
+        "os_flavour": "AWS-HTTP",
+        "os_id": 17114,
+        "os_is_secure": false,
+        "os_name": "BNL_OS_0",
+        "os_secret_key": "",
+        "os_state": "ACTIVE"
+      },
+      {
+        "ddmendpoint": "",
+        "os_access_key": "BNL_ObjectStoreKey.pub",
+        "os_bucket_endpoint": "/atlas_eventservice",
+        "os_bucket_id": 2,
+        "os_bucket_name": "eventservice",
+        "os_endpoint": "s3://cephgw.usatlas.bnl.gov:8443/",
+        "os_flavour": "AWS-S3",
+        "os_id": 17113,
+        "os_is_secure": false,
+        "os_name": "BNL_OS_0",
+        "os_secret_key": "BNL_ObjectStoreKey",
+        "os_state": "ACTIVE"
+      },
+      {
+        "ddmendpoint": "BNL-ATLAS_LOGS_old",
+        "os_access_key": "BNL_ObjectStoreKey.pub",
+        "os_bucket_endpoint": "/atlas_logs",
+        "os_bucket_id": 3,
+        "os_bucket_name": "logs",
+        "os_endpoint": "s3://cephgw.usatlas.bnl.gov:8443/",
+        "os_flavour": "AWS-S3",
+        "os_id": 17113,
+        "os_is_secure": false,
+        "os_name": "BNL_OS_0",
+        "os_secret_key": "BNL_ObjectStoreKey",
+        "os_state": "ACTIVE"
+      }
+    ],
+    "panda_resource": "SLAC_ES",
+    "panda_site": "SLAC",
+    "params": {},
+    "parent": "SLAC_VIRTUAL",
+    "pcache": null,
+    "pilot_manager": "Harvester",
+    "pilot_version": "2",
+    "pilotlimit": null,
+    "pledgedcpu": -1,
+    "pledgedstorage": null,
+    "priorityoffset": null,
+    "probe": "manual",
+    "proxy": "",
+    "ptest": false,
+    "python_path": "",
+    "queue": "",
+    "queuehours": 0,
+    "queues": [
+      {
+        "ce_endpoint": "osgserv06.slac.stanford.edu:9619",
+        "ce_flavour": "HTCONDOR-CE",
+        "ce_id": 2733,
+        "ce_jobmanager": "lsf",
+        "ce_name": "WT2-CE-osgserv06.slac.stanford.edu",
+        "ce_queue_id": 15084,
+        "ce_queue_maxcputime": 480,
+        "ce_queue_maxwctime": 480,
+        "ce_queue_name": "prod.es",
+        "ce_queue_status": "Production",
+        "ce_state": "ACTIVE",
+        "ce_status": "production",
+        "ce_version": ""
+      }
+    ],
+    "rc": "US-Tier3s",
+    "rc_country": "USA",
+    "rc_site": "WT2",
+    "rc_site_state": "ACTIVE",
+    "recoverdir": "",
+    "region": "US",
+    "releases": [
+      "ANY"
+    ],
+    "resource_type": "GRID",
+    "retry": false,
+    "se": "OLDMOVERDEPRECATED",
+    "sein": "OLDMOVERDEPRECATED",
+    "seinopt": "OLDMOVERDEPRECATED",
+    "seopt": "OLDMOVERDEPRECATED",
+    "sepath": "OLDMOVERDEPRECATED",
+    "seprodpath": "OLDMOVERDEPRECATED",
+    "setokens": "OLDMOVERDEPRECATED",
+    "site": "SLAC",
+    "site_state": "ACTIVE",
+    "siteid": "SLAC_ES",
+    "sitershare": null,
+    "sitershares": null,
+    "space": 0,
+    "special_par": "",
+    "stageinretry": 2,
+    "stageoutretry": 2,
+    "state": "ACTIVE",
+    "state_comment": "Object was created using WebUI",
+    "state_update": "2015-11-05T20:10:16.075915",
+    "status": "offline",
+    "system": "osg",
+    "tags": "",
+    "tier": "T3D",
+    "tier_level": 3,
+    "timefloor": 20,
+    "tmpdir": "/scratch",
+    "transferringlimit": null,
+    "tspace": "2070-01-01T00:00:00",
+    "type": "production",
+    "uconfig": {},
+    "use_newmover": true,
+    "use_pcache": false,
+    "validatedreleases": "True",
+    "version": null,
+    "vo_name": "atlas",
+    "wansinklimit": 0,
+    "wansourcelimit": 3,
+    "wnconnectivity": "full",
+    "wntmpdir": "/scratch",
+    "workflow": "pull",
+    "zip_time_gap": 600
+  }
+}
