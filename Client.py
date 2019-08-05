@@ -65,7 +65,7 @@ def _getURL(type,srvID=None):
     else:
         urls = serverURLs['default']
     return urls[type]
-    
+
 
 # get Panda srvIDs
 def getPandas():
@@ -130,7 +130,7 @@ class _Curl:
         if self.sslKey != '':
             com += ' --key %s' % self.sslKey
         # timeout
-        com += ' -m 600' 
+        com += ' -m 600'
         # data
         strData = ''
         for key in data.keys():
@@ -178,7 +178,7 @@ class _Curl:
         if self.sslKey != '':
             com += ' --key %s' % self.sslKey
         # timeout
-        com += ' -m 600' 
+        com += ' -m 600'
         # data
         strData = ''
         for key in data.keys():
@@ -225,7 +225,7 @@ class _Curl:
             com += ' --cacert %s' % self.sslCert
         if self.sslKey != '':
             com += ' --key %s' % self.sslKey
-        # emulate PUT 
+        # emulate PUT
         for key in data.keys():
             com += ' -F "%s=@%s"' % (key,data[key])
         com += ' %s' % url
@@ -238,7 +238,7 @@ class _Curl:
         if self.verbose:
             print ret
         return ret
-            
+
 
 '''
 Client API
@@ -252,13 +252,13 @@ def useWebCache():
 
        args:
        returns:
-    """     
+    """
     global baseURL
     baseURL = re.sub('25080','25085',baseURL)
     global serverURLs
     for tmpKey,tmpVal in serverURLs.iteritems():
         tmpVal['URL'] = baseURL
-    
+
 
 # submit jobs
 def submitJobs(jobs,srvID=None,toPending=False):
@@ -271,12 +271,12 @@ def submitJobs(jobs,srvID=None,toPending=False):
                       two-staged submission mechanism
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  True: request is processed
                  False: not processed
-    """     
+    """
     # set hostname
     hostname = commands.getoutput('hostname')
     for job in jobs:
@@ -313,12 +313,12 @@ def runTaskAssignment(jobs):
            ids: list of typical JobSpecs for tasks to be assigned
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  True: request is processed
                  False: not processed
-    """     
+    """
     # set hostname
     hostname = commands.getoutput('hostname')
     for job in jobs:
@@ -353,10 +353,10 @@ def getJobStatus(ids,srvID=None):
            ids: the list of PandaIDs
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            the list of JobSpecs (or Nones for non-existing PandaIDs)
-    """     
+    """
     # serialize
     strIDs = pickle.dumps(ids)
     # instantiate curl
@@ -382,10 +382,10 @@ def getPandaIDwithJobExeID(ids):
            ids: list of jobExecutionIDs
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            the list of PandaIDs (or Nones for non-existing IDs)
-    """     
+    """
     # serialize
     strIDs = pickle.dumps(ids)
     # instantiate curl
@@ -411,10 +411,10 @@ def getAssigningTask():
        args:
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            the list of taskIDs
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     # execute
@@ -438,13 +438,13 @@ def seeCloudTask(ids):
            ids: the list of taskIDs
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
-           the list of clouds (or Nones if tasks are not yet assigned) 
+           the list of clouds (or Nones if tasks are not yet assigned)
         raises:
-           EC_Failed: if communication failure to the panda server  
+           EC_Failed: if communication failure to the panda server
 
-    """     
+    """
     # serialize
     strIDs = pickle.dumps(ids)
     # instantiate curl
@@ -486,10 +486,10 @@ def killJobs(ids,code=None,verbose=False,srvID=None,useMailAsID=False,keepUnmerg
            keepUnmerged: set True not to cancel unmerged jobs when pmerge is killed.
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
-           the list of clouds (or Nones if tasks are not yet assigned) 
-    """     
+           the list of clouds (or Nones if tasks are not yet assigned)
+    """
     # serialize
     strIDs = pickle.dumps(ids)
     # instantiate curl
@@ -516,21 +516,21 @@ def killJobs(ids,code=None,verbose=False,srvID=None,useMailAsID=False,keepUnmerg
 
 # reassign jobs
 def reassignJobs(ids,forPending=False,firstSubmission=None):
-    """Triggers reassignment of jobs. This is not effective if jobs were preassigned to sites before being submitted. 
+    """Triggers reassignment of jobs. This is not effective if jobs were preassigned to sites before being submitted.
 
        args:
            ids: the list of taskIDs
            forPending: set True if pending jobs are reassigned
-           firstSubmission: set True if first jobs are submitted for a task, or False if not 
+           firstSubmission: set True if first jobs are submitted for a task, or False if not
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  True: request is processed
                  False: not processed
 
-    """     
+    """
     # serialize
     strIDs = pickle.dumps(ids)
     # instantiate curl
@@ -591,7 +591,7 @@ def queryJobInfoPerCloud(cloud,schedulerID=None):
         print errStr
         return EC_Failed,output+'\n'+errStr
 
-    
+
 # get job statistics
 def getJobStatistics(sourcetype=None):
     """Get job statistics
@@ -603,11 +603,11 @@ def getJobStatistics(sourcetype=None):
                production: production jobs
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
-           map of the number jobs per job status in each site 
+           map of the number jobs per job status in each site
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     # execute
@@ -616,7 +616,7 @@ def getJobStatistics(sourcetype=None):
         url = _getURL('URL',srvID) + '/getJobStatistics'
         data = {}
         if sourcetype != None:
-            data['sourcetype'] = sourcetype            
+            data['sourcetype'] = sourcetype
         status,output = curl.get(url,data)
         try:
             tmpRet = status,pickle.loads(output)
@@ -637,9 +637,9 @@ def getJobStatistics(sourcetype=None):
                 # sum statistics
                 for tmpStatus,tmpCount in tmpVal.iteritems():
                     if ret[tmpCloud].has_key(tmpStatus):
-                        ret[tmpCloud][tmpStatus] += tmpCount 
+                        ret[tmpCloud][tmpStatus] += tmpCount
                     else:
-                        ret[tmpCloud][tmpStatus] = tmpCount    
+                        ret[tmpCloud][tmpStatus] = tmpCount
     return 0,ret
 
 
@@ -651,9 +651,9 @@ def getJobStatisticsForBamboo(useMorePG=False):
            useMorePG: set True if fine-grained classification is required
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
-           map of the number jobs per job status in each site 
+           map of the number jobs per job status in each site
 
     """
     # instantiate curl
@@ -689,9 +689,9 @@ def getJobStatisticsForBamboo(useMorePG=False):
                     else:
                         for tmpStatus,tmpCount in tmpVal.iteritems():
                             if ret[tmpCloud][tmpPType].has_key(tmpStatus):
-                                ret[tmpCloud][tmpPType][tmpStatus] += tmpCount 
+                                ret[tmpCloud][tmpPType][tmpStatus] += tmpCount
                             else:
-                                ret[tmpCloud][tmpPType][tmpStatus] = tmpCount    
+                                ret[tmpCloud][tmpPType][tmpStatus] = tmpCount
     return 0,ret
 
 
@@ -704,7 +704,7 @@ def getHighestPrioJobStat(perPG=False,useMorePG=False):
            useMorePG: set True if fine-grained classification is required
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            map of the number jobs and priorities in each combination of cloud and processingType (or processingGroup)
 
@@ -726,19 +726,19 @@ def getHighestPrioJobStat(perPG=False,useMorePG=False):
         errStr = "ERROR getHighestPrioJobStat : %s %s" % (type,value)
         print errStr
         return EC_Failed,output+'\n'+errStr
- 
+
 
 # get jobs updated recently
 def getJobsToBeUpdated(limit=5000,lockedby='',srvID=None):
     """Get the list of jobs which have been recently updated.
 
        args:
-           limit: the maximum number of jobs 
+           limit: the maximum number of jobs
            lockedby: name of the machinery which submitted jobs
            srvID: obsolete
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            the lit of PandaIDs
 
@@ -760,15 +760,15 @@ def getJobsToBeUpdated(limit=5000,lockedby='',srvID=None):
 
 # update prodDBUpdateTimes
 def updateProdDBUpdateTimes(params,verbose=False,srvID=None):
-    """Update timestamp of jobs when update info is propagated to another database 
+    """Update timestamp of jobs when update info is propagated to another database
 
        args:
-           params: map of PandaID and jobStatus and timestamp 
+           params: map of PandaID and jobStatus and timestamp
            verbose: set True to see what's going on
            srvID: obsolete
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  True: request is processed
@@ -797,15 +797,15 @@ def updateProdDBUpdateTimes(params,verbose=False,srvID=None):
 
 # get PandaID at site
 def getPandaIDsSite(site,status,limit=500):
-    """Get the list of jobs in a job status at at a site 
+    """Get the list of jobs in a job status at at a site
 
        args:
-           site: site name 
+           site: site name
            status: job status
            limit: maximum number of jobs
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            the list of PandaIDs
 
@@ -824,7 +824,7 @@ def getPandaIDsSite(site,status,limit=500):
         print errStr
         return EC_Failed,output+'\n'+errStr
 
-    
+
 # get job statistics per site
 def getJobStatisticsPerSite(predefined=False,workingGroup='',countryGroup='',jobType='',minPriority=None,
                             readArchived=None):
@@ -842,11 +842,11 @@ def getJobStatisticsPerSite(predefined=False,workingGroup='',countryGroup='',job
            readArchived: get jobs with finished/failed/cancelled state in addition
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
-           map of the number jobs per job status in each site 
+           map of the number jobs per job status in each site
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     # execute
@@ -862,8 +862,8 @@ def getJobStatisticsPerSite(predefined=False,workingGroup='',countryGroup='',job
             data['jobType'] = jobType
         if not minPriority in ['',None]:
             data['minPriority'] = minPriority
-        if not readArchived in ['',None]:    
-            data['readArchived'] = readArchived    
+        if not readArchived in ['',None]:
+            data['readArchived'] = readArchived
         status,output = curl.get(url,data)
         try:
             tmpRet = status,pickle.loads(output)
@@ -884,9 +884,9 @@ def getJobStatisticsPerSite(predefined=False,workingGroup='',countryGroup='',job
                 # sum statistics
                 for tmpStatus,tmpCount in tmpVal.iteritems():
                     if ret[tmpSite].has_key(tmpStatus):
-                        ret[tmpSite][tmpStatus] += tmpCount 
+                        ret[tmpSite][tmpStatus] += tmpCount
                     else:
-                        ret[tmpSite][tmpStatus] = tmpCount    
+                        ret[tmpSite][tmpStatus] = tmpCount
     return 0,ret
 
 
@@ -898,11 +898,11 @@ def getJobStatisticsWithLabel(site=''):
            site: commna-separated list of sites. An empty string for all sites.
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
-           map of the number jobs per job status and prodSourceLabel in each site 
+           map of the number jobs per job status and prodSourceLabel in each site
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     # execute
@@ -947,11 +947,11 @@ def getJobStatisticsPerSiteResource():
        args:
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            map of the number jobs per job status in each site and resource
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     # execute
@@ -967,7 +967,7 @@ def getJobStatisticsPerSiteResource():
         print errStr
         return EC_Failed,output+'\n'+errStr
 
-                
+
 
 # query last files in datasets
 def queryLastFilesInDataset(datasets):
@@ -977,11 +977,11 @@ def queryLastFilesInDataset(datasets):
            datasets: the list of dataset names
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            map of the dataset name and the file name
 
-    """     
+    """
     # serialize
     strDSs = pickle.dumps(datasets)
     # instantiate curl
@@ -996,7 +996,7 @@ def queryLastFilesInDataset(datasets):
         type, value, traceBack = sys.exc_info()
         print "ERROR queryLastFilesInDataset : %s %s" % (type,value)
         return EC_Failed,None
-                                                                
+
 
 # insert sandbox file info
 def insertSandboxFileInfo(userName,fileName,fileSize,checkSum,verbose=False):
@@ -1010,10 +1010,10 @@ def insertSandboxFileInfo(userName,fileName,fileSize,checkSum,verbose=False):
            verbose: set True to see what's going on
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  else: communication failure
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1033,10 +1033,10 @@ def putFile(file):
            file: the file name
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  else: communication failure
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1082,11 +1082,11 @@ def getSiteSpecs(siteType=None):
                production: production sites
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            map of site and attributes
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     # execute
@@ -1111,11 +1111,11 @@ def getCloudSpecs():
        args:
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            map of cloud and attributes
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     # execute
@@ -1155,11 +1155,11 @@ def getNUserJobs(siteName):
            siteName: the site name
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  else: communication failure
-           a dictionary of DN, myproxy pass phrase, queued job count, hostname of myproxy server 
+           a dictionary of DN, myproxy pass phrase, queued job count, hostname of myproxy server
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1187,11 +1187,11 @@ def runBrokerage(sites,atlasRelease,cmtConfig=None):
            cmtConfig: cmt config
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  else: communication failure
            the name of the selected site
 
-    """     
+    """
     # serialize
     strSites = pickle.dumps(sites)
     # instantiate curl
@@ -1213,17 +1213,17 @@ def getRW(priority=0):
            priority: workload with higher priorities than this value
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            map of cloud and the amount of workload
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     # execute
     url = baseURLBAMBOO + '/getRW'
     # get RWs for high priority tasks
-    data = {'priority':priority}        
+    data = {'priority':priority}
     status,output = curl.get(url,data)
     try:
         return status,pickle.loads(output)
@@ -1256,18 +1256,18 @@ def changeJobPriorities(newPrioMap):
 
 # insert task params
 def insertTaskParams(taskParams):
-    """Insert task parameters 
+    """Insert task parameters
 
        args:
            taskParams: a dictionary of task parameters
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and JediTaskID
                  True: request is processed
                  False: not processed
-    """     
+    """
     # serialize
     taskParamsStr = json.dumps(taskParams)
     # instantiate curl
@@ -1292,10 +1292,10 @@ def killTask(jediTaskID):
     """Kill a task
 
        args:
-           jediTaskID: jediTaskID of the task to be killed 
+           jediTaskID: jediTaskID of the task to be killed
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1304,8 +1304,8 @@ def killTask(jediTaskID):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1330,13 +1330,13 @@ def finishTask(jediTaskID,soft=False):
 
        args:
            jediTaskID: jediTaskID of the task to be finished
-           soft: If True, new jobs are not generated and the task is 
+           soft: If True, new jobs are not generated and the task is
                  finihsed once all remaining jobs are done.
                  If False, all remaining jobs are killed and then the
                  task is finished
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1345,8 +1345,8 @@ def finishTask(jediTaskID,soft=False):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1373,11 +1373,11 @@ def reassignTaskToSite(jediTaskID,site,mode=None):
 
        args:
            jediTaskID: jediTaskID of the task to be reassigned
-           site: the site name where the task is reassigned 
+           site: the site name where the task is reassigned
            mode: If soft, only defined/waiting/assigned/activated jobs are killed. If nokill, no jobs are killed. All jobs are killed by default.
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1386,7 +1386,7 @@ def reassignTaskToSite(jediTaskID,site,mode=None):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
+               101: irrelevant taskID
     """
     maxSite = 60
     if site != None and len(site) > maxSite:
@@ -1420,7 +1420,7 @@ def reassignTaskToCloud(jediTaskID,cloud,mode=None):
            mode: If soft, only defined/waiting/assigned/activated jobs are killed. If nokill, no jobs are killed. All jobs are killed by default.
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1429,8 +1429,8 @@ def reassignTaskToCloud(jediTaskID,cloud,mode=None):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1447,9 +1447,9 @@ def reassignTaskToCloud(jediTaskID,cloud,mode=None):
         errtype,errvalue = sys.exc_info()[:2]
         errStr = "ERROR reassignTaskToCloud : %s %s" % (errtype,errvalue)
         return EC_Failed,output+'\n'+errStr
-                                    
 
-            
+
+
 # reassign task to a nucleus
 def reassignTaskToNucleus(jediTaskID,nucleus,mode=None):
     """Reassign a task to a nucleus. Existing jobs are killed and new jobs are generated in the cloud
@@ -1460,7 +1460,7 @@ def reassignTaskToNucleus(jediTaskID,nucleus,mode=None):
            mode: If soft, only defined/waiting/assigned/activated jobs are killed. If nokill, no jobs are killed. All jobs are killed by default.
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1469,8 +1469,8 @@ def reassignTaskToNucleus(jediTaskID,nucleus,mode=None):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1487,9 +1487,9 @@ def reassignTaskToNucleus(jediTaskID,nucleus,mode=None):
         errtype,errvalue = sys.exc_info()[:2]
         errStr = "ERROR reassignTaskToCloud : %s %s" % (errtype,errvalue)
         return EC_Failed,output+'\n'+errStr
-                                    
 
-            
+
+
 # upload log
 def uploadLog(logStr,logFileName):
     """Upload sandbox
@@ -1499,10 +1499,10 @@ def uploadLog(logStr,logFileName):
            logFileName: name of log file
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  else: communication failure
 
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1530,13 +1530,13 @@ def changeTaskPriority(jediTaskID,newPriority):
            newPriority: new task priority
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  0: unknown task
                  1: succeeded
-                 None: database error 
-    """     
+                 None: database error
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1557,17 +1557,17 @@ def changeTaskPriority(jediTaskID,newPriority):
 
 # set debug mode
 def setDebugMode(pandaID,modeOn):
-    """Turn debug mode on/off for a job 
+    """Turn debug mode on/off for a job
 
        args:
            pandaID: PandaID of the job
            modeOn: True to turn it on. Oppositely, False
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  another: communication failure
            error message
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1590,7 +1590,7 @@ def retryTask(jediTaskID,verbose=False,noChildRetry=False,discardEvents=False):
            discardEvents: discard events
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1599,13 +1599,13 @@ def retryTask(jediTaskID,verbose=False,noChildRetry=False,discardEvents=False):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
     curl.sslKey  = _x509()
-    curl.verbose = verbose    
+    curl.verbose = verbose
     # execute
     url = baseURLSSL + '/retryTask'
     data = {'jediTaskID':jediTaskID}
@@ -1632,7 +1632,7 @@ def reloadInput(jediTaskID,verbose=False):
            jediTaskID: jediTaskID of the task to retry
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1641,13 +1641,13 @@ def reloadInput(jediTaskID,verbose=False):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
     curl.sslKey  = _x509()
-    curl.verbose = verbose    
+    curl.verbose = verbose
     # execute
     url = baseURLSSL + '/reloadInput'
     data = {'jediTaskID':jediTaskID}
@@ -1670,13 +1670,13 @@ def changeTaskWalltime(jediTaskID,wallTime):
            wallTime: new walltime for the task
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  0: unknown task
                  1: succeeded
-                 None: database error 
-    """     
+                 None: database error
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1705,13 +1705,13 @@ def changeTaskCputime(jediTaskID,cpuTime):
            cpuTime: new cputime for the task
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  0: unknown task
                  1: succeeded
-                 None: database error 
-    """     
+                 None: database error
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1740,13 +1740,13 @@ def changeTaskRamCount(jediTaskID,ramCount):
            ramCount: new ramCount for the task
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  0: unknown task
                  1: succeeded
-                 None: database error 
-    """     
+                 None: database error
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1776,14 +1776,14 @@ def changeTaskAttribute(jediTaskID,attrName,attrValue):
            attrValue: new value for the attribute
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return: a tupple of return code and message
                  0: unknown task
                  1: succeeded
                  2: disallowed to update the attribute
-                 None: database error 
-    """     
+                 None: database error
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1813,14 +1813,14 @@ def changeTaskSplitRule(jediTaskID,ruleName,ruleValue):
            ruleValue: new value for the rule
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return: a tupple of return code and message
                  0: unknown task
                  1: succeeded
                  2: disallowed to update the attribute
-                 None: database error 
-    """     
+                 None: database error
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1848,7 +1848,7 @@ def pauseTask(jediTaskID,verbose=False):
            jediTaskID: jediTaskID of the task to pause
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1857,13 +1857,13 @@ def pauseTask(jediTaskID,verbose=False):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
     curl.sslKey  = _x509()
-    curl.verbose = verbose    
+    curl.verbose = verbose
     # execute
     url = baseURLSSL + '/pauseTask'
     data = {'jediTaskID':jediTaskID}
@@ -1885,7 +1885,7 @@ def resumeTask(jediTaskID,verbose=False):
            jediTaskID: jediTaskID of the task to release
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1894,13 +1894,13 @@ def resumeTask(jediTaskID,verbose=False):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
     curl.sslKey  = _x509()
-    curl.verbose = verbose    
+    curl.verbose = verbose
     # execute
     url = baseURLSSL + '/resumeTask'
     data = {'jediTaskID':jediTaskID}
@@ -1922,7 +1922,7 @@ def avalancheTask(jediTaskID,verbose=False):
            jediTaskID: jediTaskID of the task to avalanche
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: request is registered
@@ -1931,13 +1931,13 @@ def avalancheTask(jediTaskID,verbose=False):
                  3: permission denied
                  4: irrelevant task status
                100: non SSL connection
-               101: irrelevant taskID 
-    """     
+               101: irrelevant taskID
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
     curl.sslKey  = _x509()
-    curl.verbose = verbose    
+    curl.verbose = verbose
     # execute
     url = baseURLSSL + '/avalancheTask'
     data = {'jediTaskID':jediTaskID}
@@ -1960,7 +1960,7 @@ def increaseAttemptNr(jediTaskID,increase):
            increase: increase for attempt numbers
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return code
                  0: succeeded
@@ -1968,8 +1968,8 @@ def increaseAttemptNr(jediTaskID,increase):
                  2: invalid task status
                  3: permission denied
                  4: wrong parameter
-                 None: database error 
-    """     
+                 None: database error
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -1993,7 +1993,7 @@ def killUnfinishedJobs(jediTaskID,code=None,verbose=False,srvID=None,useMailAsID
     """Kill unfinished jobs in a task. Normal users can kill only their own jobs.
     People with production VOMS role can kill any jobs.
     Running jobs are killed when next heartbeat comes from the pilot.
-    Set code=9 if running jobs need to be killed immediately. 
+    Set code=9 if running jobs need to be killed immediately.
 
        args:
            jediTaskID: the taskID of the task
@@ -2011,10 +2011,10 @@ def killUnfinishedJobs(jediTaskID,code=None,verbose=False,srvID=None,useMailAsID
            useMailAsID: obsolete
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
-           the list of clouds (or Nones if tasks are not yet assigned) 
-    """     
+           the list of clouds (or Nones if tasks are not yet assigned)
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -2042,13 +2042,13 @@ def triggerTaskBrokerage(jediTaskID):
            jediTaskID: jediTaskID of the task to change the attribute
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            return: a tupple of return code and message
                  0: unknown task
                  1: succeeded
-                 None: database error 
-    """     
+                 None: database error
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -2262,11 +2262,11 @@ def setNumSlotsForWP(pandaQueueName, numSlots, gshare=None, resourceType=None, v
            pandaQueueName: Panda Queue name
            numSlots: the number of slots. 0 to dynamically set based on the number of starting jobs
            gshare: global share. None to set for any global share (default)
-           resourceType: resource type. None to set for any resource type (default) 
+           resourceType: resource type. None to set for any resource type (default)
            validPeriod: How long the rule is valid in days. None if no expiration (default)
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: succeeded
@@ -2274,7 +2274,7 @@ def setNumSlotsForWP(pandaQueueName, numSlots, gshare=None, resourceType=None, v
                100: non SSL connection
                101: missing production role
                102: type error for some parameters
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
@@ -2309,7 +2309,7 @@ def enableJumboJobs(jediTaskID, totalJumboJobs=1, nJumboPerSite=1):
            nJumboPerSite: The number of active jumbo jobs per site
        returns:
            status code
-                 0: communication succeeded to the panda server 
+                 0: communication succeeded to the panda server
                  255: communication failure
            tuple of return code and diagnostic message
                  0: succeeded
@@ -2317,7 +2317,7 @@ def enableJumboJobs(jediTaskID, totalJumboJobs=1, nJumboPerSite=1):
                100: non SSL connection
                101: missing production role
                102: type error for some parameters
-    """     
+    """
     # instantiate curl
     curl = _Curl()
     curl.sslCert = _x509()
