@@ -731,5 +731,6 @@
     "wntmpdir": "/scratch",
     "workflow": "pull",
     "zip_time_gap": 600
-  }
+  },
+  "hans": {}
 }
