@@ -10,11 +10,11 @@ class JSONTest(unittest.TestCase):
 
     # this should work, thanks: https://stackoverflow.com/a/25851972
     @classmethod
-    def ordered(obj):
+    def ordered(self,obj):
         if isinstance(obj, dict):
-            return sorted((k, ordered(v)) for k, v in obj.items())
+            return sorted((k, self.ordered(v)) for k, v in obj.items())
         if isinstance(obj, list):
-            return sorted(ordered(x) for x in obj)
+            return sorted(self.ordered(x) for x in obj)
         else:
             return obj
 
@@ -22,4 +22,4 @@ class JSONTest(unittest.TestCase):
         """
         Asserts if a and b are the same
         """
-        return self.assertEqual(ordered(a),ordered(b))
+        return self.assertEqual(self.ordered(a),self.ordered(b))
