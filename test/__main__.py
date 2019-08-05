@@ -3,15 +3,15 @@ import unittest
 import argparse
 
 import logging
-from commonHelpers.logger import logger
+from ..commonHelpers.logger import logger
 
-logger = logger.getChild("mephisto")
+logger = logger.getChild(__name__)
 
 testmodules = [
-    'commonHelpers',
-    'maps',
+    # 'commonHelpers',
+    # 'maps',
     'scrapers',
-    'writers',
+    # 'writers',
     ]
 
 parser = argparse.ArgumentParser(description='Run some tests')
@@ -39,7 +39,7 @@ suite = unittest.TestSuite()
 
 # based on code snippet from http://stackoverflow.com/questions/1732438/how-do-i-run-all-python-unit-tests-in-a-directory#15630454
 for postfix in tests:
-    t = "MPF.test."+postfix
+    t = "test."+postfix
     if "." in postfix:
         # i don't have a better solution yet, so hack for now
         importTest = ".".join(t.split(".")[:-2])
