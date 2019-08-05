@@ -6,7 +6,7 @@ source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
 lsetup python
 
 #execute script
-cd /afs/cern.ch/user/e/eschanet/qualitask/
+cd /afs/cern.ch/user/e/eschanet/queue_monit/
 
 #get updated DAOD datadisk info
 python downloadDatadiskInfo.py
