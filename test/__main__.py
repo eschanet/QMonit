@@ -44,7 +44,7 @@ suite = unittest.TestSuite()
 
 # based on code snippet from http://stackoverflow.com/questions/1732438/how-do-i-run-all-python-unit-tests-in-a-directory#15630454
 for postfix in tests:
-    t = "test."+postfix
+    t = "test.test_"+postfix
     if "." in postfix:
         # i don't have a better solution yet, so hack for now
         importTest = ".".join(t.split(".")[:-2])

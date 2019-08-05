@@ -15,7 +15,7 @@ class PQ_names_map(Map):
         :param ifile: the name of the inputfile
         :param ofile: the name of the outpufile for the map
         :param key: keyword in the ifile that should be used to create the actual map'''
-        with open(os.path.join('data',ifile)) as f:
+        with open(ifile) as f:
             map = {}
             data = json.load(f)
             for kw,val in data.iteritems():
