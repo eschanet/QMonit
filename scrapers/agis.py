@@ -17,6 +17,7 @@ class AGIS(Scraper):
         json_data={}
 
         for key,d in data.items():
-            json_data[d.get(sort_field,"")] = d
+            if sort_field in d:
+                json_data[d[sort_field]] = d
 
         return json_data
