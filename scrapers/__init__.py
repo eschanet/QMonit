@@ -43,6 +43,10 @@ class Scraper(object):
         data = json.load(response)
         return data
 
+    def validate(self, json_data):
+        """Validate the integrity of the data"""
+        return True
+
     @abc.abstractmethod
     def convert(self, data, *args, **kwargs):
         """Converts downloaded data to desired output format.
