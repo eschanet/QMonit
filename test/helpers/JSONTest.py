@@ -3,7 +3,7 @@ import itertools
 import os
 import shutil
 
-from ...commonHelpers.logger import logger
+from commonHelpers.logger import logger
 logger = logger.getChild(__name__)
 
 class JSONTest(unittest.TestCase):

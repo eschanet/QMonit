@@ -4,11 +4,11 @@ import os
 
 from .helpers.JSONTest import JSONTest
 
-from ..scrapers import scraper_classes as scrapers
+import scrapers
 
-from ..commonHelpers import fileHelpers as fh
+from commonHelpers import fileHelpers as fh
 
-from ..commonHelpers.logger import logger
+from commonHelpers.logger import logger
 logger = logger.getChild(__name__)
 
 class TestAGIS(JSONTest):

@@ -27,7 +27,7 @@ class Scraper(object):
 
     def save(self,file,data):
         try:
-            with open(os.path.join('data',file), 'w') as f:
+            with open(file, 'w') as f:
                 json.dump(data, f)
             return True
         except IOError:

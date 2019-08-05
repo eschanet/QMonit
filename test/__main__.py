@@ -1,9 +1,9 @@
 import unittest
-
+import sys
 import argparse
 
 import logging
-from ..commonHelpers.logger import logger
+from commonHelpers.logger import logger
 
 logger = logger.getChild(__name__)
 
@@ -18,10 +18,15 @@ parser = argparse.ArgumentParser(description='Run some tests')
 parser.add_argument('tests', nargs='*', help='only run given tests')
 parser.add_argument('--log', help='logging level')
 parser.add_argument('--list', help='list test modules', action='store_true')
+parser.add_argument('-q', action='store_true', default=False, help='set test verbosity to 1 (default 2)')
 args = parser.parse_args()
 
 if args.log:
     logger.parent.setLevel(getattr(logging, args.log.upper()))
+if args.q:
+    verbosity = 1
+else:
+    verbosity = 2
 
 if args.tests:
     tests = args.tests
