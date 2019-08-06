@@ -44,7 +44,7 @@ def run():
         # Now the DDM info from AGIS
         raw_data = agis.download(url="http://atlas-agis-api.cern.ch/request/ddmendpoint/query/list/?json&")
         json_data = agis.convert(data=raw_data,sort_field="site")
-        saved = agis.save(file="data/scraped_agis_sites.json",data=json_data)
+        saved = agis.save(file="data/scraped_agis_ddm.json",data=json_data)
 
     else:
         # Nothing to do otherwise
