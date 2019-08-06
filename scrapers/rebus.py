@@ -2,24 +2,47 @@ import os
 import json
 
 from . import Scraper
-from maps import PQ_names_map as pq_map
+
+from commonHelpers.logger import logger
+logger = logger.getChild(__name__)
+
+class RebusDict(dict):
+    def __init__(self, *args, **kwargs):
+        super(RebusDict, self).__init__(*args, **kwargs)
+
+    def update(self,object,append_mode=False):
+        if not append_mode:
+            return dict.update(object)
+        elif append_mode:
+            k,v = object.items()[0]
+            if k in self:
+                super(RebusDict, self).update(object)
+            else:
+                self[k] = [v]
+        else:
+            super(RebusDict, self).update(object)
 
 class REBUS(Scraper):
 
     def __init__(self, *args, **kwargs):
          super(REBUS, self).__init__(*args, **kwargs)
 
-    def convert(self, data, sort_field="panda_queue", should_be_ordered_by="panda_queue", *args, **kwargs):
+    def convert(self, data, append_mode=False,sort_field="panda_queue", should_be_ordered_by="panda_queue", *args, **kwargs):
         """Convert the REBUS data to the desired format of being ordered by Panda queues
 
         :param data: data to be converted in the desired format"""
 
-        # We need a map between PQ names and the names that are used elsewhere. Weirdly enough, there are different variationsself.
-        pqs = pq_map.PQ_names_map()
+        json_data = RebusDict()
 
-        json_data={}
-
-        for key,d in data.items():
-            json_data[d[sort_field]] = d
+        if isinstance(data,dict):
+            for key,d in data.items():
+                if sort_field in d:
+                    json_data.update(object={d[sort_field]:d},append_mode=append_mode)
+        elif isinstance(data,list):
+            for d in data:
+                if sort_field in d:
+                    json_data.update(object={d[sort_field]:d},append_mode=append_mode)
+        else:
+            logger.error("Data is not type dict or list but: {}".format(type(data)))
 
         return json_data

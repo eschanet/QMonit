@@ -2,7 +2,7 @@ import os
 import json
 
 from . import Scraper
-from maps import PQ_names_map as pq_map
+
 from commonHelpers.logger import logger
 logger = logger.getChild(__name__)
 
