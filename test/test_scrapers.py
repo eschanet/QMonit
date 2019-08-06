@@ -5,6 +5,7 @@ import os
 from .helpers.JSONTest import JSONTest
 
 from scrapers.agis import AGIS
+from scrapers.rebus import REBUS
 
 from commonHelpers import fileHelpers as fh
 from commonHelpers.logger import logger
@@ -40,6 +41,19 @@ class TestAGIS(JSONTest):
         output_data = fh.get_json_from_file('test/references/test_output_agis_ddm.json')
         agis = AGIS()
         my_data = agis.convert(data=original_data,sort_field="site")
+        self.assertSame(output_data, my_data)
+
+
+class TestREBUS(JSONTest):
+
+    def test_federation_scraper_conversion(self):
+        """
+        Test that converting scraped REBUS federations works
+        """
+        original_data = fh.get_json_from_file('test/references/test_input_rebus_federation.json')
+        output_data = fh.get_json_from_file('test/references/test_output_rebus_federation.json')
+        rebus = REBUS()
+        my_data = rebus.convert(data=original_data,sort_field="Site")
         self.assertSame(output_data, my_data)
 
 
