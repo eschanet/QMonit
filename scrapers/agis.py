@@ -3,6 +3,8 @@ import json
 
 from . import Scraper
 from maps import PQ_names_map as pq_map
+from commonHelpers.logger import logger
+logger = logger.getChild(__name__)
 
 class AGIS(Scraper):
 
@@ -16,8 +18,15 @@ class AGIS(Scraper):
 
         json_data={}
 
-        for key,d in data.items():
-            if sort_field in d:
-                json_data[d[sort_field]] = d
+        if isinstance(data,dict):
+            for key,d in data.items():
+                if sort_field in d:
+                    json_data[d[sort_field]] = d
+        elif isinstance(data,list):
+            for d in data:
+                if sort_field in d:
+                    json_data[d[sort_field]] = d
+        else:
+            logger.error("Data is not type dict or list but: {}".format(type(data)))
 
         return json_data
