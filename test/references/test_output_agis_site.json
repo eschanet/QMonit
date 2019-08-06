@@ -1,0 +1,507 @@
+{ "AGLT2" :
+  {
+    "allowfax": false,
+    "cloud": "US",
+    "corepower": 10.96,
+    "corepower_on": false,
+    "country": "USA",
+    "datapolicies": [
+      "T0Disk",
+      "Nucleus",
+      "AnalysisData"
+    ],
+    "ddmendpoints": {
+      "AGLT2_CALIBDISK": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "AGLT2_DATADISK": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "AGLT2_HOTDISK": {
+        "se_impl": "xrootd",
+        "state": "DISABLED",
+        "state_comment": "",
+        "state_update": "2013-08-19T22:43:36.883089"
+      },
+      "AGLT2_LOCALGROUPDISK": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "AGLT2_PERF-MUONS": {
+        "se_impl": "xrootd",
+        "state": "DISABLED",
+        "state_comment": "",
+        "state_update": "2017-04-20T09:12:46.864314"
+      },
+      "AGLT2_PHYS-HIGGS": {
+        "se_impl": "xrootd",
+        "state": "DISABLED",
+        "state_comment": "",
+        "state_update": "2017-04-06T15:36:51.657094"
+      },
+      "AGLT2_PHYS-SM": {
+        "se_impl": "xrootd",
+        "state": "DISABLED",
+        "state_comment": "",
+        "state_update": "2017-04-07T14:35:47.239521"
+      },
+      "AGLT2_PRODDISK": {
+        "se_impl": "xrootd",
+        "state": "DISABLED",
+        "state_comment": "",
+        "state_update": "2015-11-09T15:27:31.115797"
+      },
+      "AGLT2_SCRATCHDISK": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "AGLT2_SUPERDISK": {
+        "se_impl": "dcache",
+        "state": "DISABLED",
+        "state_comment": "New endpoint AGLT2_SUPERDISK was created via WebUI by Wei Yang for Gridftp testing",
+        "state_update": "2017-03-24T09:04:55.691914"
+      },
+      "AGLT2_USERDISK": {
+        "se_impl": "xrootd",
+        "state": "DISABLED",
+        "state_comment": "",
+        "state_update": "2017-07-26T13:58:39.379940"
+      },
+      "OSIRIS_ES": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "OSIRIS_LOG": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      }
+    },
+    "email": "ball@umich.edu",
+    "emailContact": "laurens@pa.msu.edu,smckee@umich.edu,wuwj@umich.edu",
+    "fsconf": {
+      "frontier": [
+        [
+          "http://frontier-atlas.lcg.triumf.ca:3128/ATLAS_frontier",
+          {
+            "http://frontier-atlas1.lcg.triumf.ca:3128/ATLAS_frontier": "ACTIVE",
+            "http://frontier-atlas2.lcg.triumf.ca:3128/ATLAS_frontier": "ACTIVE",
+            "http://frontier-atlas3.lcg.triumf.ca:3128/ATLAS_frontier": "ACTIVE"
+          }
+        ],
+        [
+          "http://lcgft-atlas.gridpp.rl.ac.uk:3128/frontierATLAS",
+          {
+            "http://lcgvo-frontier05.gridpp.rl.ac.uk:3128/frontierATLAS": "ACTIVE",
+            "http://lcgvo-frontier06.gridpp.rl.ac.uk:3128/frontierATLAS": "ACTIVE",
+            "http://lcgvo-frontier07.gridpp.rl.ac.uk:3128/frontierATLAS": "ACTIVE"
+          }
+        ]
+      ],
+      "squid": [
+        [
+          "http://squid.aglt2.org:3128",
+          {
+            "http://cache.aglt2.org:3128": "ACTIVE",
+            "http://cache2.aglt2.org:3128": "ACTIVE",
+            "http://cache3.aglt2.org:3128": "ACTIVE"
+          }
+        ]
+      ]
+    },
+    "grid_flavour": "OSG",
+    "has_notification": true,
+    "has_proxyconfig": false,
+    "infoURL": "http://www.aglt2.org/twiki/bin/view/AGLT2/Tier2Policy",
+    "is_atlas": true,
+    "is_direct": true,
+    "is_pledged": true,
+    "last_modified": "2015-06-08T16:22:27.756526",
+    "latitude": 42.276189000000002,
+    "longitude": -83.740994000000001,
+    "maxdiskio": 3000,
+    "maxdiskio_on": false,
+    "name": "AGLT2",
+    "networks": {
+      "ipv4": [
+        "192.41.230.0/23",
+        "192.41.236.0/23",
+        "192.41.238.0/28"
+      ],
+      "ipv6": [
+        "2001:48a8:68f7::/48"
+      ]
+    },
+    "presources": {
+      "GreatLakesT2": {
+        "AGLT2_HOSPITAL": {
+          "capability": "mcore",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": false,
+          "is_virtual": false,
+          "name": "AGLT2_HOSPITAL",
+          "pandaqueues": [
+            {
+              "name": "AGLT2_HOSPITAL",
+              "type": "production"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "production"
+        },
+        "AGLT2_LMEM_SL7-condor": {
+          "capability": "himem",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": false,
+          "is_virtual": false,
+          "name": "AGLT2_LMEM_SL7-condor",
+          "pandaqueues": [
+            {
+              "name": "AGLT2_LMEM_SL7-condor",
+              "type": "production"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "production"
+        },
+        "AGLT2_TEST": {
+          "capability": "score",
+          "hc_param": "OnlyTest",
+          "is_cvmfs": true,
+          "is_default": false,
+          "is_virtual": false,
+          "name": "AGLT2_TEST-condor",
+          "pandaqueues": [
+            {
+              "name": "AGLT2_TEST-condor",
+              "type": "production"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "production"
+        },
+        "AGLT2_UCORE": {
+          "capability": "ucore",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": true,
+          "is_virtual": false,
+          "name": "AGLT2_UCORE",
+          "pandaqueues": [
+            {
+              "name": "AGLT2_UCORE",
+              "type": "production"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "production"
+        },
+        "ANALY_AGLT2_SL7-condor": {
+          "capability": "score",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": true,
+          "is_virtual": false,
+          "name": "ANALY_AGLT2_SL7-condor",
+          "pandaqueues": [
+            {
+              "name": "ANALY_AGLT2_SL7-condor",
+              "type": "analysis"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "analysis"
+        }
+      }
+    },
+    "psconf": {},
+    "rc": "US-AGLT2",
+    "rc_country": "USA",
+    "rc_site": "AGLT2",
+    "rc_site_state": "ACTIVE",
+    "rc_site_status": "active",
+    "rc_tier_level": 2,
+    "rcsite": {
+      "altname": "US-ATLAS Great Lakes T2 (Univ. Michigan, Michigan State Univ.)",
+      "corepower": 10.96,
+      "country": "USA",
+      "emailContact": "laurens@pa.msu.edu,smckee@umich.edu,wuwj@umich.edu",
+      "infoURL": "http://www.aglt2.org/twiki/bin/view/AGLT2/Tier2Policy",
+      "is_pledged": true,
+      "latitude": 42.276189000000002,
+      "longitude": -83.740994000000001,
+      "maxdiskio": 3000,
+      "name": "AGLT2",
+      "rc": "US-AGLT2",
+      "rc_country": "USA",
+      "rc_tier_level": 2,
+      "state": "ACTIVE",
+      "state_comment": "State set to ACTIVE after DDMEndpoint creation",
+      "state_update": "2016-08-07T07:55:50.719633",
+      "status": "active",
+      "timezone": "EST/EDT"
+    },
+    "state": "ACTIVE",
+    "tier_level": 2,
+    "timezone": "EST/EDT",
+    "vo_name": "atlas"
+  },
+  "RRC-KI-T1":
+  {
+    "allowfax": true,
+    "cloud": "RU",
+    "corepower": 15.5,
+    "corepower_on": false,
+    "country": "Russian Federation",
+    "datapolicies": [
+      "T0Disk",
+      "T0Tape",
+      "T0TaskOutput",
+      "Nucleus",
+      "AnalysisData"
+    ],
+    "ddmendpoints": {
+      "RRC-KI-T1_DATADISK": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "RRC-KI-T1_DATATAPE": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "RRC-KI-T1_LOCALGROUPDISK": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "RRC-KI-T1_MCTAPE": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      },
+      "RRC-KI-T1_SCRATCHDISK": {
+        "se_impl": "",
+        "state": "ACTIVE"
+      }
+    },
+    "email": "gridops@grid.kiae.ru",
+    "emailContact": "gridops@grid.kiae.ru",
+    "fsconf": {
+      "frontier": [
+        [
+          "http://ccfrontier.in2p3.fr:23128/ccin2p3-AtlasFrontier",
+          {
+            "http://ccfrontier01.in2p3.fr:23128/ccin2p3-AtlasFrontier": "ACTIVE",
+            "http://ccfrontier05.in2p3.fr:23128/ccin2p3-AtlasFrontier": "ACTIVE"
+          }
+        ],
+        [
+          "http://lcgft-atlas.gridpp.rl.ac.uk:3128/frontierATLAS",
+          {
+            "http://lcgvo-frontier05.gridpp.rl.ac.uk:3128/frontierATLAS": "ACTIVE",
+            "http://lcgvo-frontier06.gridpp.rl.ac.uk:3128/frontierATLAS": "ACTIVE",
+            "http://lcgvo-frontier07.gridpp.rl.ac.uk:3128/frontierATLAS": "ACTIVE"
+          }
+        ]
+      ],
+      "squid": [
+        [
+          "http://ch.t1.grid.kiae.ru:3128",
+          {
+            "http://ch1.t1.grid.kiae.ru:3128": "ACTIVE",
+            "http://ch2.t1.grid.kiae.ru:3128": "ACTIVE"
+          }
+        ]
+      ]
+    },
+    "grid_flavour": "LCG",
+    "has_notification": false,
+    "has_proxyconfig": false,
+    "infoURL": "http://www.grid.kiae.ru/",
+    "is_atlas": true,
+    "is_direct": false,
+    "is_pledged": true,
+    "last_modified": "2013-05-17T09:22:44.644130",
+    "latitude": 55.75,
+    "longitude": 37.582999999999998,
+    "maxdiskio": null,
+    "maxdiskio_on": false,
+    "name": "RRC-KI-T1",
+    "networks": {
+      "ipv4": [
+        "144.206.224.0/24",
+        "144.206.236.0/24",
+        "144.206.255.128/26"
+      ],
+      "ipv6": [
+        "2001:67c:1bec:224::/64",
+        "2001:67c:1bec:236::/64",
+        "2001:67c:1bec::255:0/112"
+      ]
+    },
+    "presources": {
+      "RRC-KI-HPC": {
+        "ANALY_RRC-KI-HPC": {
+          "capability": "score",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": true,
+          "is_virtual": false,
+          "name": "ANALY_RRC-KI-HPC",
+          "pandaqueues": [
+            {
+              "name": "ANALY_RRC-KI-HPC",
+              "type": "analysis"
+            }
+          ],
+          "resource_type": "hpc",
+          "state": "ACTIVE",
+          "type": "analysis"
+        },
+        "RRC-KI-HPC2": {
+          "capability": "score",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": true,
+          "is_virtual": false,
+          "name": "RRC-KI-HPC2",
+          "pandaqueues": [
+            {
+              "name": "RRC-KI-HPC2",
+              "type": "production"
+            }
+          ],
+          "resource_type": "hpc",
+          "state": "ACTIVE",
+          "type": "production"
+        }
+      },
+      "RRC-KI-T1": {
+        "ANALY_RRC-KI-T1": {
+          "capability": "score",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": true,
+          "is_virtual": false,
+          "name": "ANALY_RRC-KI-T1",
+          "pandaqueues": [
+            {
+              "name": "ANALY_RRC-KI-T1",
+              "type": "analysis"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "analysis"
+        },
+        "RRC-KI-T1": {
+          "capability": "score",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": false,
+          "is_virtual": false,
+          "name": "RRC-KI-T1",
+          "pandaqueues": [
+            {
+              "name": "RRC-KI-T1",
+              "type": "production"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "production"
+        },
+        "RRC-KI-T1_MCORE": {
+          "capability": "mcore",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": false,
+          "is_virtual": false,
+          "name": "RRC-KI-T1_MCORE",
+          "pandaqueues": [
+            {
+              "name": "RRC-KI-T1_MCORE",
+              "type": "production"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "production"
+        },
+        "RRC-KI-T1_TEST": {
+          "capability": "score",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": true,
+          "is_virtual": false,
+          "name": "RRC-KI-T1_TEST",
+          "pandaqueues": [
+            {
+              "name": "RRC-KI-T1_TEST",
+              "type": "production"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "production"
+        },
+        "RRC-KI-T1_UCORE": {
+          "capability": "ucore",
+          "hc_param": "AutoExclusion",
+          "is_cvmfs": true,
+          "is_default": false,
+          "is_virtual": false,
+          "name": "RRC-KI-T1_UCORE",
+          "pandaqueues": [
+            {
+              "name": "RRC-KI-T1_UCORE",
+              "type": "production"
+            }
+          ],
+          "resource_type": "GRID",
+          "state": "ACTIVE",
+          "type": "production"
+        }
+      }
+    },
+    "psconf": {},
+    "rc": "NRC-KI-T1",
+    "rc_country": "Russian Federation",
+    "rc_site": "RRC-KI-T1",
+    "rc_site_state": "ACTIVE",
+    "rc_site_status": "Production",
+    "rc_tier_level": 1,
+    "rcsite": {
+      "altname": "Russian Research Center - Kurchatov Institute",
+      "corepower": 15.5,
+      "country": "Russian Federation",
+      "emailContact": "gridops@grid.kiae.ru",
+      "infoURL": "http://www.grid.kiae.ru/",
+      "is_pledged": true,
+      "latitude": 55.75,
+      "longitude": 37.582999999999998,
+      "maxdiskio": null,
+      "name": "RRC-KI-T1",
+      "rc": "NRC-KI-T1",
+      "rc_country": "Russian Federation",
+      "rc_tier_level": 1,
+      "state": "ACTIVE",
+      "state_comment": "State set to ACTIVE after DDMEndpoint creation",
+      "state_update": "2013-02-13T12:00:03.196839",
+      "status": "Production",
+      "timezone": ""
+    },
+    "state": "ACTIVE",
+    "state_comment": "ATLAS Site was created by using WebUI",
+    "state_update": "2013-02-18T10:00:48.451543",
+    "tier_level": 1,
+    "timezone": "",
+    "vo_name": "atlas"
+  }
+}

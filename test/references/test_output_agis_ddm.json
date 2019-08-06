@@ -1,0 +1,619 @@
+{ "ru-Moscow-SINP-LCG2" : {
+  "aprotocols": {},
+  "arprotocols": {},
+  "cloud": "RU",
+  "country": "Russian Federation",
+  "datapolicies": [
+    "AnalysisData"
+  ],
+  "ddmgroups": [
+    "NLSITES",
+    "NLTIER2S",
+    "ALL"
+  ],
+  "domain": ".*sinp.msu.ru.*/atlashotdisk/.*",
+  "endpoint": "/dpm/sinp.msu.ru/home/atlas/atlashotdisk/",
+  "id": 7302,
+  "is_cache": false,
+  "is_deterministic": false,
+  "is_mkdir": false,
+  "is_pledged": false,
+  "is_rucio": false,
+  "is_tape": false,
+  "is_volatile": false,
+  "last_modified": "2019-03-21T13:34:02.721074",
+  "name": "RU-MOSCOW-SINP-LCG2_HOTDISK",
+  "objectstores": [],
+  "permissions": {
+    "/atlas/Role=NULL": "frwpu",
+    "/atlas/Role=production": "frwpuda"
+  },
+  "phys_groups": [],
+  "protocols": {},
+  "quotas": {},
+  "rc": "RU-RDIG",
+  "rc_accounting": "Russian Data-Intensive GRID",
+  "rc_country": "Russian Federation",
+  "rc_site": "ru-Moscow-SINP-LCG2",
+  "rc_site_state": "DISABLED",
+  "resource": {
+    "basepath": "",
+    "endpoint": "",
+    "id": 1,
+    "name": "NULL",
+    "service": "NULL"
+  },
+  "rprotocols": {},
+  "se": "srm://grid130.sinp.msu.ru:8446/srm/managerv2?SFN=",
+  "se_flavour": "SRM",
+  "servedfts": {
+    "DEFAULT": "https://fts3.cern.ch:8443/glite-data-transfer-fts/services/FileTransfer"
+  },
+  "servedlfc": "rucio://atlas-rucio.cern.ch:/grid/atlas",
+  "servedrestfts": {
+    "MASTER": [
+      "https://fts3-atlas.cern.ch:8446",
+      "https://fts3.cern.ch:8446",
+      "https://lcgfts3.gridpp.rl.ac.uk:8446"
+    ],
+    "TESTING": "https://fts3-pilot.cern.ch:8446"
+  },
+  "site": "ru-Moscow-SINP-LCG2",
+  "site_state": "DISABLED",
+  "space_method": "storage",
+  "space_usage_url": "",
+  "state": "DISABLED",
+  "state_update": "2013-02-06T11:41:30.082774",
+  "tier_level": 2,
+  "token": "ATLASHOTDISK",
+  "type": ""
+},
+"CERN-PROD" : {
+    "aprotocols": {
+      "SE": [
+        [
+          "gsiftp://eosatlassftp.cern.ch:2811",
+          0,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "davs://eosatlashttp.cern.ch:443",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "root://eosatlas.cern.ch:1094",
+          2,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "d": [
+        [
+          "root://eosatlas.cern.ch:1094",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "gsiftp://eosatlassftp.cern.ch:2811",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "davs://eosatlashttp.cern.ch:443",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "delete_wan": [
+        [
+          "root://eosatlas.cern.ch:1094",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "gsiftp://eosatlassftp.cern.ch:2811",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "davs://eosatlashttp.cern.ch:443",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "r": [
+        [
+          "root://eosatlas.cern.ch:1094",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "gsiftp://eosatlassftp.cern.ch:2811",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "davs://eosatlashttp.cern.ch:443",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "read_wan": [
+        [
+          "root://eosatlas.cern.ch:1094",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "gsiftp://eosatlassftp.cern.ch:2811",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "davs://eosatlashttp.cern.ch:443",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "third_party_copy": [
+        [
+          "gsiftp://eosatlassftp.cern.ch:2811",
+          0,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "davs://eosatlashttp.cern.ch:443",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "root://eosatlas.cern.ch:1094",
+          2,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "w": [
+        [
+          "root://eosatlas.cern.ch:1094",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "gsiftp://eosatlassftp.cern.ch:2811",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "davs://eosatlashttp.cern.ch:443",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "write_wan": [
+        [
+          "root://eosatlas.cern.ch:1094",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "gsiftp://eosatlassftp.cern.ch:2811",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "davs://eosatlashttp.cern.ch:443",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ]
+    },
+    "arprotocols": {
+      "SE": [
+        {
+          "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+          "flavour": "GRIDFTP",
+          "id": 317,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "davs://eosatlashttp.cern.ch:443",
+          "flavour": "WEBDAV",
+          "id": 315,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "root://eosatlas.cern.ch:1094",
+          "flavour": "XROOTD",
+          "id": 314,
+          "path": "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        }
+      ],
+      "d": [
+        {
+          "endpoint": "root://eosatlas.cern.ch:1094",
+          "flavour": "XROOTD",
+          "id": 314,
+          "path": "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+          "flavour": "GRIDFTP",
+          "id": 317,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "davs://eosatlashttp.cern.ch:443",
+          "flavour": "WEBDAV",
+          "id": 315,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        }
+      ],
+      "delete_wan": [
+        {
+          "endpoint": "root://eosatlas.cern.ch:1094",
+          "flavour": "XROOTD",
+          "id": 314,
+          "path": "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+          "flavour": "GRIDFTP",
+          "id": 317,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "davs://eosatlashttp.cern.ch:443",
+          "flavour": "WEBDAV",
+          "id": 315,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        }
+      ],
+      "r": [
+        {
+          "endpoint": "root://eosatlas.cern.ch:1094",
+          "flavour": "XROOTD",
+          "id": 314,
+          "path": "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+          "flavour": "GRIDFTP",
+          "id": 317,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "davs://eosatlashttp.cern.ch:443",
+          "flavour": "WEBDAV",
+          "id": 315,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        }
+      ],
+      "read_wan": [
+        {
+          "endpoint": "root://eosatlas.cern.ch:1094",
+          "flavour": "XROOTD",
+          "id": 314,
+          "path": "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+          "flavour": "GRIDFTP",
+          "id": 317,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "davs://eosatlashttp.cern.ch:443",
+          "flavour": "WEBDAV",
+          "id": 315,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        }
+      ],
+      "third_party_copy": [
+        {
+          "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+          "flavour": "GRIDFTP",
+          "id": 317,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "davs://eosatlashttp.cern.ch:443",
+          "flavour": "WEBDAV",
+          "id": 315,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "root://eosatlas.cern.ch:1094",
+          "flavour": "XROOTD",
+          "id": 314,
+          "path": "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        }
+      ],
+      "w": [
+        {
+          "endpoint": "root://eosatlas.cern.ch:1094",
+          "flavour": "XROOTD",
+          "id": 314,
+          "path": "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+          "flavour": "GRIDFTP",
+          "id": 317,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "davs://eosatlashttp.cern.ch:443",
+          "flavour": "WEBDAV",
+          "id": 315,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        }
+      ],
+      "write_wan": [
+        {
+          "endpoint": "root://eosatlas.cern.ch:1094",
+          "flavour": "XROOTD",
+          "id": 314,
+          "path": "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+          "flavour": "GRIDFTP",
+          "id": 317,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        },
+        {
+          "endpoint": "davs://eosatlashttp.cern.ch:443",
+          "flavour": "WEBDAV",
+          "id": 315,
+          "path": "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        }
+      ]
+    },
+    "cloud": "CERN",
+    "country": "Switzerland",
+    "datapolicies": [
+      "Nucleus",
+      "AnalysisData"
+    ],
+    "ddmgroups": [
+      "CERN",
+      "ALL"
+    ],
+    "domain": ".*eosatlas.cern.ch.*/atlasgroupdisk/phys-exotics/.*",
+    "endpoint": "phys-exotics/dq2/rucio/",
+    "id": 1210,
+    "is_cache": false,
+    "is_deterministic": true,
+    "is_mkdir": false,
+    "is_pledged": false,
+    "is_rucio": false,
+    "is_tape": false,
+    "is_volatile": false,
+    "last_modified": "2019-03-21T13:33:58.269563",
+    "name": "CERN-PROD_PHYS-EXOTICS",
+    "objectstores": [],
+    "permissions": {
+      "/atlas/Role=NULL": "fr---",
+      "/atlas/Role=production": "frwda",
+      "/atlas/phys-exotics/Role=production": "frwd-"
+    },
+    "phys_groups": [
+      "phys-exotics"
+    ],
+    "protocols": {
+      "davs://eosatlashttp.cern.ch:443": [
+        [
+          "SE",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "third_party_copy",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "delete_wan",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "d",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "write_wan",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "r",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "w",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "read_wan",
+          2,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "gsiftp://eosatlassftp.cern.ch:2811": [
+        [
+          "SE",
+          0,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "third_party_copy",
+          0,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "delete_wan",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "d",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "write_wan",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "r",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "w",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "read_wan",
+          1,
+          "/eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ],
+      "root://eosatlas.cern.ch:1094": [
+        [
+          "delete_wan",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "d",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "write_wan",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "r",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "w",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "read_wan",
+          0,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "SE",
+          2,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ],
+        [
+          "third_party_copy",
+          2,
+          "//eos/atlas/atlasgroupdisk/phys-exotics/dq2/rucio/"
+        ]
+      ]
+    },
+    "quotas": {
+      "/atlas/phys-exotics/Role=production": 29
+    },
+    "rc": "CH-CERN",
+    "rc_accounting": "CERN-PROD",
+    "rc_country": "Switzerland",
+    "rc_site": "CERN-PROD",
+    "rc_site_state": "ACTIVE",
+    "resource": {
+      "basepath": "",
+      "endpoint": "/eos/atlas/atlasgroupdisk/",
+      "id": 320,
+      "name": "ATLASGROUPDISK",
+      "service": "CERN-PROD_SE_1"
+    },
+    "rprotocols": {
+      "314": {
+        "activities": [
+          "delete_wan",
+          "read_wan",
+          "write_wan",
+          "third_party_copy",
+          "r",
+          "w",
+          "SE",
+          "d"
+        ],
+        "basepath": "/",
+        "endpoint": "root://eosatlas.cern.ch:1094",
+        "flavour": "XROOTD",
+        "id": 314
+      },
+      "315": {
+        "activities": [
+          "third_party_copy",
+          "delete_wan",
+          "read_wan",
+          "write_wan",
+          "r",
+          "w",
+          "SE",
+          "d"
+        ],
+        "basepath": "",
+        "endpoint": "davs://eosatlashttp.cern.ch:443",
+        "flavour": "WEBDAV",
+        "id": 315
+      },
+      "317": {
+        "activities": [
+          "third_party_copy",
+          "delete_wan",
+          "read_wan",
+          "write_wan",
+          "r",
+          "w",
+          "SE",
+          "d"
+        ],
+        "basepath": "",
+        "endpoint": "gsiftp://eosatlassftp.cern.ch:2811",
+        "flavour": "GRIDFTP",
+        "id": 317
+      }
+    },
+    "se": "root://eosatlas.cern.ch:1094",
+    "se_flavour": "XROOTD",
+    "servedfts": {
+      "DEFAULT": "https://fts3.cern.ch:8443/glite-data-transfer-fts/services/FileTransfer"
+    },
+    "servedlfc": "rucio://atlas-rucio.cern.ch:/grid/atlas",
+    "servedrestfts": {
+      "MASTER": [
+        "https://fts3-atlas.cern.ch:8446",
+        "https://fts.usatlas.bnl.gov:8446",
+        "https://lcgfts3.gridpp.rl.ac.uk:8446"
+      ],
+      "TESTING": "https://fts3-pilot.cern.ch:8446"
+    },
+    "site": "CERN-PROD",
+    "site_state": "ACTIVE",
+    "space_method": "storage",
+    "space_usage_url": "root://eosatlas.cern.ch//eos/atlas/proc/accounting",
+    "state": "ACTIVE",
+    "tier_level": 0,
+    "token": "ATLASGROUPDISK",
+    "type": "GROUPDISK"
+  }
+}
