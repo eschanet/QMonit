@@ -43,7 +43,6 @@ class TestAGIS(JSONTest):
         my_data = agis.convert(data=original_data,sort_field="site")
         self.assertSame(output_data, my_data)
 
-
 class TestREBUS(JSONTest):
 
     def test_federation_scraper_conversion(self):
@@ -52,6 +51,16 @@ class TestREBUS(JSONTest):
         """
         original_data = fh.get_json_from_file('test/references/test_input_rebus_federation.json')
         output_data = fh.get_json_from_file('test/references/test_output_rebus_federation.json')
+        rebus = REBUS()
+        my_data = rebus.convert(data=original_data,sort_field="Site")
+        self.assertSame(output_data, my_data)
+
+    def test_pledge_scraper_conversion(self):
+        """
+        Test that converting scraped REBUS pledges works
+        """
+        original_data = fh.get_json_from_file('test/references/test_input_rebus_pledges.json')
+        output_data = fh.get_json_from_file('test/references/test_output_rebus_pledges.json')
         rebus = REBUS()
         my_data = rebus.convert(data=original_data,sort_field="Site")
         self.assertSame(output_data, my_data)
