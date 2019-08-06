@@ -12,7 +12,7 @@ class RebusDict(dict):
 
     def update(self,object,append_mode=False):
         if not append_mode:
-            return dict.update(object)
+            return super(RebusDict, self).update(object)
         elif append_mode:
             k,v = object.items()[0]
             if k in self:
