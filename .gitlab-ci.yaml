@@ -5,6 +5,6 @@ test:
   stage: test
   script:
     # run the unit tests
-  - python test
+    - python test
   only:
     feature/classes
