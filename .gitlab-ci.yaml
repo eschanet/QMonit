@@ -6,3 +6,5 @@ test:
   script:
     # run the unit tests
   - python test
+  only:
+    feature/classes
