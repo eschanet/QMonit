@@ -53,13 +53,13 @@ class Scraper(object):
 class HTTPScraper(Scraper):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, token, request, url, *args, **kwargs):
+    def __init__(self, request, url, headers):
         """Initializing the scraper object."""
-        super(HTTPScraper, self).__init__(*args, **kwargs)
+        super(HTTPScraper, self).__init__()
 
-        self.token = token
         self.request = request
         self.url = url
+        self.headers = headers
 
 
     def download(self):
