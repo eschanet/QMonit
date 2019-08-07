@@ -3,6 +3,7 @@ from __future__ import print_function
 import os
 import urllib
 import json
+from requests import post
 
 import abc
 
@@ -12,9 +13,8 @@ class Scraper(object):
     def __init__(self, *args, **kwargs):
         """Initializing the scraper object."""
 
-
-    @classmethod
-    def create_dir(self,path):
+    @staticmethod
+    def create_dir(path):
         """Create directory with path.
 
         :param path: directory path"""
@@ -25,7 +25,8 @@ class Scraper(object):
             if error.errno != 17:
                 raise
 
-    def save(self,file,data):
+    @staticmethod
+    def save(file,data):
         try:
             with open(file, 'w') as f:
                 json.dump(data, f)
@@ -33,6 +34,51 @@ class Scraper(object):
         except IOError:
             print("Got an error saving to file.")
             return False
+
+    @abc.abstractmethod
+    def download(self,request,token):
+        """
+        Download JSON data from url.
+        """
+
+    @abc.abstractmethod
+    def convert(self, data, *args, **kwargs):
+        """Converts downloaded data to desired output format.
+
+        :param data: input data that has been downloaded
+        :param args: additional arguments that are passed to the class
+        :param kwargs: additional arguments that are passed to the class"""
+
+
+class HTTPScraper(Scraper):
+    __metaclass__ = abc.ABCMeta
+
+    def __init__(self, *args, **kwargs):
+        """Initializing the scraper object."""
+        super(HTTPScraper, self).__init__(*args, **kwargs)
+
+        self.token = token
+        self.request = request
+        self.url = url
+
+
+
+    def download(self,request,token):
+        """Download JSON data from url.
+
+        :param url: the url containing the JSON to be downloaded."""
+
+        response = urllib.urlopen(url)
+        data = json.load(response)
+        return data
+
+
+class JSONScraper(Scraper):
+    __metaclass__ = abc.ABCMeta
+
+    def __init__(self, *args, **kwargs):
+        """Initializing the scraper object."""
+        super(HTTPScraper, self).__init__(*args, **kwargs)
 
     def download(self,url):
         """Download JSON data from url.
@@ -42,15 +88,3 @@ class Scraper(object):
         response = urllib.urlopen(url)
         data = json.load(response)
         return data
-
-    def validate(self, json_data):
-        """Validate the integrity of the data"""
-        return True
-
-    @abc.abstractmethod
-    def convert(self, data, *args, **kwargs):
-        """Converts downloaded data to desired output format.
-
-        :param data: input data that has been downloaded
-        :param args: additional arguments that are passed to the class
-        :param kwargs: additional arguments that are passed to the class"""
