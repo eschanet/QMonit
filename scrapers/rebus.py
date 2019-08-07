@@ -1,5 +1,7 @@
 import os
 import json
+from pprint import pprint
+import collections
 
 from . import Scraper
 
@@ -16,7 +18,7 @@ class RebusDict(dict):
         elif append_mode:
             k,v = object.items()[0]
             if k in self:
-                super(RebusDict, self).update(object)
+                self[k].append(v)
             else:
                 self[k] = [v]
         else:
@@ -36,11 +38,11 @@ class REBUS(Scraper):
 
         if isinstance(data,dict):
             for key,d in data.items():
-                if sort_field in d:
+                if isinstance(d.get(sort_field,{}), collections.Hashable):
                     json_data.update(object={d[sort_field]:d},append_mode=append_mode)
         elif isinstance(data,list):
             for d in data:
-                if sort_field in d:
+                if isinstance(d.get(sort_field,{}), collections.Hashable):
                     json_data.update(object={d[sort_field]:d},append_mode=append_mode)
         else:
             logger.error("Data is not type dict or list but: {}".format(type(data)))
