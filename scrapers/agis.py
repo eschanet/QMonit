@@ -1,12 +1,12 @@
 import os
 import json
 
-from . import Scraper
+from . import JSONScraper
 
 from commonHelpers.logger import logger
 logger = logger.getChild(__name__)
 
-class AGIS(Scraper):
+class AGIS(JSONScraper):
 
     def __init__(self, *args, **kwargs):
          super(AGIS, self).__init__(*args, **kwargs)

@@ -78,7 +78,7 @@ class JSONScraper(Scraper):
 
     def __init__(self, *args, **kwargs):
         """Initializing the scraper object."""
-        super(HTTPScraper, self).__init__(*args, **kwargs)
+        super(JSONScraper, self).__init__(*args, **kwargs)
 
     def download(self,url):
         """Download JSON data from url.
