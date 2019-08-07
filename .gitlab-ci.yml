@@ -5,11 +5,7 @@ test:
   stage: test
   script:
     - echo "Running tests"
-    - python -V
-    - pwd
-    - ls
-    - echo $PYTHONPATH
-    - export PYTHONPATH=$PWD
-    - python test
+    - export PYTHONPATH="$PYTHONPATH:$(readlink -f ..)"
+    - python runTest.sh
   only:
     - feature/classes
