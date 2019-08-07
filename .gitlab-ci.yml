@@ -8,6 +8,7 @@ test:
     - python -V
     - pwd
     - ls
+    - echo $PYTHONPATH
     - python test
   only:
     - feature/classes
