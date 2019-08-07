@@ -13,22 +13,19 @@ class Grafana(HTTPScraper):
     def __init__(self, *args, **kwargs):
          super(Grafana, self).__init__(*args, **kwargs)
 
-    def convert(self, data, append_mode=False,sort_field="panda_queue", should_be_ordered_by="panda_queue", *args, **kwargs):
+    def convert(self, data, sort_field="panda_queue", should_be_ordered_by="panda_queue", *args, **kwargs):
         """Convert the Grafana data to the desired format of being ordered by Panda queues
 
         :param data: data to be converted in the desired format"""
 
-        json_data = RebusDict()
+        # all of this is still quite ugly ...
+        json_data = {}
 
-        if isinstance(data,dict):
-            for key,d in data.items():
-                if isinstance(d.get(sort_field,{}), collections.Hashable):
-                    json_data.update(object={d[sort_field]:d},append_mode=append_mode)
-        elif isinstance(data,list):
-            for d in data:
-                if isinstance(d.get(sort_field,{}), collections.Hashable):
-                    json_data.update(object={d[sort_field]:d},append_mode=append_mode)
-        else:
-            logger.error("Data is not type dict or list but: {}".format(type(data)))
+        for k in loads(data.text)['responses'][0]['aggregations']['4']['buckets']:
+            rse = k['key']
+            files = int(k['1']['value'])
+            bytes = int(k['3']['value'])
+
+            json_data[rse] = {'bytes': bytes, 'files': files}
 
         return json_data
