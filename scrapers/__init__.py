@@ -53,7 +53,7 @@ class Scraper(object):
 class HTTPScraper(Scraper):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, token, request, url, *args, **kwargs):
         """Initializing the scraper object."""
         super(HTTPScraper, self).__init__(*args, **kwargs)
 
@@ -62,15 +62,11 @@ class HTTPScraper(Scraper):
         self.url = url
 
 
-
-    def download(self,request,token):
-        """Download JSON data from url.
-
-        :param url: the url containing the JSON to be downloaded."""
-
-        response = urllib.urlopen(url)
-        data = json.load(response)
-        return data
+    def download(self):
+        """
+        Download data.
+        """
+        return post(self.url, headers=self.headers, data=self.request)
 
 
 class JSONScraper(Scraper):
