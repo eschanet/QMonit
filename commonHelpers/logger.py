@@ -1,7 +1,3 @@
-"""
-Logger template
-"""
-
 import logging
 import atexit
 
