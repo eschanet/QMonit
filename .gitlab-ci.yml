@@ -4,4 +4,9 @@ stages:
 test:
   stage: test
   script:
+    - echo "Running tests"
+    - python -V
+    - pwd
     - python test
+  only:
+    - feature/classes
