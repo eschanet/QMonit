@@ -2,15 +2,22 @@
 
 from __future__ import print_function
 
+import time
 import argparse
+import ConfigParser
 
 from scrapers.agis import AGIS
 from scrapers.rebus import REBUS
+from scrapers.grafana import Grafana
 
 from maps import PQ_names_map as pq_map
 
 import logging
 from commonHelpers.logger import logger
+
+#do some configurations
+config = ConfigParser.ConfigParser()
+config.read("config.cfg")
 
 logger = logger.getChild("mephisto")
 
@@ -66,12 +73,32 @@ def run():
         else:
             logger.error("Problem scraping federations REBUS")
 
+        # then the pledges
         raw_data = rebus.download(url="https://wlcg-rebus.cern.ch/apps/pledges/resources/2019/all/json")
         json_data = rebus.convert(data=raw_data,sort_field="Federation")
         if rebus.save(file="data/scraped_rebus_pledges.json",data=json_data):
             logger.info("Scraped pledges REBUS")
         else:
             logger.error("Problem scraping pledges REBUS")
+
+        # we also get datadisk information from monit Grafana
+        url = config.get("credentials_monit_grafana", "url")
+        token = config.get("credentials_monit_grafana", "token")
+
+        now = int(round(time.time() * 1000))
+        yesterday = now - 12*60*60*1000
+        two_days = yesterday - 24*60*60*1000
+
+        data = '{"search_type":"query_then_fetch","ignore_unavailable":true,"index":["monit_prod_rucioacc_enr_site_*","monit_prod_rucioacc_enr_site_*"]}\n{"size":0,"query":{"bool":{"filter":[{"range":{"metadata.timestamp":{"gte":"%i","lte":"%i","format":"epoch_millis"}}},{"query_string":{"analyze_wildcard":true,"query":"data.account:* AND data.campaign:* AND data.country:* AND data.cloud:* AND data.datatype:* AND data.datatype_grouped:(\\"DAOD\\") AND data.prod_step:* AND data.provenance:* AND data.rse:* AND data.scope:* AND data.experiment_site:* AND data.stream_name:* AND data.tier:* AND data.token:(\\"ATLASDATADISK\\" OR \\"T2ATLASDATADISK\\") AND data.tombstone:* AND NOT(data.tombstone:UNKNOWN) AND data.rse:/.*().*/ AND NOT data.rse:/.*(none).*/"}}]}},"aggs":{"4":{"terms":{"field":"data.rse","size":500,"order":{"_term":"desc"},"min_doc_count":1},"aggs":{"1":{"sum":{"field":"data.files"}},"3":{"sum":{"field":"data.bytes"}}}}}}\n' % (two_days,yesterday)
+        headers = {'Authorization': 'Bearer %s' % token}
+
+        grafana = Grafana(url=url,request=data,headers=headers)
+        raw_data = grafana.download()
+        json_data = grafana.convert(data=raw_data)
+        if grafana.save(file='data/scraped_grafana_datadisk.json', data=json_data):
+            logger.info('Scraped datadisks from monit grafana')
+        else:
+            logger.error('Problem scraping datadisks from monit grafana')
 
     else:
         # Nothing to do otherwise
