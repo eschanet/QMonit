@@ -7,6 +7,7 @@ test:
     - echo "Running tests"
     - python -V
     - pwd
+    - ls
     - python test
   only:
     - feature/classes
