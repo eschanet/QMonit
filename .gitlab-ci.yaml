@@ -1,0 +1,9 @@
+stages:
+  - test
+
+test:
+  stage: test
+  script:
+    - python test
+  only:
+    - feature/classes
