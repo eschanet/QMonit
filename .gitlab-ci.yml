@@ -9,6 +9,7 @@ test:
     - pwd
     - ls
     - echo $PYTHONPATH
+    - export PYTHONPATH=$PWD
     - python test
   only:
     - feature/classes
