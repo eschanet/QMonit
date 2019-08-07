@@ -23,7 +23,8 @@ def run():
 
     # Each time the scrapers are run, we update the PQ map
     pqs = pq_map.PQ_names_map(file="data/map_PQ_names.json")
-    pqs.update(ifile="data/scraped_agis_pandaqueue.json",ofile="data/map_PQ_names.json",key="panda_resource")
+    if not pqs.update(ifile="data/scraped_agis_pandaqueue.json",ofile="data/map_PQ_names.json",key="panda_resource"):
+        logger.warning("PQ map is not available")
 
     if args.interval == '10m':
         # Now run all the scrapers that should run in 10min intervals
