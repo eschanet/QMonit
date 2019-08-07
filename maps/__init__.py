@@ -11,12 +11,12 @@ class Map(dict):
 
     def load_file(self,file):
         '''Load a file that contains the map'''
-        try:
+        if os.path.exists(file):
             with open(file) as json_file:
                 data = json.load(json_file)
                 return data
-        except:
-            raise
+        else:
+            return {}
 
     def save(self,filename,data):
         try:
