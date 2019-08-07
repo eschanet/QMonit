@@ -6,6 +6,6 @@ test:
   script:
     - echo "Running tests"
     - export PYTHONPATH="$PYTHONPATH:$(readlink -f ..)"
-    - python runTest.sh
+    - python test
   only:
     - feature/classes
