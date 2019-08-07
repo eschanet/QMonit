@@ -7,4 +7,4 @@ test:
     # run the unit tests
     - python test
   only:
-    feature/classes
+    - feature/classes
