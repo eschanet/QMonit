@@ -1,0 +1,918 @@
+{
+    "responses": [
+        {
+            "status": 200,
+            "hits": {
+                "hits": [],
+                "total": 252162,
+                "max_score": 0.0
+            },
+            "_shards": {
+                "successful": 1134,
+                "failed": 0,
+                "skipped": 1133,
+                "total": 1134
+            },
+            "took": 609,
+            "aggregations": {
+                "4": {
+                    "buckets": [
+                        {
+                            "1": {
+                                "value": 227911.0
+                            },
+                            "3": {
+                                "value": 360855134522866.0
+                            },
+                            "key": "WUPPERTALPROD_DATADISK",
+                            "doc_count": 2674
+                        },
+                        {
+                            "1": {
+                                "value": 1342.0
+                            },
+                            "3": {
+                                "value": 3015523741786.0
+                            },
+                            "key": "WEIZMANN-LCG2_DATADISK",
+                            "doc_count": 27
+                        },
+                        {
+                            "1": {
+                                "value": 109427.0
+                            },
+                            "3": {
+                                "value": 152176869346249.0
+                            },
+                            "key": "UTA_SWT2_DATADISK",
+                            "doc_count": 535
+                        },
+                        {
+                            "1": {
+                                "value": 369264.0
+                            },
+                            "3": {
+                                "value": 435778904913857.0
+                            },
+                            "key": "UNIBE-LHEP_DATADISK",
+                            "doc_count": 1757
+                        },
+                        {
+                            "1": {
+                                "value": 398769.0
+                            },
+                            "3": {
+                                "value": 585573613770303.0
+                            },
+                            "key": "UNI-FREIBURG_DATADISK",
+                            "doc_count": 2953
+                        },
+                        {
+                            "1": {
+                                "value": 4.0
+                            },
+                            "3": {
+                                "value": 6139487551.0
+                            },
+                            "key": "UKI-SOUTHGRID-SUSX_DATADISK",
+                            "doc_count": 4
+                        },
+                        {
+                            "1": {
+                                "value": 307864.0
+                            },
+                            "3": {
+                                "value": 402538419395272.0
+                            },
+                            "key": "UKI-SOUTHGRID-RALPP_DATADISK",
+                            "doc_count": 1245
+                        },
+                        {
+                            "1": {
+                                "value": 276788.0
+                            },
+                            "3": {
+                                "value": 357344844205408.0
+                            },
+                            "key": "UKI-SOUTHGRID-OX-HEP_DATADISK",
+                            "doc_count": 1238
+                        },
+                        {
+                            "1": {
+                                "value": 1.0
+                            },
+                            "3": {
+                                "value": 3192681238.0
+                            },
+                            "key": "UKI-SOUTHGRID-CAM-HEP_DATADISK",
+                            "doc_count": 1
+                        },
+                        {
+                            "1": {
+                                "value": 596650.0
+                            },
+                            "3": {
+                                "value": 914694451969361.0
+                            },
+                            "key": "UKI-SCOTGRID-GLASGOW_DATADISK",
+                            "doc_count": 3822
+                        },
+                        {
+                            "1": {
+                                "value": 430348.0
+                            },
+                            "3": {
+                                "value": 538233310480022.0
+                            },
+                            "key": "UKI-SCOTGRID-ECDF_DATADISK",
+                            "doc_count": 1723
+                        },
+                        {
+                            "1": {
+                                "value": 10072.0
+                            },
+                            "3": {
+                                "value": 12342078554127.0
+                            },
+                            "key": "UKI-SCOTGRID-ECDF-RDF_DATADISK",
+                            "doc_count": 534
+                        },
+                        {
+                            "1": {
+                                "value": 68.0
+                            },
+                            "3": {
+                                "value": 234662255764.0
+                            },
+                            "key": "UKI-SCOTGRID-DURHAM_DATADISK",
+                            "doc_count": 8
+                        },
+                        {
+                            "1": {
+                                "value": 183353.0
+                            },
+                            "3": {
+                                "value": 215289963654819.0
+                            },
+                            "key": "UKI-NORTHGRID-SHEF-HEP_DATADISK",
+                            "doc_count": 921
+                        },
+                        {
+                            "1": {
+                                "value": 647440.0
+                            },
+                            "3": {
+                                "value": 1189724337014969.0
+                            },
+                            "key": "UKI-NORTHGRID-MAN-HEP_DATADISK",
+                            "doc_count": 4723
+                        },
+                        {
+                            "1": {
+                                "value": 410887.0
+                            },
+                            "3": {
+                                "value": 493264235825269.0
+                            },
+                            "key": "UKI-NORTHGRID-LIV-HEP_DATADISK",
+                            "doc_count": 1264
+                        },
+                        {
+                            "1": {
+                                "value": 31389.0
+                            },
+                            "3": {
+                                "value": 109883471526534.0
+                            },
+                            "key": "UKI-NORTHGRID-LANCS-HEP_PHYS-BEAUTY",
+                            "doc_count": 14
+                        },
+                        {
+                            "1": {
+                                "value": 736232.0
+                            },
+                            "3": {
+                                "value": 1188104236185270.0
+                            },
+                            "key": "UKI-NORTHGRID-LANCS-HEP_DATADISK",
+                            "doc_count": 3898
+                        },
+                        {
+                            "1": {
+                                "value": 537264.0
+                            },
+                            "3": {
+                                "value": 559186082724146.0
+                            },
+                            "key": "UKI-LT2-RHUL_DATADISK",
+                            "doc_count": 1421
+                        },
+                        {
+                            "1": {
+                                "value": 760473.0
+                            },
+                            "3": {
+                                "value": 1121991879513706.0
+                            },
+                            "key": "UKI-LT2-QMUL_DATADISK",
+                            "doc_count": 5866
+                        },
+                        {
+                            "1": {
+                                "value": 1.0
+                            },
+                            "3": {
+                                "value": 63765573.0
+                            },
+                            "key": "UKI-LT2-BRUNEL_DATADISK",
+                            "doc_count": 1
+                        },
+                        {
+                            "1": {
+                                "value": 176271.0
+                            },
+                            "3": {
+                                "value": 211948143035165.0
+                            },
+                            "key": "UAM-LCG2_DATADISK",
+                            "doc_count": 2361
+                        },
+                        {
+                            "1": {
+                                "value": 251.0
+                            },
+                            "3": {
+                                "value": 122733099383.0
+                            },
+                            "key": "TRIUMF-LCG2_PERF-TAU",
+                            "doc_count": 2
+                        },
+                        {
+                            "1": {
+                                "value": 1645585.0
+                            },
+                            "3": {
+                                "value": 2760744416486406.0
+                            },
+                            "key": "TRIUMF-LCG2_DATADISK",
+                            "doc_count": 7776
+                        },
+                        {
+                            "1": {
+                                "value": 295783.0
+                            },
+                            "3": {
+                                "value": 381257804145851.0
+                            },
+                            "key": "TR-10-ULAKBIM_DATADISK",
+                            "doc_count": 2153
+                        },
+                        {
+                            "1": {
+                                "value": 954983.0
+                            },
+                            "3": {
+                                "value": 1516159028699746.0
+                            },
+                            "key": "TOKYO-LCG2_DATADISK",
+                            "doc_count": 5587
+                        },
+                        {
+                            "1": {
+                                "value": 214478.0
+                            },
+                            "3": {
+                                "value": 268433550118212.0
+                            },
+                            "key": "TECHNION-HEP_DATADISK",
+                            "doc_count": 1309
+                        },
+                        {
+                            "1": {
+                                "value": 775196.0
+                            },
+                            "3": {
+                                "value": 1558122291748392.0
+                            },
+                            "key": "TAIWAN-LCG2_DATADISK",
+                            "doc_count": 4331
+                        },
+                        {
+                            "1": {
+                                "value": 1057835.0
+                            },
+                            "3": {
+                                "value": 2009108259946866.0
+                            },
+                            "key": "SWT2_CPB_DATADISK",
+                            "doc_count": 8026
+                        },
+                        {
+                            "1": {
+                                "value": 56606.0
+                            },
+                            "3": {
+                                "value": 96180076815111.0
+                            },
+                            "key": "SLACXRD_DATADISK",
+                            "doc_count": 488
+                        },
+                        {
+                            "1": {
+                                "value": 569202.0
+                            },
+                            "3": {
+                                "value": 707107020467570.0
+                            },
+                            "key": "SARA-MATRIX_DATADISK",
+                            "doc_count": 2759
+                        },
+                        {
+                            "1": {
+                                "value": 540096.0
+                            },
+                            "3": {
+                                "value": 671689053225926.0
+                            },
+                            "key": "RU-PROTVINO-IHEP_DATADISK",
+                            "doc_count": 1911
+                        },
+                        {
+                            "1": {
+                                "value": 1010428.0
+                            },
+                            "3": {
+                                "value": 1534971852517290.0
+                            },
+                            "key": "RRC-KI-T1_DATADISK",
+                            "doc_count": 7165
+                        },
+                        {
+                            "1": {
+                                "value": 1189838.0
+                            },
+                            "3": {
+                                "value": 1334717975912242.0
+                            },
+                            "key": "RO-07-NIPNE_DATADISK",
+                            "doc_count": 1804
+                        },
+                        {
+                            "1": {
+                                "value": 2231525.0
+                            },
+                            "3": {
+                                "value": 3989773557108853.0
+                            },
+                            "key": "RAL-LCG2-ECHO_DATADISK",
+                            "doc_count": 12141
+                        },
+                        {
+                            "1": {
+                                "value": 133490.0
+                            },
+                            "3": {
+                                "value": 176160606707231.0
+                            },
+                            "key": "PSNC_DATADISK",
+                            "doc_count": 983
+                        },
+                        {
+                            "1": {
+                                "value": 330643.0
+                            },
+                            "3": {
+                                "value": 446591640820009.0
+                            },
+                            "key": "PRAGUELCG2_DATADISK",
+                            "doc_count": 2944
+                        },
+                        {
+                            "1": {
+                                "value": 550885.0
+                            },
+                            "3": {
+                                "value": 818103383340302.0
+                            },
+                            "key": "PIC_DATADISK",
+                            "doc_count": 3962
+                        },
+                        {
+                            "1": {
+                                "value": 298063.0
+                            },
+                            "3": {
+                                "value": 394031941065389.0
+                            },
+                            "key": "OU_OSCER_ATLAS_DATADISK",
+                            "doc_count": 818
+                        },
+                        {
+                            "1": {
+                                "value": 332707.0
+                            },
+                            "3": {
+                                "value": 537935643419228.0
+                            },
+                            "key": "NIKHEF-ELPROD_DATADISK",
+                            "doc_count": 4717
+                        },
+                        {
+                            "1": {
+                                "value": 1514792.0
+                            },
+                            "3": {
+                                "value": 1995183232614339.0
+                            },
+                            "key": "NET2_DATADISK",
+                            "doc_count": 6025
+                        },
+                        {
+                            "1": {
+                                "value": 21.0
+                            },
+                            "3": {
+                                "value": 198820755885.0
+                            },
+                            "key": "NERSC_DATADISK",
+                            "doc_count": 2
+                        },
+                        {
+                            "1": {
+                                "value": 8040.0
+                            },
+                            "3": {
+                                "value": 10977734269960.0
+                            },
+                            "key": "NDGF-T1_PHYS-HIGGS",
+                            "doc_count": 31
+                        },
+                        {
+                            "1": {
+                                "value": 2058882.0
+                            },
+                            "3": {
+                                "value": 2938034374239204.0
+                            },
+                            "key": "NDGF-T1_DATADISK",
+                            "doc_count": 8720
+                        },
+                        {
+                            "1": {
+                                "value": 52155.0
+                            },
+                            "3": {
+                                "value": 71788578617104.0
+                            },
+                            "key": "NCG-INGRID-PT_DATADISK",
+                            "doc_count": 134
+                        },
+                        {
+                            "1": {
+                                "value": 1857763.0
+                            },
+                            "3": {
+                                "value": 3383687593654268.0
+                            },
+                            "key": "MWT2_DATADISK",
+                            "doc_count": 13139
+                        },
+                        {
+                            "1": {
+                                "value": 287998.0
+                            },
+                            "3": {
+                                "value": 502298282074662.0
+                            },
+                            "key": "MPPMU_DATADISK",
+                            "doc_count": 3380
+                        },
+                        {
+                            "1": {
+                                "value": 325587.0
+                            },
+                            "3": {
+                                "value": 497683506713084.0
+                            },
+                            "key": "LRZ-LMU_DATADISK",
+                            "doc_count": 2985
+                        },
+                        {
+                            "1": {
+                                "value": 561433.0
+                            },
+                            "3": {
+                                "value": 637609792488117.0
+                            },
+                            "key": "JINR-LCG2_DATADISK",
+                            "doc_count": 1941
+                        },
+                        {
+                            "1": {
+                                "value": 1458699.0
+                            },
+                            "3": {
+                                "value": 2355160145698999.0
+                            },
+                            "key": "INFN-T1_DATADISK",
+                            "doc_count": 8178
+                        },
+                        {
+                            "1": {
+                                "value": 268094.0
+                            },
+                            "3": {
+                                "value": 270113389653837.0
+                            },
+                            "key": "INFN-ROMA1_DATADISK",
+                            "doc_count": 2526
+                        },
+                        {
+                            "1": {
+                                "value": 336152.0
+                            },
+                            "3": {
+                                "value": 380384426996523.0
+                            },
+                            "key": "INFN-NAPOLI-ATLAS_DATADISK",
+                            "doc_count": 2456
+                        },
+                        {
+                            "1": {
+                                "value": 456334.0
+                            },
+                            "3": {
+                                "value": 574025715140660.0
+                            },
+                            "key": "INFN-MILANO-ATLASC_DATADISK",
+                            "doc_count": 1668
+                        },
+                        {
+                            "1": {
+                                "value": 290693.0
+                            },
+                            "3": {
+                                "value": 326018481889076.0
+                            },
+                            "key": "INFN-FRASCATI_DATADISK",
+                            "doc_count": 1048
+                        },
+                        {
+                            "1": {
+                                "value": 1292.0
+                            },
+                            "3": {
+                                "value": 1808713976309.0
+                            },
+                            "key": "INFN-COSENZA_DATADISK",
+                            "doc_count": 36
+                        },
+                        {
+                            "1": {
+                                "value": 377374.0
+                            },
+                            "3": {
+                                "value": 434196113979817.0
+                            },
+                            "key": "IN2P3-LPSC_DATADISK",
+                            "doc_count": 937
+                        },
+                        {
+                            "1": {
+                                "value": 847692.0
+                            },
+                            "3": {
+                                "value": 882661494128384.0
+                            },
+                            "key": "IN2P3-LPC_DATADISK",
+                            "doc_count": 1517
+                        },
+                        {
+                            "1": {
+                                "value": 486176.0
+                            },
+                            "3": {
+                                "value": 644048486338146.0
+                            },
+                            "key": "IN2P3-LAPP_DATADISK",
+                            "doc_count": 2557
+                        },
+                        {
+                            "1": {
+                                "value": 798807.0
+                            },
+                            "3": {
+                                "value": 996044855648571.0
+                            },
+                            "key": "IN2P3-CPPM_DATADISK",
+                            "doc_count": 2017
+                        },
+                        {
+                            "1": {
+                                "value": 6872.0
+                            },
+                            "3": {
+                                "value": 8759565997110.0
+                            },
+                            "key": "IN2P3-CC_PHYS-HIGGS",
+                            "doc_count": 44
+                        },
+                        {
+                            "1": {
+                                "value": 1659960.0
+                            },
+                            "3": {
+                                "value": 2799059269032005.0
+                            },
+                            "key": "IN2P3-CC_DATADISK",
+                            "doc_count": 8442
+                        },
+                        {
+                            "1": {
+                                "value": 204727.0
+                            },
+                            "3": {
+                                "value": 246367913222639.0
+                            },
+                            "key": "IL-TAU-HEP_DATADISK",
+                            "doc_count": 933
+                        },
+                        {
+                            "1": {
+                                "value": 298156.0
+                            },
+                            "3": {
+                                "value": 321350968284192.0
+                            },
+                            "key": "IFIC-LCG2_DATADISK",
+                            "doc_count": 3513
+                        },
+                        {
+                            "1": {
+                                "value": 320405.0
+                            },
+                            "3": {
+                                "value": 369906687053918.0
+                            },
+                            "key": "IFAE_DATADISK",
+                            "doc_count": 1065
+                        },
+                        {
+                            "1": {
+                                "value": 503220.0
+                            },
+                            "3": {
+                                "value": 580432959959060.0
+                            },
+                            "key": "IEPSAS-KOSICE_DATADISK",
+                            "doc_count": 1174
+                        },
+                        {
+                            "1": {
+                                "value": 19449.0
+                            },
+                            "3": {
+                                "value": 48190877786201.0
+                            },
+                            "key": "HK-LCG2_DATADISK",
+                            "doc_count": 494
+                        },
+                        {
+                            "1": {
+                                "value": 380106.0
+                            },
+                            "3": {
+                                "value": 470819965545226.0
+                            },
+                            "key": "GRIF-LPNHE_DATADISK",
+                            "doc_count": 1406
+                        },
+                        {
+                            "1": {
+                                "value": 568624.0
+                            },
+                            "3": {
+                                "value": 700639777376641.0
+                            },
+                            "key": "GRIF-LAL_DATADISK",
+                            "doc_count": 1593
+                        },
+                        {
+                            "1": {
+                                "value": 1233711.0
+                            },
+                            "3": {
+                                "value": 1142155120379108.0
+                            },
+                            "key": "GRIF-IRFU_DATADISK",
+                            "doc_count": 1533
+                        },
+                        {
+                            "1": {
+                                "value": 1073635.0
+                            },
+                            "3": {
+                                "value": 1189709125146499.0
+                            },
+                            "key": "GOEGRID_DATADISK",
+                            "doc_count": 3281
+                        },
+                        {
+                            "1": {
+                                "value": 354.0
+                            },
+                            "3": {
+                                "value": 125913876135.0
+                            },
+                            "key": "FZK-LCG2_PERF-TAU",
+                            "doc_count": 1
+                        },
+                        {
+                            "1": {
+                                "value": 6399.0
+                            },
+                            "3": {
+                                "value": 4018740325013.0
+                            },
+                            "key": "FZK-LCG2_PERF-IDTRACKING",
+                            "doc_count": 2
+                        },
+                        {
+                            "1": {
+                                "value": 2349145.0
+                            },
+                            "3": {
+                                "value": 3572410488116601.0
+                            },
+                            "key": "FZK-LCG2_DATADISK",
+                            "doc_count": 8355
+                        },
+                        {
+                            "1": {
+                                "value": 563.0
+                            },
+                            "3": {
+                                "value": 838026025792.0
+                            },
+                            "key": "FR-ALPES_DATADISK_DATALAKES",
+                            "doc_count": 12
+                        },
+                        {
+                            "1": {
+                                "value": 335887.0
+                            },
+                            "3": {
+                                "value": 376285878874412.0
+                            },
+                            "key": "FMPHI-UNIBA_DATADISK",
+                            "doc_count": 1092
+                        },
+                        {
+                            "1": {
+                                "value": 185912.0
+                            },
+                            "3": {
+                                "value": 230795856190065.0
+                            },
+                            "key": "EELA-UTFSM_DATADISK",
+                            "doc_count": 1291
+                        },
+                        {
+                            "1": {
+                                "value": 311209.0
+                            },
+                            "3": {
+                                "value": 388050042136084.0
+                            },
+                            "key": "DESY-ZN_DATADISK",
+                            "doc_count": 3003
+                        },
+                        {
+                            "1": {
+                                "value": 308828.0
+                            },
+                            "3": {
+                                "value": 445222733170837.0
+                            },
+                            "key": "DESY-HH_DATADISK",
+                            "doc_count": 3046
+                        },
+                        {
+                            "1": {
+                                "value": 269864.0
+                            },
+                            "3": {
+                                "value": 332743418050318.0
+                            },
+                            "key": "CYFRONET-LCG2_DATADISK",
+                            "doc_count": 1256
+                        },
+                        {
+                            "1": {
+                                "value": 436307.0
+                            },
+                            "3": {
+                                "value": 471202448666700.0
+                            },
+                            "key": "CSCS-LCG2_DATADISK",
+                            "doc_count": 2308
+                        },
+                        {
+                            "1": {
+                                "value": 3204719.0
+                            },
+                            "3": {
+                                "value": 4294769817946719.0
+                            },
+                            "key": "CERN-PROD_DATADISK",
+                            "doc_count": 12300
+                        },
+                        {
+                            "1": {
+                                "value": 79.0
+                            },
+                            "3": {
+                                "value": 106801796128.0
+                            },
+                            "key": "CERN-PROD-RUCIOTEST_DATADISK",
+                            "doc_count": 4
+                        },
+                        {
+                            "1": {
+                                "value": 1382617.0
+                            },
+                            "3": {
+                                "value": 1571157013181160.0
+                            },
+                            "key": "CA-WATERLOO-T2_DATADISK",
+                            "doc_count": 1442
+                        },
+                        {
+                            "1": {
+                                "value": 346063.0
+                            },
+                            "3": {
+                                "value": 385591639900305.0
+                            },
+                            "key": "CA-VICTORIA-WESTGRID-T2_DATADISK",
+                            "doc_count": 1507
+                        },
+                        {
+                            "1": {
+                                "value": 422112.0
+                            },
+                            "3": {
+                                "value": 673761776764942.0
+                            },
+                            "key": "CA-SFU-T2_DATADISK",
+                            "doc_count": 2703
+                        },
+                        {
+                            "1": {
+                                "value": 4114937.0
+                            },
+                            "3": {
+                                "value": 6216641160832065.0
+                            },
+                            "key": "BNL-OSG2_DATADISK",
+                            "doc_count": 12296
+                        },
+                        {
+                            "1": {
+                                "value": 133211.0
+                            },
+                            "3": {
+                                "value": 166105252672373.0
+                            },
+                            "key": "BEIJING-LCG2_DATADISK",
+                            "doc_count": 871
+                        },
+                        {
+                            "1": {
+                                "value": 762614.0
+                            },
+                            "3": {
+                                "value": 887028486505757.0
+                            },
+                            "key": "AUSTRALIA-ATLAS_DATADISK",
+                            "doc_count": 1261
+                        },
+                        {
+                            "1": {
+                                "value": 1559635.0
+                            },
+                            "3": {
+                                "value": 2864830492252718.0
+                            },
+                            "key": "AGLT2_DATADISK",
+                            "doc_count": 10771
+                        }
+                    ],
+                    "sum_other_doc_count": 0,
+                    "doc_count_error_upper_bound": 0
+                }
+            },
+            "timed_out": false
+        }
+    ]
+}

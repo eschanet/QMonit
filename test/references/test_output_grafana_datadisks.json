@@ -1,0 +1,358 @@
+{
+    "AGLT2_DATADISK": {
+        "bytes": 2864830492252718,
+        "files": 1559635
+    },
+    "AUSTRALIA-ATLAS_DATADISK": {
+        "bytes": 887028486505757,
+        "files": 762614
+    },
+    "BEIJING-LCG2_DATADISK": {
+        "bytes": 166105252672373,
+        "files": 133211
+    },
+    "BNL-OSG2_DATADISK": {
+        "bytes": 6216641160832065,
+        "files": 4114937
+    },
+    "CA-SFU-T2_DATADISK": {
+        "bytes": 673761776764942,
+        "files": 422112
+    },
+    "CA-VICTORIA-WESTGRID-T2_DATADISK": {
+        "bytes": 385591639900305,
+        "files": 346063
+    },
+    "CA-WATERLOO-T2_DATADISK": {
+        "bytes": 1571157013181160,
+        "files": 1382617
+    },
+    "CERN-PROD-RUCIOTEST_DATADISK": {
+        "bytes": 106801796128,
+        "files": 79
+    },
+    "CERN-PROD_DATADISK": {
+        "bytes": 4294769817946719,
+        "files": 3204719
+    },
+    "CSCS-LCG2_DATADISK": {
+        "bytes": 471202448666700,
+        "files": 436307
+    },
+    "CYFRONET-LCG2_DATADISK": {
+        "bytes": 332743418050318,
+        "files": 269864
+    },
+    "DESY-HH_DATADISK": {
+        "bytes": 445222733170837,
+        "files": 308828
+    },
+    "DESY-ZN_DATADISK": {
+        "bytes": 388050042136084,
+        "files": 311209
+    },
+    "EELA-UTFSM_DATADISK": {
+        "bytes": 230795856190065,
+        "files": 185912
+    },
+    "FMPHI-UNIBA_DATADISK": {
+        "bytes": 376285878874412,
+        "files": 335887
+    },
+    "FR-ALPES_DATADISK_DATALAKES": {
+        "bytes": 838026025792,
+        "files": 563
+    },
+    "FZK-LCG2_DATADISK": {
+        "bytes": 3572410488116601,
+        "files": 2349145
+    },
+    "FZK-LCG2_PERF-IDTRACKING": {
+        "bytes": 4018740325013,
+        "files": 6399
+    },
+    "FZK-LCG2_PERF-TAU": {
+        "bytes": 125913876135,
+        "files": 354
+    },
+    "GOEGRID_DATADISK": {
+        "bytes": 1189709125146499,
+        "files": 1073635
+    },
+    "GRIF-IRFU_DATADISK": {
+        "bytes": 1142155120379108,
+        "files": 1233711
+    },
+    "GRIF-LAL_DATADISK": {
+        "bytes": 700639777376641,
+        "files": 568624
+    },
+    "GRIF-LPNHE_DATADISK": {
+        "bytes": 470819965545226,
+        "files": 380106
+    },
+    "HK-LCG2_DATADISK": {
+        "bytes": 48190877786201,
+        "files": 19449
+    },
+    "IEPSAS-KOSICE_DATADISK": {
+        "bytes": 580432959959060,
+        "files": 503220
+    },
+    "IFAE_DATADISK": {
+        "bytes": 369906687053918,
+        "files": 320405
+    },
+    "IFIC-LCG2_DATADISK": {
+        "bytes": 321350968284192,
+        "files": 298156
+    },
+    "IL-TAU-HEP_DATADISK": {
+        "bytes": 246367913222639,
+        "files": 204727
+    },
+    "IN2P3-CC_DATADISK": {
+        "bytes": 2799059269032005,
+        "files": 1659960
+    },
+    "IN2P3-CC_PHYS-HIGGS": {
+        "bytes": 8759565997110,
+        "files": 6872
+    },
+    "IN2P3-CPPM_DATADISK": {
+        "bytes": 996044855648571,
+        "files": 798807
+    },
+    "IN2P3-LAPP_DATADISK": {
+        "bytes": 644048486338146,
+        "files": 486176
+    },
+    "IN2P3-LPC_DATADISK": {
+        "bytes": 882661494128384,
+        "files": 847692
+    },
+    "IN2P3-LPSC_DATADISK": {
+        "bytes": 434196113979817,
+        "files": 377374
+    },
+    "INFN-COSENZA_DATADISK": {
+        "bytes": 1808713976309,
+        "files": 1292
+    },
+    "INFN-FRASCATI_DATADISK": {
+        "bytes": 326018481889076,
+        "files": 290693
+    },
+    "INFN-MILANO-ATLASC_DATADISK": {
+        "bytes": 574025715140660,
+        "files": 456334
+    },
+    "INFN-NAPOLI-ATLAS_DATADISK": {
+        "bytes": 380384426996523,
+        "files": 336152
+    },
+    "INFN-ROMA1_DATADISK": {
+        "bytes": 270113389653837,
+        "files": 268094
+    },
+    "INFN-T1_DATADISK": {
+        "bytes": 2355160145698999,
+        "files": 1458699
+    },
+    "JINR-LCG2_DATADISK": {
+        "bytes": 637609792488117,
+        "files": 561433
+    },
+    "LRZ-LMU_DATADISK": {
+        "bytes": 497683506713084,
+        "files": 325587
+    },
+    "MPPMU_DATADISK": {
+        "bytes": 502298282074662,
+        "files": 287998
+    },
+    "MWT2_DATADISK": {
+        "bytes": 3383687593654268,
+        "files": 1857763
+    },
+    "NCG-INGRID-PT_DATADISK": {
+        "bytes": 71788578617104,
+        "files": 52155
+    },
+    "NDGF-T1_DATADISK": {
+        "bytes": 2938034374239204,
+        "files": 2058882
+    },
+    "NDGF-T1_PHYS-HIGGS": {
+        "bytes": 10977734269960,
+        "files": 8040
+    },
+    "NERSC_DATADISK": {
+        "bytes": 198820755885,
+        "files": 21
+    },
+    "NET2_DATADISK": {
+        "bytes": 1995183232614339,
+        "files": 1514792
+    },
+    "NIKHEF-ELPROD_DATADISK": {
+        "bytes": 537935643419228,
+        "files": 332707
+    },
+    "OU_OSCER_ATLAS_DATADISK": {
+        "bytes": 394031941065389,
+        "files": 298063
+    },
+    "PIC_DATADISK": {
+        "bytes": 818103383340302,
+        "files": 550885
+    },
+    "PRAGUELCG2_DATADISK": {
+        "bytes": 446591640820009,
+        "files": 330643
+    },
+    "PSNC_DATADISK": {
+        "bytes": 176160606707231,
+        "files": 133490
+    },
+    "RAL-LCG2-ECHO_DATADISK": {
+        "bytes": 3989773557108853,
+        "files": 2231525
+    },
+    "RO-07-NIPNE_DATADISK": {
+        "bytes": 1334717975912242,
+        "files": 1189838
+    },
+    "RRC-KI-T1_DATADISK": {
+        "bytes": 1534971852517290,
+        "files": 1010428
+    },
+    "RU-PROTVINO-IHEP_DATADISK": {
+        "bytes": 671689053225926,
+        "files": 540096
+    },
+    "SARA-MATRIX_DATADISK": {
+        "bytes": 707107020467570,
+        "files": 569202
+    },
+    "SLACXRD_DATADISK": {
+        "bytes": 96180076815111,
+        "files": 56606
+    },
+    "SWT2_CPB_DATADISK": {
+        "bytes": 2009108259946866,
+        "files": 1057835
+    },
+    "TAIWAN-LCG2_DATADISK": {
+        "bytes": 1558122291748392,
+        "files": 775196
+    },
+    "TECHNION-HEP_DATADISK": {
+        "bytes": 268433550118212,
+        "files": 214478
+    },
+    "TOKYO-LCG2_DATADISK": {
+        "bytes": 1516159028699746,
+        "files": 954983
+    },
+    "TR-10-ULAKBIM_DATADISK": {
+        "bytes": 381257804145851,
+        "files": 295783
+    },
+    "TRIUMF-LCG2_DATADISK": {
+        "bytes": 2760744416486406,
+        "files": 1645585
+    },
+    "TRIUMF-LCG2_PERF-TAU": {
+        "bytes": 122733099383,
+        "files": 251
+    },
+    "UAM-LCG2_DATADISK": {
+        "bytes": 211948143035165,
+        "files": 176271
+    },
+    "UKI-LT2-BRUNEL_DATADISK": {
+        "bytes": 63765573,
+        "files": 1
+    },
+    "UKI-LT2-QMUL_DATADISK": {
+        "bytes": 1121991879513706,
+        "files": 760473
+    },
+    "UKI-LT2-RHUL_DATADISK": {
+        "bytes": 559186082724146,
+        "files": 537264
+    },
+    "UKI-NORTHGRID-LANCS-HEP_DATADISK": {
+        "bytes": 1188104236185270,
+        "files": 736232
+    },
+    "UKI-NORTHGRID-LANCS-HEP_PHYS-BEAUTY": {
+        "bytes": 109883471526534,
+        "files": 31389
+    },
+    "UKI-NORTHGRID-LIV-HEP_DATADISK": {
+        "bytes": 493264235825269,
+        "files": 410887
+    },
+    "UKI-NORTHGRID-MAN-HEP_DATADISK": {
+        "bytes": 1189724337014969,
+        "files": 647440
+    },
+    "UKI-NORTHGRID-SHEF-HEP_DATADISK": {
+        "bytes": 215289963654819,
+        "files": 183353
+    },
+    "UKI-SCOTGRID-DURHAM_DATADISK": {
+        "bytes": 234662255764,
+        "files": 68
+    },
+    "UKI-SCOTGRID-ECDF-RDF_DATADISK": {
+        "bytes": 12342078554127,
+        "files": 10072
+    },
+    "UKI-SCOTGRID-ECDF_DATADISK": {
+        "bytes": 538233310480022,
+        "files": 430348
+    },
+    "UKI-SCOTGRID-GLASGOW_DATADISK": {
+        "bytes": 914694451969361,
+        "files": 596650
+    },
+    "UKI-SOUTHGRID-CAM-HEP_DATADISK": {
+        "bytes": 3192681238,
+        "files": 1
+    },
+    "UKI-SOUTHGRID-OX-HEP_DATADISK": {
+        "bytes": 357344844205408,
+        "files": 276788
+    },
+    "UKI-SOUTHGRID-RALPP_DATADISK": {
+        "bytes": 402538419395272,
+        "files": 307864
+    },
+    "UKI-SOUTHGRID-SUSX_DATADISK": {
+        "bytes": 6139487551,
+        "files": 4
+    },
+    "UNI-FREIBURG_DATADISK": {
+        "bytes": 585573613770303,
+        "files": 398769
+    },
+    "UNIBE-LHEP_DATADISK": {
+        "bytes": 435778904913857,
+        "files": 369264
+    },
+    "UTA_SWT2_DATADISK": {
+        "bytes": 152176869346249,
+        "files": 109427
+    },
+    "WEIZMANN-LCG2_DATADISK": {
+        "bytes": 3015523741786,
+        "files": 1342
+    },
+    "WUPPERTALPROD_DATADISK": {
+        "bytes": 360855134522866,
+        "files": 227911
+    }
+}
