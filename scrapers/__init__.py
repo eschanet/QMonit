@@ -4,6 +4,7 @@ import os
 import urllib
 import json
 from requests import post
+from elasticsearch6 import Elasticsearch
 
 import abc
 
@@ -48,6 +49,21 @@ class Scraper(object):
         :param data: input data that has been downloaded
         :param args: additional arguments that are passed to the class
         :param kwargs: additional arguments that are passed to the class"""
+
+class ElasticSearchScraper(Scraper):
+    __metaclass__ = abc.ABCMeta
+
+    def __init__(self, *args, **kwargs):
+        """Initializing the scraper object."""
+        super(ElasticSearchScraper, self).__init__()
+
+        self.elasticsearch = Elasticsearch(*args,**kwargs)
+
+    def download(self,*args,**kwargs):
+        """
+        Download data.
+        """
+        return self.elasticsearch.search(*args,**kwargs)
 
 
 class HTTPScraper(Scraper):
