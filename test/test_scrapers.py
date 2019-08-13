@@ -7,6 +7,7 @@ from .helpers.JSONTest import JSONTest
 
 from scrapers.agis import AGIS
 from scrapers.rebus import REBUS
+from scrapers.grafana import Grafana
 
 from commonHelpers import fileHelpers as fh
 from commonHelpers.logger import logger
@@ -66,6 +67,19 @@ class TestREBUS(JSONTest):
         my_data = rebus.convert(data=original_data,sort_field="Federation", append_mode=True)
         self.assertSame(output_data, my_data)
 
+class TestGrafana(JSONTest):
+
+    def test_datadisk_scraper_conversion(self):
+        """
+        Test that converting scraped datadisk information from Grafana works
+        """
+        original_data = fh.get_json_from_file('test/references/test_input_grafana_datadisks.json')
+        output_data = fh.get_json_from_file('test/references/test_output_grafana_datadisks.json')
+
+        grafana = Grafana(url="",request="",headers={})
+
+        my_data = grafana.convert(data=original_data,sort_field="Site")
+        self.assertSame(output_data, my_data)
 
 if __name__ == "__main__":
 
