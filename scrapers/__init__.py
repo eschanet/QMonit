@@ -53,11 +53,11 @@ class Scraper(object):
 class ElasticSearchScraper(Scraper):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, host=[], **kwargs):
         """Initializing the scraper object."""
         super(ElasticSearchScraper, self).__init__()
 
-        self.elasticsearch = Elasticsearch(*args,**kwargs)
+        self.elasticsearch = Elasticsearch(host,**kwargs)
 
     def download(self,*args,**kwargs):
         """
