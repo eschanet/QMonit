@@ -5,10 +5,12 @@ from __future__ import print_function
 import time
 import argparse
 import ConfigParser
+import pprint
 
 from scrapers.agis import AGIS
 from scrapers.rebus import REBUS
 from scrapers.grafana import Grafana
+from scrapers.elasticsearch import ElasticSearch
 
 from maps import PQ_names_map as pq_map
 
@@ -24,7 +26,7 @@ logger = logger.getChild("mephisto")
 parser = argparse.ArgumentParser(description="Run a set of JSON/web scrapers")
 parser.add_argument('--debug', action='store_true', help='print debug messages')
 parser.add_argument('-interval', default='10m', help='Defines which scrapers are being run')
-args = parser.parse_args()
+argparse = parser.parse_args()
 
 def run():
 
@@ -33,7 +35,7 @@ def run():
     if not pqs.update(ifile="data/scraped_agis_pandaqueue.json",ofile="data/map_PQ_names.json",key="panda_resource"):
         logger.warning("PQ map is not available")
 
-    if args.interval == '10m':
+    if argparse.interval == '10m':
         # Now run all the scrapers that should run in 10min intervals
         # First the PQ AGIS information
         agis = AGIS()
@@ -44,7 +46,7 @@ def run():
         else:
             logger.error("Problem scraping PQ AGIS")
 
-    elif args.interval == '1h':
+    elif argparse.interval == '1h':
         # Run all the scrapers that only need to be run once per hour (because they don't change too often)
 
         # Next the ATLAS sites AGIS information
@@ -99,6 +101,38 @@ def run():
             logger.info('Scraped datadisks from monit grafana')
         else:
             logger.error('Problem scraping datadisks from monit grafana')
+
+        #get credentials
+        password = config.get("credentials_elasticsearch", "password")
+        username = config.get("credentials_elasticsearch", "username")
+        host = config.get("credentials_elasticsearch", "host")
+        arg = ([{'host': host, 'port': 9200}])
+        elasticsearch = ElasticSearch(arg,**{'http_auth':(username, password)})
+        kwargs = {
+            'index' : "benchmarks-*",
+            'body' : {
+                "size" : 10000,
+                "query" : {
+                    "match_all" : {},
+                },
+                "collapse": {
+                    "field": "metadata.PanDAQueue",
+                    "inner_hits": {
+                        "name": "most_recent",
+                        "size": 50,
+                        "sort": [{"timestamp": "desc"}]
+                    }
+                }
+            },
+            'filter_path' : [""]
+        }
+        raw_data = elasticsearch.download(**kwargs)
+        json_data = elasticsearch.convert(data=raw_data)
+
+        if elasticsearch.save(file='data/scraped_elasticsearch_benchmark.json', data=json_data):
+            logger.info('Scraped benchmark results from ES')
+        else:
+            logger.error('Problem scraping benchmark results from ES')
 
     else:
         # Nothing to do otherwise
