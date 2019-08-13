@@ -8,6 +8,7 @@ from .helpers.JSONTest import JSONTest
 from scrapers.agis import AGIS
 from scrapers.rebus import REBUS
 from scrapers.grafana import Grafana
+from scrapers.elasticsearch import ElasticSearch
 
 from commonHelpers import fileHelpers as fh
 from commonHelpers.logger import logger
@@ -78,7 +79,21 @@ class TestGrafana(JSONTest):
 
         grafana = Grafana(url="",request="",headers={})
 
-        my_data = grafana.convert(data=original_data,sort_field="Site")
+        my_data = grafana.convert(data=original_data)
+        self.assertSame(output_data, my_data)
+
+class TestElasticSearch(JSONTest):
+
+    def test_benchmark_scraper_conversion(self):
+        """
+        Test that converting the scraped benchmark job tests from ES works fine.
+        """
+        original_data = fh.get_json_from_file('test/references/test_input_elasticsearch_benchmarks.json')
+        output_data = fh.get_json_from_file('test/references/test_output_elasticsearch_benchmarks.json')
+
+        elasticsearch = ElasticSearch()
+
+        my_data = elasticsearch.convert(data=original_data)
         self.assertSame(output_data, my_data)
 
 if __name__ == "__main__":
