@@ -6,6 +6,7 @@ test:
   script:
     - echo "Running tests"
     - export PYTHONPATH="$PYTHONPATH:$PWD"
+    - pip install elasticsearch6 
     - python test
   only:
     - feature/classes
