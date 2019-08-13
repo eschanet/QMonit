@@ -94,7 +94,7 @@ def run():
 
         grafana = Grafana(url=url,request=data,headers=headers)
         raw_data = grafana.download()
-        json_data = grafana.convert(data=raw_data)
+        json_data = grafana.convert(data=raw_data.json())
         if grafana.save(file='data/scraped_grafana_datadisk.json', data=json_data):
             logger.info('Scraped datadisks from monit grafana')
         else:
