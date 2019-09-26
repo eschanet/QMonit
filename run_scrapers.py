@@ -77,7 +77,7 @@ def run():
 
         # then the pledges
         raw_data = rebus.download(url="https://wlcg-rebus.cern.ch/apps/pledges/resources/2019/all/json")
-        json_data = rebus.convert(data=raw_data,sort_field="Federation")
+        json_data = rebus.convert(data=raw_data,sort_field="Federation", append_mode=True)
         if rebus.save(file="data/scraped_rebus_pledges.json",data=json_data):
             logger.info("Scraped pledges REBUS")
         else:
