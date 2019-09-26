@@ -111,17 +111,8 @@ def run():
         kwargs = {
             'index' : "benchmarks-*",
             'body' : {
-                "size" : 10000,
-                "query" : {
-                    "match_all" : {},
-                },
-                "collapse": {
-                    "field": "metadata.PanDAQueue",
-                    "inner_hits": {
-                        "name": "most_recent",
-                        "size": 50,
-                        "sort": [{"timestamp": "desc"}]
-                    }
+                "size" : 10000,"query" : {"match_all" : {},},
+                "collapse": {"field": "metadata.PanDAQueue","inner_hits": {"name": "most_recent","size": 50,"sort": [{"timestamp": "desc"}]}
                 }
             },
             'filter_path' : [""]
