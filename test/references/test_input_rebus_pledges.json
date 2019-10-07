@@ -1,0 +1,46 @@
+[{
+    "PledgeType": "CPU",
+    "Federation": "CH-CERN",
+    "Country": "Switzerland",
+    "PledgeUnit": "HEP-SPEC06",
+    "ALICE": 350000,
+    "ATLAS": 411000,
+    "LHCb": 86000,
+    "Tier": "Tier 0",
+    "CMS": 423000
+  },
+  {
+    "PledgeType": "CPU",
+    "Federation": "ATLAS Federation, HH/Goe",
+    "Country": "Germany",
+    "PledgeUnit": "HEP-SPEC06",
+    "ALICE": "",
+    "ATLAS": 21533,
+    "LHCb": "",
+    "Tier": "Tier 2",
+    "CMS": ""
+  },
+  {
+    "PledgeType": "Disk",
+    "Federation": "ATLAS Federation, HH/Goe",
+    "Country": "Germany",
+    "PledgeUnit": "Tbytes",
+    "ALICE": "",
+    "ATLAS": 1800,
+    "LHCb": "",
+    "Tier": "Tier 2",
+    "CMS": ""
+  },
+  {
+  "PledgeType": "Disk",
+  "Federation": {},
+  "Country": "Germany",
+  "PledgeUnit": "Tbytes",
+  "ALICE": "",
+  "ATLAS": 3600,
+  "LHCb": "",
+  "Tier": "Tier 2",
+  "CMS": ""
+},
+{}
+]

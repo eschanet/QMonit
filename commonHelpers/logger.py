@@ -1,12 +1,8 @@
-"""
-Logger template
-"""
-
 import logging
 import atexit
 
 # create logger
-logger = logging.getLogger("mephisto") # name should be given, otherwise we are configuring the root logger
+logger = logging.getLogger("QMonit") # name should be given, otherwise we are configuring the root logger
 
 # configure logging if no handlers exist
 if (len(logger.handlers) < 1

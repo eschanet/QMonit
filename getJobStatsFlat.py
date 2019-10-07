@@ -29,21 +29,33 @@ url_siteJobs   = baseURL + '/getJobStatisticsPerSiteResource'
 url_bamboo     = baseURL + '/getJobStatisticsForBamboo'
 bigpandaURL = 'https://bigpanda.cern.ch/dash/production/?cloudview=world&json'
 
-#let's load some of the information that has been scraped previously
-with open('pandaqueue_scraped.json') as pandaqueue:
-    panda_queues = json.load(pandaqueue)
-with open('pandaqueue_actual_map.json') as pandaresource:
-    panda_resources = json.load(pandaresource)
-with open('sites_scraped.json') as siteresource:
-    site_resources = json.load(siteresource)
-with open('ddm_scraped.json') as ddmresource:
-    ddm_resources = json.load(ddmresource)
-with open('federation_pledges_scraped.json') as pledgesresource:
-    pledges_resources = json.load(pledgesresource)
-with open('federations_scraped.json') as federationsresource:
-    federations_resource = json.load(federationsresource)
-with open('benchmarks_elasticsearch_scraped.json') as benchmarksresource:
-    benchmarks_resource = json.load(benchmarksresource)
+def getJSON(file):
+    with open(file) as f:
+        return json.load(f)
+
+panda_queues = getJSON('data/scraped_agis_pandaqueue.json')
+panda_resources = getJSON('data/map_PQ_names.json')
+site_resources = getJSON('data/scraped_agis_sites.json')
+ddm_resources = getJSON('data/scraped_agis_ddm.json')
+pledges_resources = getJSON('data/scraped_rebus_pledges.json')
+federations_resources = getJSON('data/scraped_rebus_federations.json')
+benchmarks_resources = getJSON('data/scraped_agis_pandaqueue.json')
+
+# #let's load some of the information that has been scraped previously
+# with open('pandaqueue_scraped.json') as pandaqueue:
+#     panda_queues = json.load(pandaqueue)
+# with open('pandaqueue_actual_map.json') as pandaresource:
+#     panda_resources = json.load(pandaresource)
+# with open('sites_scraped.json') as siteresource:
+#     site_resources = json.load(siteresource)
+# with open('ddm_scraped.json') as ddmresource:
+#     ddm_resources = json.load(ddmresource)
+# with open('federation_pledges_scraped.json') as pledgesresource:
+#     pledges_resources = json.load(pledgesresource)
+# with open('federations_scraped.json') as federationsresource:
+#     federations_resources = json.load(federationsresource)
+# with open('benchmarks_elasticsearch_scraped.json') as benchmarksresource:
+#     benchmarks_resourcess = json.load(benchmarksresource)
 
 #get the actual job numbers from panda
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
@@ -99,7 +111,7 @@ for site, site_result in siteResourceStats.iteritems():
             container_type = panda_queues.get(queue,{}).get("container_type","None")
 
             #information from wlcg rebus
-            federation = federations_resource.get(atlas_site,{}).get("Federation","None")
+            federation = federations_resources.get(atlas_site,{}).get("Federation","None")
             pledge = ""
             for pledge_types,pledge_units in zip(pledges_resources.get(federation,{}),pledges_resources.get(federation,{})):
                 pledge_type = pledge_types.get("PledgeType","None")
@@ -145,7 +157,7 @@ for site, site_result in siteResourceStats.iteritems():
             corepower = float(panda_queues.get(queue,{}).get("corepower","1.0"))
 
             # Benchmarked HS06
-            benchmark_corepower = float(benchmarks_resource.get(queue,{}).get("avg_value",0.0))
+            benchmark_corepower = float(benchmarks_resources.get(queue,{}).get("avg_value",0.0))
 
             n_jobs = value[job_status]
 
@@ -189,4 +201,4 @@ for site, site_result in siteResourceStats.iteritems():
             points_list.append(json_body)
 
 
-client.write_points(points=points_list, time_precision="n")
+# client.write_points(points=points_list, time_precision="n")

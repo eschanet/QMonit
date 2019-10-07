@@ -35,16 +35,18 @@ def run():
                 body={
                     "size" : 10000,
                     "query" : {
-                        "match_all" : {},
-                        # "bool" : {
-                        #     "must" : {
-                        #         "match" : {
-                        #             "metadata.PanDAQueue" : "ANALY_LRZ",
-                        #             "metadata.PanDAQueue" : "ANALY_CPPM"
-                        #
-                        #         }
-                        #     }
-                        # }
+                        # "match_all" : {},
+                        "bool" : {
+                            "must" : {
+                                "bool": {
+                                    "should" : [
+                                        { "match" : {"metadata.PanDAQueue" : "LRZ-LMU_UCORE"}},
+                                        { "match" : {"metadata.PanDAQueue" : "ANALY_LRZ"}}
+                                    ],
+                                    "minimum_should_match" : 1
+                                }
+                            }
+                        }
                     },
                     "collapse": {
                         "field": "metadata.PanDAQueue",
@@ -56,6 +58,9 @@ def run():
                     }
                 },
                 filter_path=[""])
+
+    saved = fh.save_json_to_file("benchmarks_elasticsearch_raw.json",res)
+
 
     for hit in res['hits']['hits']:
         # pprint(hit)

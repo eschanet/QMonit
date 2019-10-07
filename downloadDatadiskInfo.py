@@ -1,4 +1,5 @@
 from requests import post
+import pprint
 from json import loads, dumps, dump
 import json
 import time
@@ -24,6 +25,11 @@ def run_query():
 
     r = post(request_url, headers=headers, data=data)
 
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(r.json())
+
+    with open("hans.json", "w") as f:
+        json.dump(r.json(), f, indent=4)
     data = {}
     for k in loads(r.text)['responses'][0]['aggregations']['4']['buckets']:
         rse = k['key']

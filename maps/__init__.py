@@ -11,16 +11,16 @@ class Map(dict):
 
     def load_file(self,file):
         '''Load a file that contains the map'''
-        try:
-            with open(os.path.join('data',file)) as json_file:
+        if os.path.exists(file):
+            with open(file) as json_file:
                 data = json.load(json_file)
                 return data
-        except:
-            raise
+        else:
+            return {}
 
     def save(self,filename,data):
         try:
-            with open(os.path.join('data',filename), 'w') as f:
+            with open(filename, 'w') as f:
                 json.dump(data, f)
             return True
         except IOError:

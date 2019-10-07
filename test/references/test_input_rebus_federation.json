@@ -1,0 +1,20 @@
+[{
+    "Infrastructure": "EGI",
+    "Federation": "CH-CERN",
+    "Country": "Switzerland",
+    "Site": "CERN-PROD",
+    "FederationAccountingName": "CERN-PROD",
+    "Institute Name": "CERN",
+    "Tier": "Tier 0"
+  },
+  {
+    "Infrastructure": "EGI",
+    "Federation": "Turkish Tier-2 Federation",
+    "Country": "Turkey",
+    "Site": "TR-10-ULAKBIM",
+    "FederationAccountingName": "TR-Tier2-federation",
+    "Institute Name": "TUBITAK ULAKBIM",
+    "Tier": "Tier 2"
+  },
+  {}
+]
