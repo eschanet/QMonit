@@ -8,8 +8,8 @@ lsetup python
 #execute script
 cd /afs/cern.ch/user/e/eschanet/queue_monit/
 
-#get updated queue info from AGIS
-python downloadQueueInfo.py
+#run the scrapers
+python run_scrapers.py -interval 10m
 
 #use the updated queue info and write it into MySQL database
 python writeQueueInfoMYSQL.py
