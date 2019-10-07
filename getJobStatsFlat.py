@@ -41,22 +41,6 @@ pledges_resources = getJSON('data/scraped_rebus_pledges.json')
 federations_resources = getJSON('data/scraped_rebus_federations.json')
 benchmarks_resources = getJSON('data/scraped_agis_pandaqueue.json')
 
-# #let's load some of the information that has been scraped previously
-# with open('pandaqueue_scraped.json') as pandaqueue:
-#     panda_queues = json.load(pandaqueue)
-# with open('pandaqueue_actual_map.json') as pandaresource:
-#     panda_resources = json.load(pandaresource)
-# with open('sites_scraped.json') as siteresource:
-#     site_resources = json.load(siteresource)
-# with open('ddm_scraped.json') as ddmresource:
-#     ddm_resources = json.load(ddmresource)
-# with open('federation_pledges_scraped.json') as pledgesresource:
-#     pledges_resources = json.load(pledgesresource)
-# with open('federations_scraped.json') as federationsresource:
-#     federations_resources = json.load(federationsresource)
-# with open('benchmarks_elasticsearch_scraped.json') as benchmarksresource:
-#     benchmarks_resourcess = json.load(benchmarksresource)
-
 #get the actual job numbers from panda
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
 

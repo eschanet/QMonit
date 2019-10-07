@@ -43,14 +43,13 @@ def run():
     logger.info('Getting existing data.')
     read_cursor.execute("select panda_queue, resource from jobs")
 
-    with open('pandaqueue_scraped.json') as pandaqueue:
-        panda_queues = json.load(pandaqueue)
+    def getJSON(file):
+        with open(file) as f:
+            return json.load(f)
 
-    with open('pandaqueue_actual_map.json') as pandaresource:
-        panda_resources = json.load(pandaresource)
-
-    with open('daods_datadisk.json') as datadisks:
-        datadisk_info = json.load(datadisks)
+    panda_queues = getJSON('data/scraped_agis_pandaqueue.json')
+    panda_resources = getJSON('data/map_PQ_names.json')
+    datadisk_info = getJSON('data/scraped_grafana_datadisk.json')
 
     for (panda_queue, resource) in read_cursor:
         try:
