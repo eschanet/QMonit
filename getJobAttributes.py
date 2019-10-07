@@ -11,6 +11,7 @@ from datetime import datetime
 from pandaserver.taskbuffer import JobSpec
 from pandaserver.userinterface import Client
 
+#this is an example
 job = Client.getJobStatus([4242299116])
 
 spec = job[1][0]

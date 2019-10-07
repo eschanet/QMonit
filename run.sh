@@ -15,7 +15,7 @@ python run_scrapers.py -interval 10m
 python writeQueueInfoMYSQL.py
 
 #get data from panda and write to influxdb
-python getJobStatsFlat.py
+python writeJobStats.py
 
 #keep load of influx and compute interesting quantities offline
 #download data, compute quantities, re-upload with same timestamp
