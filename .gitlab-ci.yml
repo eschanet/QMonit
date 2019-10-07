@@ -8,5 +8,3 @@ test:
     - export PYTHONPATH="$PYTHONPATH:$PWD"
     - pip install elasticsearch6 
     - python test
-  only:
-    - feature/classes
