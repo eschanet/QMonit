@@ -201,4 +201,4 @@ for site, site_result in siteResourceStats.iteritems():
             points_list.append(json_body)
 
 
-# client.write_points(points=points_list, time_precision="n")
+client.write_points(points=points_list, time_precision="n")
