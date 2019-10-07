@@ -39,7 +39,7 @@ site_resources = getJSON('data/scraped_agis_sites.json')
 ddm_resources = getJSON('data/scraped_agis_ddm.json')
 pledges_resources = getJSON('data/scraped_rebus_pledges.json')
 federations_resources = getJSON('data/scraped_rebus_federations.json')
-benchmarks_resources = getJSON('data/scraped_agis_pandaqueue.json')
+benchmarks_resources = getJSON('data/scraped_elasticsearch_benchmark.json')
 
 #get the actual job numbers from panda
 err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
