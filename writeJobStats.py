@@ -97,12 +97,13 @@ for site, site_result in siteResourceStats.iteritems():
             #information from wlcg rebus
             federation = federations_resources.get(atlas_site,{}).get("Federation","None")
             pledge = ""
-            for pledge_types,pledge_units in zip(pledges_resources.get(federation,{}),pledges_resources.get(federation,{})):
-                pledge_type = pledge_types.get("PledgeType","None")
-                pledge_unit = pledge_units.get("PledgeUnit","None")
+            for pledges in pledges_resources.get(federation,[]):
+                pledge_type = pledges.get("PledgeType","None")
+                pledge_unit = pledges.get("PledgeUnit","None")
                 pledge += "%s (%s);" % (pledge_type, pledge_unit)
-            if len(pledge)>1: #not sure if needed? is below safe for empty strings?
-                pledge = pledge[:-1]
+                if pledge_unit == 'HEP-SPEC06':
+                    federation_HS06_pledge = pledges.get("ATLAS",0)
+            pledge = pledge[:-1] if len(pledge)>1 else "None" #wait a minute, is this safe for empty strings?
 
             #information about frontier
             frontier_list = site_resources.get(atlas_site, {}).get("fsconf", {}).get("frontier", [])
@@ -179,6 +180,7 @@ for site, site_result in siteResourceStats.iteritems():
                                 "resource_factor" : resource_factor,
                                 "corepower" : corepower,
                                 "HS06_benchmark" : benchmark_corepower,
+                                "federation_HS06_pledge" : federation_HS06_pledge,
                             }
                         }
 
