@@ -33,20 +33,18 @@ def customfloat(f):
     else:
         return 0.0
 
-with open('pandaqueue_scraped.json') as pandaqueue:
-    panda_queues = json.load(pandaqueue)
+def getJSON(file):
+    with open(file) as f:
+        return json.load(f)
 
-with open('pandaqueue_actual_map.json') as pandaresource:
-    panda_resources = json.load(pandaresource)
-
-with open('sites_scraped.json') as siteresource:
-    site_resources = json.load(siteresource)
-
-with open('ddm_scraped.json') as ddmresource:
-    ddm_resources = json.load(ddmresource)
-
-with open('daods_datadisk.json') as datadisks:
-    datadisk_info = json.load(datadisks)
+panda_queues = getJSON('data/scraped_agis_pandaqueue.json')
+panda_resources = getJSON('data/map_PQ_names.json')
+site_resources = getJSON('data/scraped_agis_sites.json')
+ddm_resources = getJSON('data/scraped_agis_ddm.json')
+pledges_resources = getJSON('data/scraped_rebus_pledges.json')
+federations_resources = getJSON('data/scraped_rebus_federations.json')
+benchmarks_resources = getJSON('data/scraped_agis_pandaqueue.json')
+datadisk_info = getJSON('data/scraped_grafana_datadisk.json')
 
 client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
 
