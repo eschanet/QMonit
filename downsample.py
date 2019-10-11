@@ -23,6 +23,7 @@ import mysql.connector
 
 parser = argparse.ArgumentParser(description="Derived quantities writer")
 parser.add_argument('--debug', action='store_true', help='print debug messages')
+parser.add_argument('--kill-last', action='store_true', help='print debug messages')
 parser.add_argument('-average', default='1h', help='How much time to average over')
 parser.add_argument('-measurement', default='jobs', help='What measurement to average')
 args = parser.parse_args()
@@ -48,10 +49,6 @@ def get_average(time_intervals, values, index):
     # create list first
     to_sum = [value[index] for value in values[:time_intervals] if not value[index] is None]
     total_jobs = sum(to_sum)
-
-    # total_jobs = sum(values[:time_intervals])
-    # for value in values[:time_intervals]:
-    #     total_jobs += value[index]
 
     try:
         mean = float(total_jobs) / len(to_sum)
@@ -128,6 +125,7 @@ def run():
         averaged_cpu = get_average(time_units, values, columns.index('resource_factor'))
         averaged_corepower = get_average(time_units, values, columns.index('corepower'))
         averaged_HS06_benchmark = get_average(time_units, values, columns.index('HS06_benchmark'))
+        averaged_HS06_pledge = get_average(time_units, values, columns.index('federation_HS06_pledge'))
 
         #construct rest of the data dict
         data = dict(zip(columns, latest_value))
@@ -150,6 +148,7 @@ def run():
         data.pop('resource_factor', None)
         data.pop('corepower', None)
         data.pop('HS06_benchmark', None)
+        data.pop('federation_HS06_pledge', None)
 
         json_body = {   "measurement": "jobs",
                         "tags": data,
@@ -158,9 +157,15 @@ def run():
                             "jobs" : averaged_jobs,
                             "resource_factor" : averaged_cpu,
                             "corepower" : averaged_corepower,
-                            "HS06_benchmark" : averaged_HS06_benchmark
+                            "HS06_benchmark" : averaged_HS06_benchmark,
+                            "federation_HS06_pledge" : averaged_HS06_pledge
                         }
                     }
+
+        #sometimes I fuck up and then I want to kill the last measurement...
+        if args.kill_last:
+            for key,value in json_body['fields'].iteritems():
+                json_body['fields'][key] = 0.0
 
         points_list.append(json_body)
 
