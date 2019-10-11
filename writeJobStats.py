@@ -9,9 +9,16 @@ import cPickle as pickle
 from datetime import datetime,timedelta
 import hashlib
 import ConfigParser
+import argparse
 
 from influxdb import InfluxDBClient
 import Client
+
+parser = argparse.ArgumentParser(description="Write job stats")
+parser.add_argument('--debug', action='store_true', help='print debug messages')
+parser.add_argument('--skipSubmit', action='store_true', help='do not upload to DB')
+args = parser.parse_args()
+
 
 #do some configurations
 config = ConfigParser.ConfigParser()
@@ -42,10 +49,11 @@ federations_resources = getJSON('data/scraped_rebus_federations.json')
 benchmarks_resources = getJSON('data/scraped_elasticsearch_benchmark.json')
 
 #get the actual job numbers from panda
-err, siteResourceStats = Client.getJobStatisticsPerSiteResource()
+err, siteResourceStats = Client.getJobStatisticsPerSiteResource(10)
 
 #idb client instance for uploading data later on
-client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
+if not args.skipSubmit:
+    client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
 points_list = []
 
 # Explicitly set timestamp in InfluxDB point. Avoids having multiple entries per 10 minute interval (can happen sometimes with acron)
@@ -186,5 +194,5 @@ for site, site_result in siteResourceStats.iteritems():
 
             points_list.append(json_body)
 
-
-client.write_points(points=points_list, time_precision="n")
+if not args.skipSubmit:
+    client.write_points(points=points_list, time_precision="n")
