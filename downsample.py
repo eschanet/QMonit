@@ -21,6 +21,8 @@ from influxdb import InfluxDBClient
 import Client
 import mysql.connector
 
+urllib.disable_warnings(urllib.exceptions.InsecureRequestWarning)
+
 parser = argparse.ArgumentParser(description="Derived quantities writer")
 parser.add_argument('--debug', action='store_true', help='print debug messages')
 parser.add_argument('--kill-last', action='store_true', help='print debug messages')
@@ -41,6 +43,15 @@ if args.average == '1h':
 else:
     current_time = datetime.utcnow().replace(microsecond=0,second=0,minute=0,hour=0)
 unix = int(unix_time_nanos(current_time))
+
+def get_sum(time_intervals, values, index):
+
+    total_jobs = 0
+
+    # create list first
+    to_sum = [value[index] for value in values[:time_intervals] if not value[index] is None]
+    return round(float(sum(to_sum)),2)
+
 
 def get_average(time_intervals, values, index):
 
@@ -120,8 +131,12 @@ def run():
         #get me the last (most recent) point, because this is the one I want to overwrite.
         latest_value = values[0]
 
-        #get averaged values
-        averaged_jobs = get_average(time_units, values, columns.index('jobs'))
+        # get averaged values
+        if tags['job_status'] in ['failed','finished','cancelled','closed']:
+            averaged_jobs = get_sum(time_units, values, columns.index('jobs'))
+        else:
+            averaged_jobs = get_average(time_units, values, columns.index('jobs'))
+        # averaged_jobs = get_average(time_units, values, columns.index('jobs'))
         averaged_cpu = get_average(time_units, values, columns.index('resource_factor'))
         averaged_corepower = get_average(time_units, values, columns.index('corepower'))
         averaged_HS06_benchmark = get_average(time_units, values, columns.index('HS06_benchmark'))
