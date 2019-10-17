@@ -4,7 +4,10 @@ from __future__ import print_function
 
 from pprint import pprint
 import json,sys
+
 import requests
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
 import cPickle as pickle
 from datetime import datetime,timedelta
 import hashlib

@@ -5,7 +5,10 @@ from __future__ import print_function
 from pprint import pprint
 from collections import defaultdict
 import json,sys
+
 import requests
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
 import argparse
 import ConfigParser
 
