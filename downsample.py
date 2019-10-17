@@ -21,7 +21,6 @@ from influxdb import InfluxDBClient
 import Client
 import mysql.connector
 
-urllib.disable_warnings(urllib.exceptions.InsecureRequestWarning)
 
 parser = argparse.ArgumentParser(description="Derived quantities writer")
 parser.add_argument('--debug', action='store_true', help='print debug messages')
