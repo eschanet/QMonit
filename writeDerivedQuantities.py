@@ -5,7 +5,10 @@ from __future__ import print_function
 from pprint import pprint
 from collections import defaultdict
 import json,sys
+
 import requests
+requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
+
 import argparse
 from datetime import datetime,timedelta
 import time
@@ -15,7 +18,7 @@ import ConfigParser
 
 import logging
 from commonHelpers.logger import logger
-logger = logger.getChild("mephisto")
+logger = logger.getChild("QMonit")
 
 from influxdb import InfluxDBClient
 import Client
@@ -27,19 +30,22 @@ parser.add_argument('--skipSubmit', action='store_true', help='do not upload to 
 args = parser.parse_args()
 
 if args.debug:
-    logging.getLogger("mephisto").setLevel(logging.DEBUG)
+    logging.getLogger("QMonit").setLevel(logging.DEBUG)
 
 epoch = datetime.utcfromtimestamp(0)
 
 def unix_time_nanos(dt):
     return (dt - epoch).total_seconds() * 1e9
 
-def get_average_jobs(time_intervals, values, index, debug=False):
+def get_average_jobs(time_intervals, values, index, debug=False, skipFirst=False):
     total_jobs = 0
     for value in values[:time_intervals]:
         total_jobs += value[index]
+        if debug:
+            logger.debug(value[index])
 
     mean = float(total_jobs) / time_intervals
+
     if isinstance(mean, float):
         return round(mean,2)
     else:
@@ -66,17 +72,20 @@ def getUnixFromTimeStamp(time):
     except ValueError:
         return 0
 
-def get_derived_quantities(distinct_sets, series, series_30d):
+def get_pq_from_mysql(cursor):
+    cursor.execute('SELECT DISTINCT panda_queue, resource FROM jobs;')
+    return [(pq,resource) for pq,resource in cursor]
+
+def get_derived_quantities(distinct_sets, series, series_30d, pqs_mysql):
 
     mysql_data = defaultdict(lambda: defaultdict(dict))
+    pqs_in_idb = []
 
     for rs in distinct_sets.keys():
         rs = rs[1] #rs is a tuple
 
-        if args.debug and not rs['panda_queue'] == "AGLT2_UCORE":
-            continue
-
         data = get_derived_quantities_for_keyset(rs, series, series_30d)
+        pqs_in_idb.append((rs["panda_queue"],rs["resource"]))
 
         if data is None:
             mysql_data[rs["panda_queue"]][rs["resource"]][rs["job_status"]] = None
@@ -89,7 +98,10 @@ def get_derived_quantities(distinct_sets, series, series_30d):
 
             mysql_data[rs["panda_queue"]][rs["resource"]]["tags"] = data['tags']
 
-    return mysql_data
+    #now let's run again over the PQs from the MySQL db to make sure non-existant PQs are correctly handled
+    missing_pqs = sorted(set(pqs_mysql) - set(pqs_in_idb))
+
+    return mysql_data,missing_pqs
 
 def get_derived_quantities_for_keyset(rs, series, series_30d):
     logger.debug('Queue: %s     Resource: %s      State: %s' %(rs["panda_queue"],rs["resource"],rs["job_status"]))
@@ -101,7 +113,7 @@ def get_derived_quantities_for_keyset(rs, series, series_30d):
         logger.debug('Got no points for this 10m set of keys.')
         return None
     if len(filtered_points_30d) == 0:
-        logger.debug('Got no points for this 1h set of keys.')
+        logger.debug('Got no points for this 1d set of keys.')
         return None
     elif len(filtered_points) > 1 or len(filtered_points_30d) > 1:
         logger.debug('Uhh, oh, got more than one point? This is weird! I will use the first one and hope this is what you meant to do.')
@@ -129,14 +141,16 @@ def get_derived_quantities_for_keyset(rs, series, series_30d):
     data['avg6h'] = get_average_jobs(36, values, columns.index('jobs'))
     data['avg12h'] = get_average_jobs(72, values, columns.index('jobs'))
     data['avg24h'] = get_average_jobs(144, values, columns.index('jobs'))
-    data['avg7d'] = get_average_jobs(168, values_30d, columns_30d.index('jobs'))
-    data['avg30d'] = get_average_jobs(720, values_30d, columns_30d.index('jobs'))
+    data['avg7d'] = get_average_jobs(7, values_30d, columns_30d.index('jobs'), debug=args.debug,skipFirst=True)
+    data['avg30d'] = get_average_jobs(30, values_30d, columns_30d.index('jobs'), skipFirst=True)
 
     # print(data)
     return {'tags':tags, 'values':data}
 
 def get_list_to_upload(data):
     for panda_queue, d in data.iteritems():
+        if panda_queue == 'RAL-LCG2_MCORE_TEMP':
+            logger.warning('We have some weird value here')
         for resource, job_states in d.iteritems():
             temp_data = {}
             for job_status, job_data in job_states.iteritems():
@@ -176,28 +190,34 @@ def run():
     database = config.get("credentials", "database")
 
     logger.info('Constructing InfluxDB queries.')
-
+    logger.info('Getting distinct key sets')
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
-    rs_distinct_sets = client.query('''select * from "10m"."jobs" group by panda_queue, resource, job_status limit 1''')
+    rs_distinct_sets = client.query('''select panda_queue, resource, job_status, jobs from "1h"."jobs" where time > now() - 30d group by panda_queue, resource, job_status limit 1''')
 
+    logger.info('Getting 10m data')
     rs_result_24h = client.query('''select * from "10m"."jobs" where time > now() - 24h group by panda_queue, resource, job_status ''')
+    logger.info('Got 10m data')
     raw_dict_24h = rs_result_24h.raw
     series_24h = raw_dict_24h['series']
 
-    rs_result_30d = client.query('''select * from "1h"."jobs" where time > now() - 30d group by panda_queue, resource, job_status ''')
+    logger.info('Getting 1d data')
+    rs_result_30d = client.query('''select * from "1d"."jobs" where time > now() - 30d group by panda_queue, resource, job_status ''')
+    logger.info('Got 1d data')
     raw_dict_30d = rs_result_30d.raw
     series_30d = raw_dict_30d['series']
 
     logger.info('Got data from InfluxDB.')
     logger.info('Constructing MySQL connector.')
 
-    if not args.skipSubmit:
-        cnx = mysql.connector.connect(user='monit', password=password, host='dbod-sql-graf.cern.ch', port=5501 ,database='monit_jobs')
-        cursor = cnx.cursor()
+    cnx = mysql.connector.connect(user='monit', password=password, host='dbod-sql-graf.cern.ch', port=5501 ,database='monit_jobs')
+    cursor = cnx.cursor()
+    selector = cnx.cursor()
+
+    #in mysql there may still be unique pq-resource combinations that don't exist anymore
+    pqs_mysql = get_pq_from_mysql(selector)
 
     logger.info('Building data.')
-
-    data = get_derived_quantities(rs_distinct_sets, series_24h, series_30d)
+    data,missing_pqs = get_derived_quantities(rs_distinct_sets, series_24h, series_30d, pqs_mysql)
 
     for point in get_list_to_upload(data):
         if args.debug:
@@ -205,7 +225,8 @@ def run():
         if not args.skipSubmit:
             cursor.execute(point)
 
-        # client.write_points(points=points_list, time_precision="n")
+    for pq,resource in missing_pqs:
+        cursor.execute('DELETE FROM jobs WHERE panda_queue = "{panda_queue}" AND resource = "{resource}"'.format(panda_queue=pq,resource=resource))
 
     if not args.skipSubmit:
         cnx.commit()
