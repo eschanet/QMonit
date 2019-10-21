@@ -53,6 +53,7 @@ def run():
     panda_queues = getJSON('data/scraped_agis_pandaqueue.json')
     panda_resources = getJSON('data/map_PQ_names.json')
     datadisk_info = getJSON('data/scraped_grafana_datadisk.json')
+    federations_resources = getJSON('data/scraped_rebus_federations.json')
 
     for (panda_queue, resource) in read_cursor:
         try:
@@ -66,6 +67,7 @@ def run():
         atlas_site = panda_queues[nickname]["atlas_site"]
         type = panda_queues[nickname]["type"]
         cloud = panda_queues[nickname]["cloud"]
+        federation = federations_resources.get(atlas_site,{}).get("Federation","None")
         site_state = panda_queues[nickname]["status"]
         tier = panda_queues[nickname]["tier"]
 
@@ -93,11 +95,12 @@ def run():
             datadisk_size = 0.0
             datadisk_files = 0
 
-        add_point = ('''INSERT INTO jobs (panda_queue, resource) VALUES ("{panda_queue}", "{resource}") ON DUPLICATE KEY UPDATE atlas_site="{atlas_site}", type="{type}", cloud="{cloud}", site_state="{site_state}", tier="{tier}",resource_factor="{resource_factor}", datadisk_name="{datadisk_name}", datadisk_occupied_gb="{datadisk_size}", datadisk_files="{datadisk_files}"'''.format(
+        add_point = ('''INSERT INTO jobs (panda_queue, resource) VALUES ("{panda_queue}", "{resource}") ON DUPLICATE KEY UPDATE atlas_site="{atlas_site}", type="{type}", cloud="{cloud}",federation="{federation}", site_state="{site_state}", tier="{tier}",resource_factor="{resource_factor}", datadisk_name="{datadisk_name}", datadisk_occupied_gb="{datadisk_size}", datadisk_files="{datadisk_files}"'''.format(
                     atlas_site = atlas_site,
                     panda_queue = panda_queue,
                     type = type,
                     cloud = cloud,
+                    federation = federation,
                     site_state = site_state,
                     tier = tier,
                     resource_factor=resource_factor,
