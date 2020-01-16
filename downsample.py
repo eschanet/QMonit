@@ -63,13 +63,13 @@ def get_average(time_intervals, values, index):
     try:
         mean = float(total_jobs) / len(to_sum)
     except:
-        logger.warning('Got unexpected averaged number, returning 0.0')
+        logger.warning('Got unexpected averaged number for total_jobs {} and to_sum {}, returning 0.0').format(float(total_jobs), len(to_sum))
         return 0.0
 
     if isinstance(mean, float):
         return round(mean,2)
     else:
-        logger.warning('Got unexpected averaged number, returning 0.0')
+        logger.warning('Got unexpected averaged number for mean {}, returning 0.0').format(mean)
         return 0.0
 
 def run():
@@ -95,9 +95,9 @@ def run():
         return 0
 
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
-    rs_distinct_sets = client.query('''select * from "{}"."jobs" group by panda_queue, resource, job_status limit 1'''.format(retention))
+    rs_distinct_sets = client.query('''select * from "{}"."jobs" group by panda_queue, prod_source, resource, job_status limit 1'''.format(retention))
 
-    rs_result = client.query('''select * from "{}"."jobs" where time > now() - {} group by panda_queue, resource, job_status '''.format(retention,delta))
+    rs_result = client.query('''select * from "{}"."jobs" where time > now() - {} group by panda_queue, prod_source, resource, job_status '''.format(retention,delta))
     raw_dict = rs_result.raw
     series = raw_dict['series']
 
@@ -112,7 +112,7 @@ def run():
         rs = rs[1] #rs is a tuple
         logger.debug(rs)
 
-        filtered_points = [p for p in series if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource'] and p['tags']['job_status'] == rs['job_status']]
+        filtered_points = [p for p in series if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource'] and p['tags']['prod_source'] == rs['prod_source'] and p['tags']['job_status'] == rs['job_status']]
 
         if len(filtered_points) == 0:
             logger.debug('Got no points for this set of keys.')
@@ -151,7 +151,7 @@ def run():
         else:
             #got no hashes in 1h aggregate data yet
             m = hashlib.md5()
-            m.update(tags['panda_queue'] + tags['resource'] + tags['job_status'])
+            m.update(str(tags['panda_queue']) + str(tags['prod_source']) + str(tags['resource']) + str(tags['job_status']))
             hash = str(int(m.hexdigest(), 16))[0:9]
 
         time = unix + int(hash)
