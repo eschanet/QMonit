@@ -44,7 +44,7 @@ def get_average_jobs(time_intervals, values, index, debug=False, skipFirst=False
         if debug:
             logger.debug(value[index])
 
-    mean = float(total_jobs) / time_intervals
+    mean = float(total_jobs) / len(values[:time_intervals])
 
     if isinstance(mean, float):
         return round(mean,2)
@@ -73,8 +73,8 @@ def getUnixFromTimeStamp(time):
         return 0
 
 def get_pq_from_mysql(cursor):
-    cursor.execute('SELECT DISTINCT panda_queue, resource FROM jobs;')
-    return [(pq,resource) for pq,resource in cursor]
+    cursor.execute('SELECT DISTINCT panda_queue, prod_source, resource FROM jobs;')
+    return [(pq,prod_source,resource) for pq,prod_source,resource in cursor]
 
 def get_derived_quantities(distinct_sets, series, series_30d, pqs_mysql):
 
@@ -85,18 +85,18 @@ def get_derived_quantities(distinct_sets, series, series_30d, pqs_mysql):
         rs = rs[1] #rs is a tuple
 
         data = get_derived_quantities_for_keyset(rs, series, series_30d)
-        pqs_in_idb.append((rs["panda_queue"],rs["resource"]))
+        pqs_in_idb.append((rs["panda_queue"],rs["prod_source"],rs["resource"]))
 
         if data is None:
-            mysql_data[rs["panda_queue"]][rs["resource"]][rs["job_status"]] = None
-            mysql_data[rs["panda_queue"]][rs["resource"]]["tags"] = None
+            mysql_data[rs["panda_queue"]][rs["prod_source"]][rs["resource"]][rs["job_status"]] = None
+            mysql_data[rs["panda_queue"]][rs["prod_source"]][rs["resource"]]["tags"] = None
         else:
             if not 'values' in data:
-                mysql_data[rs["panda_queue"]][rs["resource"]][rs["job_status"]] = None
+                mysql_data[rs["panda_queue"]][rs["prod_source"]][rs["resource"]][rs["job_status"]] = None
             else:
-                mysql_data[rs["panda_queue"]][rs["resource"]][rs["job_status"]] = data['values']
+                mysql_data[rs["panda_queue"]][rs["prod_source"]][rs["resource"]][rs["job_status"]] = data['values']
 
-            mysql_data[rs["panda_queue"]][rs["resource"]]["tags"] = data['tags']
+            mysql_data[rs["panda_queue"]][rs["prod_source"]][rs["resource"]]["tags"] = data['tags']
 
     #now let's run again over the PQs from the MySQL db to make sure non-existant PQs are correctly handled
     missing_pqs = sorted(set(pqs_mysql) - set(pqs_in_idb))
@@ -104,10 +104,10 @@ def get_derived_quantities(distinct_sets, series, series_30d, pqs_mysql):
     return mysql_data,missing_pqs
 
 def get_derived_quantities_for_keyset(rs, series, series_30d):
-    logger.debug('Queue: %s     Resource: %s      State: %s' %(rs["panda_queue"],rs["resource"],rs["job_status"]))
+    logger.debug('Queue: %s     Prod source: %s       Resource: %s      State: %s' %(rs["panda_queue"],rs["prod_source"],rs["resource"],rs["job_status"]))
 
-    filtered_points = [p for p in series if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource'] and p['tags']['job_status'] == rs['job_status']]
-    filtered_points_30d = [p for p in series_30d if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['resource'] == rs['resource'] and p['tags']['job_status'] == rs['job_status']]
+    filtered_points = [p for p in series if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['prod_source'] == rs['prod_source'] and p['tags']['resource'] == rs['resource'] and p['tags']['job_status'] == rs['job_status']]
+    filtered_points_30d = [p for p in series_30d if p['tags']['panda_queue'] == rs['panda_queue'] and p['tags']['prod_source'] == rs['prod_source'] and p['tags']['resource'] == rs['resource'] and p['tags']['job_status'] == rs['job_status']]
 
     if len(filtered_points) == 0:
         logger.debug('Got no points for this 10m set of keys.')
@@ -151,34 +151,36 @@ def get_list_to_upload(data):
     for panda_queue, d in data.iteritems():
         if panda_queue == 'RAL-LCG2_MCORE_TEMP':
             logger.warning('We have some weird value here')
-        for resource, job_states in d.iteritems():
-            temp_data = {}
-            for job_status, job_data in job_states.iteritems():
-                if job_data is None:
+        for prod_source, resources in d.iteritems():
+            for resource, job_states in resources.iteritems():
+                temp_data = {}
+                for job_status, job_data in job_states.iteritems():
+                    if job_data is None:
+                        continue
+                    if job_status == "tags":
+                        tags = job_data
+                    else:
+                        temp_data[job_status+"_jobs"] = job_data['current']
+                        if job_status in ['assigned', 'activated', 'failed', 'running']:
+                            for average in ["avg1h","avg6h","avg12h","avg24h","avg7d","avg30d"]:
+                                temp_data[average+"_"+job_status+"_jobs"] = job_data[average]
+
+                if len(temp_data) == 0:
                     continue
-                if job_status == "tags":
-                    tags = job_data
-                else:
-                    temp_data[job_status+"_jobs"] = job_data['current']
-                    if job_status in ['assigned', 'activated', 'failed', 'running']:
-                        for average in ["avg1h","avg6h","avg12h","avg24h","avg7d","avg30d"]:
-                            temp_data[average+"_"+job_status+"_jobs"] = job_data[average]
 
-            if len(temp_data) == 0:
-                continue
+                add_point = ('''INSERT INTO jobs (panda_queue,prod_source, resource) VALUES ("{panda_queue}", "{prod_source}", "{resource}") ON DUPLICATE KEY UPDATE '''.format(
+                            panda_queue = panda_queue,
+                            prod_source = prod_source,
+                            resource = resource))
 
-            add_point = ('''INSERT INTO jobs (panda_queue, resource) VALUES ("{panda_queue}", "{resource}") ON DUPLICATE KEY UPDATE '''.format(
-                        panda_queue = panda_queue,
-                        resource = resource))
+                for field, value in temp_data.iteritems():
+                    add_point += '''{field}={value}, '''.format(field=field, value=value)
 
-            for field, value in temp_data.iteritems():
-                add_point += '''{field}={value}, '''.format(field=field, value=value)
+                add_point = add_point[:-2] + ''';'''
 
-            add_point = add_point[:-2] + ''';'''
+                logger.debug(add_point)
 
-            logger.debug(add_point)
-
-            yield add_point
+                yield add_point
 
 def run():
 
@@ -192,16 +194,16 @@ def run():
     logger.info('Constructing InfluxDB queries.')
     logger.info('Getting distinct key sets')
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
-    rs_distinct_sets = client.query('''select panda_queue, resource, job_status, jobs from "1h"."jobs" where time > now() - 30d group by panda_queue, resource, job_status limit 1''')
+    rs_distinct_sets = client.query('''select panda_queue, prod_source, resource, job_status, jobs from "1h"."jobs" where time > now() - 30d group by panda_queue, prod_source, resource, job_status limit 1''')
 
     logger.info('Getting 10m data')
-    rs_result_24h = client.query('''select * from "10m"."jobs" where time > now() - 24h group by panda_queue, resource, job_status ''')
+    rs_result_24h = client.query('''select * from "10m"."jobs" where time > now() - 24h group by panda_queue, prod_source, resource, job_status ''')
     logger.info('Got 10m data')
     raw_dict_24h = rs_result_24h.raw
     series_24h = raw_dict_24h['series']
 
     logger.info('Getting 1d data')
-    rs_result_30d = client.query('''select * from "1d"."jobs" where time > now() - 30d group by panda_queue, resource, job_status ''')
+    rs_result_30d = client.query('''select * from "1d"."jobs" where time > now() - 30d group by panda_queue, prod_source, resource, job_status ''')
     logger.info('Got 1d data')
     raw_dict_30d = rs_result_30d.raw
     series_30d = raw_dict_30d['series']
@@ -226,7 +228,7 @@ def run():
             cursor.execute(point)
 
     for pq,resource in missing_pqs:
-        cursor.execute('DELETE FROM jobs WHERE panda_queue = "{panda_queue}" AND resource = "{resource}"'.format(panda_queue=pq,resource=resource))
+        cursor.execute('DELETE FROM jobs WHERE panda_queue = "{panda_queue}" AND resource = "{resource}" AND prod_source = "{prod_source}"'.format(panda_queue=pq,resource=resource,prod_source=prod_source))
 
     if not args.skipSubmit:
         cnx.commit()

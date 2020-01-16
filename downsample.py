@@ -95,9 +95,9 @@ def run():
         return 0
 
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
-    rs_distinct_sets = client.query('''select * from "{}"."jobs" group by panda_queue, prod_source, resource, job_status limit 1'''.format(retention))
+    rs_distinct_sets = client.query('''select * from "{}"."jobs" where "prod_source" != '' group by panda_queue, prod_source, resource, job_status limit 1'''.format(retention))
 
-    rs_result = client.query('''select * from "{}"."jobs" where time > now() - {} group by panda_queue, prod_source, resource, job_status '''.format(retention,delta))
+    rs_result = client.query('''select * from "{}"."jobs" where time > now() - {} and "prod_source" != '' group by panda_queue, prod_source, resource, job_status '''.format(retention,delta))
     raw_dict = rs_result.raw
     series = raw_dict['series']
 
@@ -181,6 +181,7 @@ def run():
             for key,value in json_body['fields'].iteritems():
                 json_body['fields'][key] = 0.0
 
+        logger.debug(json_body)
         points_list.append(json_body)
 
     client.write_points(points=points_list, time_precision="n", retention_policy=args.average)
