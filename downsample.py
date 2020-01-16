@@ -63,13 +63,13 @@ def get_average(time_intervals, values, index):
     try:
         mean = float(total_jobs) / len(to_sum)
     except:
-        logger.warning('Got unexpected averaged number for total_jobs {} and to_sum {}, returning 0.0').format(float(total_jobs), len(to_sum))
+        logger.warning('Got unexpected averaged number, returning 0.0')
         return 0.0
 
     if isinstance(mean, float):
         return round(mean,2)
     else:
-        logger.warning('Got unexpected averaged number for mean {}, returning 0.0').format(mean)
+        logger.warning('Got unexpected averaged number, returning 0.0')
         return 0.0
 
 def run():
