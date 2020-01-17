@@ -78,7 +78,7 @@ def get_pq_from_mysql(cursor):
 
 def get_derived_quantities(distinct_sets, series, series_30d, pqs_mysql):
 
-    mysql_data = defaultdict(lambda: defaultdict(dict))
+    mysql_data = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
     pqs_in_idb = []
 
     for rs in distinct_sets.keys():
@@ -194,16 +194,16 @@ def run():
     logger.info('Constructing InfluxDB queries.')
     logger.info('Getting distinct key sets')
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)
-    rs_distinct_sets = client.query('''select panda_queue, prod_source, resource, job_status, jobs from "1h"."jobs" where time > now() - 30d group by panda_queue, prod_source, resource, job_status limit 1''')
+    rs_distinct_sets = client.query('''select panda_queue, prod_source, resource, job_status, jobs from "1h"."jobs" where time > now() - 30d and "prod_source" != '' group by panda_queue, prod_source, resource, job_status limit 1''')
 
     logger.info('Getting 10m data')
-    rs_result_24h = client.query('''select * from "10m"."jobs" where time > now() - 24h group by panda_queue, prod_source, resource, job_status ''')
+    rs_result_24h = client.query('''select * from "10m"."jobs" where time > now() - 24h and "prod_source" != '' group by panda_queue, prod_source, resource, job_status ''')
     logger.info('Got 10m data')
     raw_dict_24h = rs_result_24h.raw
     series_24h = raw_dict_24h['series']
 
     logger.info('Getting 1d data')
-    rs_result_30d = client.query('''select * from "1d"."jobs" where time > now() - 30d group by panda_queue, prod_source, resource, job_status ''')
+    rs_result_30d = client.query('''select * from "1d"."jobs" where time > now() - 30d and "prod_source" != '' group by panda_queue, prod_source, resource, job_status ''')
     logger.info('Got 1d data')
     raw_dict_30d = rs_result_30d.raw
     series_30d = raw_dict_30d['series']
@@ -227,7 +227,7 @@ def run():
         if not args.skipSubmit:
             cursor.execute(point)
 
-    for pq,resource in missing_pqs:
+    for pq,prod_source,resource in missing_pqs:
         cursor.execute('DELETE FROM jobs WHERE panda_queue = "{panda_queue}" AND resource = "{resource}" AND prod_source = "{prod_source}"'.format(panda_queue=pq,resource=resource,prod_source=prod_source))
 
     if not args.skipSubmit:
