@@ -6,13 +6,27 @@ import collections
 from . import JSONScraper
 
 from commonHelpers.logger import logger
-logger = logger.getChild(__name__)
+logger = logger.getChild("mephisto")
 
 class RebusDict(dict):
     def __init__(self, *args, **kwargs):
         super(RebusDict, self).__init__(*args, **kwargs)
 
     def update(self,object,append_mode=False):
+
+        def isATLAS(object):
+            for key, item in object.items():
+                if ("CMS Federation" in item.get("Federation","")) or ("LHCb Federation" in item.get("Federation","")) or ("ALICE Federation" in item.get("Federation","")): return False
+                if (" CMS " in item.get("Federation","")) or (" LHCb " in item.get("Federation","")) or (" ALICE " in item.get("Federation","")): return False
+                if "ATLAS" in item.get("Federation",""): return True
+            return True
+
+        #FIXME: this is ugly
+        # Check if indeed ATLAS federation or maybe CMS/LHCb ...
+        if not isATLAS(object):
+            logger.debug("Not ATLAS")
+            return self
+
         if not append_mode:
             return super(RebusDict, self).update(object)
         elif append_mode:
@@ -39,10 +53,12 @@ class REBUS(JSONScraper):
         if isinstance(data,dict):
             for key,d in data.items():
                 if isinstance(d.get(sort_field,{}), collections.Hashable):
+                    logger.debug("Adding {}".format(d.get(sort_field,{})))
                     json_data.update(object={d[sort_field]:d},append_mode=append_mode)
         elif isinstance(data,list):
             for d in data:
                 if isinstance(d.get(sort_field,{}), collections.Hashable):
+                    logger.debug("Adding {}".format(d.get(sort_field,{})))
                     json_data.update(object={d[sort_field]:d},append_mode=append_mode)
         else:
             logger.error("Data is not type dict or list but: {}".format(type(data)))
