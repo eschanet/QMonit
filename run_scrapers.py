@@ -28,6 +28,9 @@ parser.add_argument('--debug', action='store_true', help='print debug messages')
 parser.add_argument('-interval', default='10m', help='Defines which scrapers are being run')
 argparse = parser.parse_args()
 
+if argparse.debug:
+    logger.setLevel(logging.DEBUG)
+
 def run():
 
     # Each time the scrapers are run, we update the PQ map
