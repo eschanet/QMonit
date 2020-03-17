@@ -57,11 +57,18 @@ benchmarks_resources = getJSON('data/scraped_elasticsearch_benchmark.json')
 #get the actual job numbers from panda
 err, siteResourceStats = Client.get_job_statistics_per_site_label_resource(10)
 
+if err:
+    logger.error("Panda error: "+str(err))
+    msg = 'Panda server returned and error.\n\nError:\n'+str(e)
+    subj=  '[QMonit error] PandaServer'
+    notifications.send_email(message=msg, subject=subj, **{'password':config.get("credentials_adcmon", "password")})
+
+
 #idb client instance for uploading data later on
 db_name = "monit_jobs" if not args.testDB else "test_monit_jobs"
 
 try:
-    client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, db_name, True, False)
+    client = InfluxDBClient('dbod-eshanet.cern.ch', 8080, username, password, db_name, True, False)
 except requests.ConnectionError:
     logger.error("Connection error: Client side probably misconfigured.")
 except:
@@ -216,11 +223,6 @@ if not args.skipSubmit:
         client.write_points(points=points_list, time_precision="n")
     except Exception, e:
         logger.error("Could not connect to DB while uploading points. " + str(e))
-        d={
-        'message' : 'InfluxDB was not reachable when trying to upload new data. Please have a look asap.\n\nError:\n'+str(e),
-        'subject' : 'Critical: QMonit error',
-        'recipients' : ['eric.schanet@cern.ch'], # any list of email adresses
-        'sender' : 'adcmon@cern.ch', # this is the sender and username to log into SMTP server
-        'password' : config.get("credentials_adcmon", "password"), # password for above user
-        }
-        notifications.send_email(**d)
+        msg = 'InfluxDB was not reachable when trying to upload new data. Please have a look asap.\n\nError:\n'+str(e)
+        subj=  '[QMonit error] InfluxDB'
+        notifications.send_email(message=msg, subject=subj, **{'password':config.get("credentials_adcmon", "password")})
