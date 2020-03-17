@@ -68,7 +68,7 @@ if err:
 db_name = "monit_jobs" if not args.testDB else "test_monit_jobs"
 
 try:
-    client = InfluxDBClient('dbod-eshanet.cern.ch', 8080, username, password, db_name, True, False)
+    client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, db_name, True, False)
 except requests.ConnectionError:
     logger.error("Connection error: Client side probably misconfigured.")
 except:
