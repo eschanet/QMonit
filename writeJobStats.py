@@ -14,6 +14,8 @@ import hashlib
 import ConfigParser
 import argparse
 
+from commonHelpers import notifications
+
 import logging
 from commonHelpers.logger import logger
 logger = logger.getChild("QMonit")
@@ -212,7 +214,13 @@ for site, site_result in siteResourceStats.iteritems():
 if not args.skipSubmit:
     try:
         client.write_points(points=points_list, time_precision="n")
-    except requests.ConnectionError:
-        logger.error("Connection error: Could not connect to DB while uploading points.")
-    except:
-        logger.error("Some unknown error occurred while uploading new data points.")
+    except Exception, e:
+        logger.error("Could not connect to DB while uploading points. " + str(e))
+        d={
+        'message' : 'InfluxDB was not reachable when trying to upload new data. Please have a look asap.\n\nError:\n'+str(e),
+        'subject' : 'Critical: QMonit error',
+        'recipients' : ['eric.schanet@cern.ch'], # any list of email adresses
+        'sender' : 'adcmon@cern.ch', # this is the sender and username to log into SMTP server
+        'password' : config.get("credentials_adcmon", "password"), # password for above user
+        }
+        notifications.send_email(**d)
