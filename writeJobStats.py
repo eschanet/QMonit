@@ -57,8 +57,14 @@ err, siteResourceStats = Client.get_job_statistics_per_site_label_resource(10)
 
 #idb client instance for uploading data later on
 db_name = "monit_jobs" if not args.testDB else "test_monit_jobs"
-if not args.skipSubmit:
+
+try:
     client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, db_name, True, False)
+except requests.ConnectionError:
+    logger.error("Connection error: Client side probably misconfigured.")
+except:
+    logger.error("Some unknown error occurred on the client side.")
+
 points_list = []
 
 # Explicitly set timestamp in InfluxDB point. Avoids having multiple entries per 10 minute interval (can happen sometimes with acron)
@@ -204,4 +210,9 @@ for site, site_result in siteResourceStats.iteritems():
                 points_list.append(json_body)
 
 if not args.skipSubmit:
-    client.write_points(points=points_list, time_precision="n")
+    try:
+        client.write_points(points=points_list, time_precision="n")
+    except requests.ConnectionError:
+        logger.error("Connection error: Could not connect to DB while uploading points.")
+    except:
+        logger.error("Some unknown error occurred while uploading new data points.")
