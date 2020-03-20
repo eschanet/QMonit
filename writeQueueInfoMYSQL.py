@@ -44,7 +44,7 @@ def run():
     write_cursor = writer.cursor()
 
     logger.info('Getting existing data.')
-    read_cursor.execute("select panda_queue, resource from jobs")
+    read_cursor.execute("select panda_queue,prod_source, resource from jobs")
 
     def getJSON(file):
         with open(file) as f:
@@ -55,14 +55,14 @@ def run():
     datadisk_info = getJSON('data/scraped_grafana_datadisk.json')
     federations_resources = getJSON('data/scraped_rebus_federations.json')
 
-    for (panda_queue, resource) in read_cursor:
+    for (panda_queue,prod_source,resource) in read_cursor:
         try:
             nickname = panda_resources[panda_queue] #do the mapping to actual panda queue nicknames
         except:
-            logger.warning("Does not exist: queue: %s    Resource: %s" %(panda_queue, resource))
+            logger.warning("Does not exist: queue: %s   Prod_source: %s    Resource: %s" %(panda_queue,prod_source, resource))
             continue
 
-        logger.debug("Queue: %s    Resource: %s" %(panda_queue, resource))
+        logger.debug("Queue: %s    Prod_source: %s     Resource: %s" %(panda_queue,prod_source, resource))
 
         atlas_site = panda_queues[nickname]["atlas_site"]
         type = panda_queues[nickname]["type"]
@@ -95,10 +95,11 @@ def run():
             datadisk_size = 0.0
             datadisk_files = 0
 
-        add_point = ('''INSERT INTO jobs (panda_queue, resource) VALUES ("{panda_queue}", "{resource}") ON DUPLICATE KEY UPDATE atlas_site="{atlas_site}", type="{type}", cloud="{cloud}",federation="{federation}", site_state="{site_state}", tier="{tier}",resource_factor="{resource_factor}", datadisk_name="{datadisk_name}", datadisk_occupied_gb="{datadisk_size}", datadisk_files="{datadisk_files}"'''.format(
+        add_point = ('''INSERT INTO jobs (panda_queue, prod_source, resource) VALUES ("{panda_queue}","{prod_source}", "{resource}") ON DUPLICATE KEY UPDATE atlas_site="{atlas_site}", type="{type}", cloud="{cloud}",federation="{federation}", site_state="{site_state}", tier="{tier}",resource_factor="{resource_factor}", datadisk_name="{datadisk_name}", datadisk_occupied_gb="{datadisk_size}", datadisk_files="{datadisk_files}"'''.format(
                     atlas_site = atlas_site,
                     panda_queue = panda_queue,
                     type = type,
+                    prod_source = prod_source,
                     cloud = cloud,
                     federation = federation,
                     site_state = site_state,
