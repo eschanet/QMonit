@@ -115,6 +115,7 @@ for site, site_result in siteResourceStats.iteritems():
                 #information taken from main AGIS json
                 atlas_site = panda_queues.get(queue,{}).get("atlas_site","None")
                 type = panda_queues.get(queue,{}).get("type","None")
+                resource_type = panda_queues.get(queue,{}).get("resource_type","None")
                 cloud = panda_queues.get(queue,{}).get("cloud","None")
                 site_state = panda_queues.get(queue,{}).get("status","None")
                 tier = panda_queues.get(queue,{}).get("tier","None")
@@ -181,6 +182,7 @@ for site, site_result in siteResourceStats.iteritems():
                     "panda_queue" : site,
                     "prod_source" : prod_source,
                     "resource" : core,
+                    "resource_type" : resource_type,
                     "type" : type,
                     "cloud" : cloud,
                     "site_state" : site_state,
