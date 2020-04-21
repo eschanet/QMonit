@@ -91,11 +91,17 @@ def run():
         token = config.get("credentials_monit_grafana", "token")
 
         now = int(round(time.time() * 1000))
-        yesterday = now - 12*60*60*1000
-        two_days = yesterday - 24*60*60*1000
+        date_to = now - 12*60*60*1000
+        date_from = date_to - 24*60*60*1000
 
-        data = '{"search_type":"query_then_fetch","ignore_unavailable":true,"index":["monit_prod_rucioacc_enr_site_*","monit_prod_rucioacc_enr_site_*"]}\n{"size":0,"query":{"bool":{"filter":[{"range":{"metadata.timestamp":{"gte":"%i","lte":"%i","format":"epoch_millis"}}},{"query_string":{"analyze_wildcard":true,"query":"data.account:* AND data.campaign:* AND data.country:* AND data.cloud:* AND data.datatype:* AND data.datatype_grouped:(\\"DAOD\\") AND data.prod_step:* AND data.provenance:* AND data.rse:* AND data.scope:* AND data.experiment_site:* AND data.stream_name:* AND data.tier:* AND data.token:(\\"ATLASDATADISK\\" OR \\"T2ATLASDATADISK\\") AND data.tombstone:* AND NOT(data.tombstone:UNKNOWN) AND data.rse:/.*().*/ AND NOT data.rse:/.*(none).*/"}}]}},"aggs":{"4":{"terms":{"field":"data.rse","size":500,"order":{"_term":"desc"},"min_doc_count":1},"aggs":{"1":{"sum":{"field":"data.files"}},"3":{"sum":{"field":"data.bytes"}}}}}}\n' % (two_days,yesterday)
-        headers = {'Authorization': 'Bearer %s' % token}
+        period = """\"gte\":"{0}",\"lte\":\"{1}\"""".format(date_from, date_to)
+
+        data = """{\"search_type\":\"query_then_fetch\",\"ignore_unavailable\":true,\"index\":[\"monit_prod_rucioacc_enr_site_*\"]}\n{\"size\":0,\"query\":{\"bool\":{\"filter\":[{\"range\":{\"metadata.timestamp\":{""" + period + """,\"format\":\"epoch_millis\"}}},{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"data.account:* AND data.campaign:* AND data.country:* AND data.cloud:* AND data.datatype:* AND data.datatype_grouped:* AND data.prod_step:* AND data.provenance:* AND data.rse:* AND data.scope:* AND data.experiment_site:* AND data.stream_name:* AND data.tier:(\\\"2\\\") AND data.token:(\\\"ATLASDATADISK\\\" OR \\\"ATLASSCRATCHDISK\\\") AND data.tombstone:(\\\"primary\\\" OR \\\"secondary\\\") AND NOT(data.tombstone:UNKNOWN) AND data.rse:/.*().*/ AND NOT data.rse:/.*(none).*/\"}}]}},\"aggs\":{\"4\":{\"terms\":{\"field\":\"data.rse\",\"size\":500,\"order\":{\"_term\":\"desc\"},\"min_doc_count\":1},\"aggs\":{\"1\":{\"sum\":{\"field\":\"data.files\"}},\"3\":{\"sum\":{\"field\":\"data.bytes\"}}}}}}\n"""
+
+        headers = {"Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer %s" % token
+            }
 
         grafana = Grafana(url=url,request=data,headers=headers)
         raw_data = grafana.download()
