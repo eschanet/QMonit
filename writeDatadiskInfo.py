@@ -57,7 +57,7 @@ reader = mysql.connector.connect(user='monit', password=password, host='dbod-sql
 read_cursor = reader.cursor()
 
 logger.info('Getting existing data.')
-read_cursor.execute("select panda_queue, resource, avg1h_running_jobs, avg6h_running_jobs, avg12h_running_jobs, avg24h_running_jobs, avg7d_running_jobs, avg30d_running_jobs from jobs")
+read_cursor.execute("select panda_queue, resource, prod_source, avg1h_running_jobs, avg6h_running_jobs, avg12h_running_jobs, avg24h_running_jobs, avg7d_running_jobs, avg30d_running_jobs from jobs")
 
 # Explicitly set timestamp in InfluxDB point. Avoids having multiple entries per 10 minute interval (can happen sometimes with acron)
 epoch = datetime.utcfromtimestamp(0)
@@ -67,7 +67,7 @@ def unix_time_nanos(dt):
 current_time = datetime.utcnow().replace(microsecond=0,second=0,minute=0)
 unix = int(unix_time_nanos(current_time))
 
-for (panda_queue, resource, avg1h_running_jobs, avg6h_running_jobs, avg12h_running_jobs, avg24h_running_jobs, avg7d_running_jobs, avg30d_running_jobs) in read_cursor:
+for (panda_queue, resource, prod_source, avg1h_running_jobs, avg6h_running_jobs, avg12h_running_jobs, avg24h_running_jobs, avg7d_running_jobs, avg30d_running_jobs) in read_cursor:
     try:
         nickname = panda_resources[panda_queue] #do the mapping to actual panda queue nicknames
     except:
@@ -80,7 +80,7 @@ for (panda_queue, resource, avg1h_running_jobs, avg6h_running_jobs, avg12h_runni
     # simple hack to protect against duplicate entries
     # each site-core combination will have its unique **hash**
     m = hashlib.md5()
-    m.update(panda_queue + resource + "running")
+    m.update(str(panda_queue) + str(prod_source) + str(resource) + "running")
     time = unix + int(str(int(m.hexdigest(), 16))[0:9])
 
     if not panda_queue in panda_resources:
@@ -128,6 +128,7 @@ for (panda_queue, resource, avg1h_running_jobs, avg6h_running_jobs, avg12h_runni
         "resource" : resource,
         "datadisk_name" : datadisk_name,
         "type" : type,
+        "prod_source" : prod_source,
         "cloud" : cloud,
         "site_state" : site_state,
         "job_status" : "running",
