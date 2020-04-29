@@ -58,6 +58,7 @@ def run():
     for (panda_queue,prod_source,resource) in read_cursor:
         try:
             nickname = panda_resources[panda_queue] #do the mapping to actual panda queue nicknames
+            atlas_site = panda_queues[nickname]["atlas_site"]
         except:
             logger.warning("Does not exist: queue: %s   Prod_source: %s    Resource: %s" %(panda_queue,prod_source, resource))
             continue
