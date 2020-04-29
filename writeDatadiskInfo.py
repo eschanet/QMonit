@@ -106,7 +106,7 @@ for (panda_queue, resource, prod_source, avg1h_running_jobs, avg6h_running_jobs,
     else:
         resource_factor = 1.0
 
-    ddm_names = panda_queues.get(panda_queue,{}).get("ddm","None").split(",")
+    ddm_names = panda_queues.get(panda_queue,{}).get("astorages",{}).get("read_lan",[])
     datadisk_names = [d for d in ddm_names if "DATADISK" in d]
 
     if len(datadisk_names) > 1:

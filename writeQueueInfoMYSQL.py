@@ -79,7 +79,9 @@ def run():
         else:
             resource_factor = 1.0
 
-        ddm_names = panda_queues[nickname]["ddm"].split(",")
+        ddm_names = panda_queues.get(nickname,{}).get("astorages",{}).get("read_lan",[])
+
+        # ddm_names = panda_queues[nickname]["ddm"].split(",")
         datadisk_names = [d for d in ddm_names if "DATADISK" in d]
 
         if len(datadisk_names) > 1:
