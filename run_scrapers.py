@@ -16,6 +16,7 @@ from maps import PQ_names_map as pq_map
 
 import logging
 from commonHelpers.logger import logger
+from commonHelpers import notifications
 
 #do some configurations
 config = ConfigParser.ConfigParser()
@@ -141,4 +142,10 @@ def run():
 
 
 if __name__== "__main__":
-    run()
+    try:
+        run()
+    except Exception, e:
+        logger.error("Got error while running scrapers. " + str(e))
+        msg = 'QMonit failed to run a scraper job.\n\nError:\n'+str(e)
+        subj=  '[QMonit error] InfluxDB'
+        notifications.send_email(message=msg, subject=subj, **{'password':config.get("credentials_adcmon", "password")})
