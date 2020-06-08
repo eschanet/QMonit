@@ -16,9 +16,9 @@ class RebusDict(dict):
 
         def isATLAS(object):
             for key, item in object.items():
-                if ("CMS Federation" in item.get("Federation","")) or ("LHCb Federation" in item.get("Federation","")) or ("ALICE Federation" in item.get("Federation","")): return False
-                if (" CMS " in item.get("Federation","")) or (" LHCb " in item.get("Federation","")) or (" ALICE " in item.get("Federation","")): return False
-                if "ATLAS" in item.get("Federation",""): return True
+                if ("CMS Federation" in item.get("accounting_name","")) or ("LHCb Federation" in item.get("accounting_name","")) or ("ALICE Federation" in item.get("accounting_name","")): return False
+                if (" CMS " in item.get("accounting_name","")) or (" LHCb " in item.get("accounting_name","")) or (" ALICE " in item.get("accounting_name","")): return False
+                if "ATLAS" in item.get("accounting_name",""): return True
             return True
 
         #FIXME: this is ugly
@@ -52,12 +52,15 @@ class REBUS(JSONScraper):
 
         if isinstance(data,dict):
             for key,d in data.items():
-                if isinstance(d.get(sort_field,{}), collections.Hashable):
-                    logger.debug("Adding {}".format(d.get(sort_field,{})))
-                    json_data.update(object={d[sort_field]:d},append_mode=append_mode)
-        elif isinstance(data,list):
-            for d in data:
-                if isinstance(d.get(sort_field,{}), collections.Hashable):
+                if key == "NULL":
+                    #CRIC has this huge NULL entry?!
+                    continue
+                if isinstance(d.get(sort_field,[]), list):
+                    for site in d.get(sort_field,[]):
+                        logger.debug("Adding {}".format(site))
+                        logger.debug(d)
+                        json_data.update(object={site:d},append_mode=append_mode)
+                elif isinstance(d.get(sort_field,{}), collections.Hashable):
                     logger.debug("Adding {}".format(d.get(sort_field,{})))
                     json_data.update(object={d[sort_field]:d},append_mode=append_mode)
         else:

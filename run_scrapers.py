@@ -72,16 +72,16 @@ def run():
 
         # Next up is REBUS, start with the actual federation map
         rebus = REBUS()
-        raw_data = rebus.download(url="https://wlcg-rebus.cern.ch/apps/topology/all/json")
-        json_data = rebus.convert(data=raw_data,sort_field="Site")
+        raw_data = rebus.download(url="http://wlcg-cric.cern.ch/api/core/federation/query/?json")
+        json_data = rebus.convert(data=raw_data,sort_field="rcsites")
         if rebus.save(file="data/scraped_rebus_federations.json",data=json_data):
             logger.info("Scraped federations REBUS")
         else:
             logger.error("Problem scraping federations REBUS")
 
         # then the pledges
-        raw_data = rebus.download(url="https://wlcg-rebus.cern.ch/apps/pledges/resources/2019/all/json")
-        json_data = rebus.convert(data=raw_data,sort_field="Federation", append_mode=True)
+        # can actually use same JSON raw data as before
+        json_data = rebus.convert(data=raw_data,sort_field="accounting_name", append_mode=True)
         if rebus.save(file="data/scraped_rebus_pledges.json",data=json_data):
             logger.info("Scraped pledges REBUS")
         else:
