@@ -128,14 +128,17 @@ for site, site_result in siteResourceStats.iteritems():
                 #information from wlcg rebus
                 federation = federations_resources.get(atlas_site,{}).get("accounting_name","None")
                 pledge = ""
+                federation_HS06_pledge = 0
                 now = datetime.now()
                 pledge_dict = federations_resources.get(atlas_site,{}).get("pledges",{})
-                pledges = pledge_dict.get(str(now.year),{}).get("Q"+str(now.month-1)//3),{}).get("atlas",{})
+                pledges = pledge_dict.get(str(now.year),{}).get("Q"+str((now.month-1)//3),{}).get("atlas",{})
                 for type, _pledge in pledges.iteritems():
                     pledge += "%s (%s);" % (_pledge, type)
+                    if type == 'CPU':
+                        federation_HS06_pledge = _pledge
+                        
                 pledge = pledge[:-1] if len(pledge)>1 else "None" #wait a minute, is this safe for empty strings?
-                print(pledge)
-                
+
                 #information about frontier
                 frontier_list = site_resources.get(atlas_site, {}).get("fsconf", {}).get("frontier", [])
                 if len(frontier_list) > 0:
