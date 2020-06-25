@@ -126,16 +126,16 @@ for site, site_result in siteResourceStats.iteritems():
                 container_type = panda_queues.get(queue,{}).get("container_type","None")
 
                 #information from wlcg rebus
-                federation = federations_resources.get(atlas_site,{}).get("Federation","None")
+                federation = federations_resources.get(atlas_site,{}).get("accounting_name","None")
                 pledge = ""
-                for pledges in pledges_resources.get(federation,[]):
-                    pledge_type = pledges.get("PledgeType","None")
-                    pledge_unit = pledges.get("PledgeUnit","None")
-                    pledge += "%s (%s);" % (pledge_type, pledge_unit)
-                    if pledge_unit == 'HEP-SPEC06':
-                        federation_HS06_pledge = pledges.get("ATLAS",0)
+                now = datetime.now()
+                pledge_dict = federations_resources.get(atlas_site,{}).get("pledges",{})
+                pledges = pledge_dict.get(str(now.year),{}).get("Q"+str(now.month-1)//3),{}).get("atlas",{})
+                for type, _pledge in pledges.iteritems():
+                    pledge += "%s (%s);" % (_pledge, type)
                 pledge = pledge[:-1] if len(pledge)>1 else "None" #wait a minute, is this safe for empty strings?
-
+                print(pledge)
+                
                 #information about frontier
                 frontier_list = site_resources.get(atlas_site, {}).get("fsconf", {}).get("frontier", [])
                 if len(frontier_list) > 0:

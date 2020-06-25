@@ -68,7 +68,7 @@ def run():
         atlas_site = panda_queues[nickname]["atlas_site"]
         type = panda_queues[nickname]["type"]
         cloud = panda_queues[nickname]["cloud"]
-        federation = federations_resources.get(atlas_site,{}).get("Federation","None")
+        federation = federations_resources.get(atlas_site,{}).get("accounting_name","None")
         site_state = panda_queues[nickname]["status"]
         tier = panda_queues[nickname]["tier"]
 
