@@ -113,28 +113,29 @@ def run():
         else:
             logger.error('Problem scraping datadisks from monit grafana')
 
-        #get credentials
-        password = config.get("credentials_elasticsearch", "password")
-        username = config.get("credentials_elasticsearch", "username")
-        host = config.get("credentials_elasticsearch", "host")
-        arg = ([{'host': host, 'port': 9200}])
-        elasticsearch = ElasticSearch(arg,**{'http_auth':(username, password)})
-        kwargs = {
-            'index' : "benchmarks-*",
-            'body' : {
-                "size" : 10000,"query" : {"match_all" : {},},
-                "collapse": {"field": "metadata.PanDAQueue","inner_hits": {"name": "most_recent","size": 50,"sort": [{"timestamp": "desc"}]}
-                }
-            },
-            'filter_path' : [""]
-        }
-        raw_data = elasticsearch.download(**kwargs)
-        json_data = elasticsearch.convert(data=raw_data)
-
-        if elasticsearch.save(file='data/scraped_elasticsearch_benchmark.json', data=json_data):
-            logger.info('Scraped benchmark results from ES')
-        else:
-            logger.error('Problem scraping benchmark results from ES')
+        # TODO: not running ES scraper for now since the benchmark jobs are no longer being run
+        # #get credentials
+        # password = config.get("credentials_elasticsearch", "password")
+        # username = config.get("credentials_elasticsearch", "username")
+        # host = config.get("credentials_elasticsearch", "host")
+        # arg = ([{'host': host, 'port': 9200}])
+        # elasticsearch = ElasticSearch(arg,**{'http_auth':(username, password)})
+        # kwargs = {
+        #     'index' : "benchmarks-*",
+        #     'body' : {
+        #         "size" : 10000,"query" : {"match_all" : {},},
+        #         "collapse": {"field": "metadata.PanDAQueue","inner_hits": {"name": "most_recent","size": 50,"sort": [{"timestamp": "desc"}]}
+        #         }
+        #     },
+        #     'filter_path' : [""]
+        # }
+        # raw_data = elasticsearch.download(**kwargs)
+        # json_data = elasticsearch.convert(data=raw_data)
+        #
+        # if elasticsearch.save(file='data/scraped_elasticsearch_benchmark.json', data=json_data):
+        #     logger.info('Scraped benchmark results from ES')
+        # else:
+        #     logger.error('Problem scraping benchmark results from ES')
 
     else:
         # Nothing to do otherwise
