@@ -50,7 +50,7 @@ def run():
         with open(file) as f:
             return json.load(f)
 
-    panda_queues = getJSON('data/scraped_agis_pandaqueue.json')
+    panda_queues = getJSON('data/scraped_cric_pandaqueue.json')
     panda_resources = getJSON('data/map_PQ_names.json')
     datadisk_info = getJSON('data/scraped_grafana_datadisk.json')
     federations_resources = getJSON('data/scraped_rebus_federations.json')

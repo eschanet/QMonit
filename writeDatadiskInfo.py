@@ -40,13 +40,13 @@ def getJSON(file):
     with open(file) as f:
         return json.load(f)
 
-panda_queues = getJSON('data/scraped_agis_pandaqueue.json')
+panda_queues = getJSON('data/scraped_cric_pandaqueue.json')
 panda_resources = getJSON('data/map_PQ_names.json')
-site_resources = getJSON('data/scraped_agis_sites.json')
-ddm_resources = getJSON('data/scraped_agis_ddm.json')
+site_resources = getJSON('data/scraped_cric_sites.json')
+ddm_resources = getJSON('data/scraped_cric_ddm.json')
 pledges_resources = getJSON('data/scraped_rebus_pledges.json')
 federations_resources = getJSON('data/scraped_rebus_federations.json')
-benchmarks_resources = getJSON('data/scraped_agis_pandaqueue.json')
+benchmarks_resources = getJSON('data/scraped_cric_pandaqueue.json')
 datadisk_info = getJSON('data/scraped_grafana_datadisk.json')
 
 client = InfluxDBClient('dbod-eschanet.cern.ch', 8080, username, password, "monit_jobs", True, False)

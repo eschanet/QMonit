@@ -30,7 +30,7 @@ class Scraper(object):
     def save(file,data):
         try:
             with open(file, 'w') as f:
-                json.dump(data, f)
+                json.dump(data, f, sort_keys=True, indent=4)
             return True
         except IOError:
             print("Got an error saving to file.")

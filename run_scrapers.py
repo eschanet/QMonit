@@ -7,8 +7,9 @@ import argparse
 import ConfigParser
 import pprint
 
-from scrapers.agis import AGIS
-from scrapers.rebus import REBUS
+from scrapers.agis import AGIS # EOL is near
+from scrapers.rebus import REBUS # EOL is near
+from scrapers.cric import CRIC
 from scrapers.grafana import Grafana
 from scrapers.elasticsearch import ElasticSearch
 
@@ -36,39 +37,39 @@ def run():
 
     # Each time the scrapers are run, we update the PQ map
     pqs = pq_map.PQ_names_map(file="data/map_PQ_names.json")
-    if not pqs.update(ifile="data/scraped_agis_pandaqueue.json",ofile="data/map_PQ_names.json",key="panda_resource"):
+    if not pqs.update(ifile="data/scraped_cric_pandaqueue.json",ofile="data/map_PQ_names.json",key="panda_resource"):
         logger.warning("PQ map is not available")
 
     if argparse.interval == '10m':
         # Now run all the scrapers that should run in 10min intervals
-        # First the PQ AGIS information
-        agis = AGIS()
-        raw_data = agis.download(url="http://atlas-agis-api.cern.ch/request/pandaqueue/query/list/?json&preset=schedconf.all")
-        json_data = agis.convert(data=raw_data,sort_field="panda_resource")
-        if agis.save(file="data/scraped_agis_pandaqueue.json",data=json_data):
-            logger.info("Scraped PQ AGIS")
+        # First the PQ CRIC information
+        cric = CRIC()
+        raw_data = cric.download(url="http://atlas-cric.cern.ch/api/atlas/pandaqueue/query/?json")
+        json_data = cric.convert(data=raw_data,sort_field="panda_resource")
+        if cric.save(file="data/scraped_cric_pandaqueue.json",data=json_data):
+            logger.info("Scraped PQ CRIC")
         else:
-            logger.error("Problem scraping PQ AGIS")
+            logger.error("Problem scraping PQ CRIC")
 
     elif argparse.interval == '1h':
         # Run all the scrapers that only need to be run once per hour (because they don't change too often)
 
-        # Next the ATLAS sites AGIS information
-        agis = AGIS()
-        raw_data = agis.download(url="http://atlas-agis-api.cern.ch/request/site/query/list/?json&")
-        json_data = agis.convert(data=raw_data,sort_field="name")
-        if agis.save(file="data/scraped_agis_sites.json",data=json_data):
-            logger.info("Scraped sites AGIS")
+        # Next the ATLAS sites CRIC information
+        cric = CRIC()
+        raw_data = cric.download(url="http://atlas-cric.cern.ch/api/atlas/site/query/?json")
+        json_data = cric.convert(data=raw_data,sort_field="name")
+        if cric.save(file="data/scraped_cric_sites.json",data=json_data):
+            logger.info("Scraped sites CRIC")
         else:
-            logger.error("Problem scraping sites AGIS")
+            logger.error("Problem scraping sites CRIC")
 
-        # Now the DDM info from AGIS
-        raw_data = agis.download(url="http://atlas-agis-api.cern.ch/request/ddmendpoint/query/list/?json&")
-        json_data = agis.convert(data=raw_data,sort_field="site")
-        if agis.save(file="data/scraped_agis_ddm.json",data=json_data):
-            logger.info("Scraped DDM AGIS")
+        # Now the DDM info from CRIC
+        raw_data = cric.download(url="http://atlas-cric.cern.ch/api/atlas/ddmendpoint/query/?json")
+        json_data = cric.convert(data=raw_data,sort_field="site")
+        if cric.save(file="data/scraped_cric_ddm.json",data=json_data):
+            logger.info("Scraped DDM CRIC")
         else:
-            logger.error("Problem scraping DDM AGIS")
+            logger.error("Problem scraping DDM CRIC")
 
         # Next up is REBUS, start with the actual federation map
         rebus = REBUS()
