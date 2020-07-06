@@ -82,7 +82,7 @@ class HTTPScraper(Scraper):
         """
         Download data.
         """
-        return post(self.url, headers=self.headers, data=self.request, verify=False)
+        return post(self.url, headers=self.headers, data=self.request)
 
 
 class JSONScraper(Scraper):
