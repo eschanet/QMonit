@@ -44,7 +44,7 @@ def run():
         # Now run all the scrapers that should run in 10min intervals
         # First the PQ CRIC information
         cric = CRIC()
-        raw_data = cric.download(url="http://atlas-cric.cern.ch/api/atlas/pandaqueue/query/?json")
+        raw_data = cric.download(url="https://atlas-cric.cern.ch/api/atlas/pandaqueue/query/?json")
         json_data = cric.convert(data=raw_data,sort_field="panda_resource")
         if cric.save(file="data/scraped_cric_pandaqueue.json",data=json_data):
             logger.info("Scraped PQ CRIC")
@@ -56,7 +56,7 @@ def run():
 
         # Next the ATLAS sites CRIC information
         cric = CRIC()
-        raw_data = cric.download(url="http://atlas-cric.cern.ch/api/atlas/site/query/?json")
+        raw_data = cric.download(url="https://atlas-cric.cern.ch/api/atlas/site/query/?json")
         json_data = cric.convert(data=raw_data,sort_field="name")
         if cric.save(file="data/scraped_cric_sites.json",data=json_data):
             logger.info("Scraped sites CRIC")
@@ -64,7 +64,7 @@ def run():
             logger.error("Problem scraping sites CRIC")
 
         # Now the DDM info from CRIC
-        raw_data = cric.download(url="http://atlas-cric.cern.ch/api/atlas/ddmendpoint/query/?json")
+        raw_data = cric.download(url="https://atlas-cric.cern.ch/api/atlas/ddmendpoint/query/?json")
         json_data = cric.convert(data=raw_data,sort_field="site")
         if cric.save(file="data/scraped_cric_ddm.json",data=json_data):
             logger.info("Scraped DDM CRIC")
@@ -73,20 +73,20 @@ def run():
 
         # Next up is REBUS, start with the actual federation map
         rebus = REBUS()
-        raw_data = rebus.download(url="http://wlcg-cric.cern.ch/api/core/federation/query/?json")
+        raw_data = rebus.download(url="https://wlcg-cric.cern.ch/api/core/federation/query/?json")
         json_data = rebus.convert(data=raw_data,sort_field="rcsites")
         if rebus.save(file="data/scraped_rebus_federations.json",data=json_data):
-            logger.info("Scraped federations REBUS")
+            logger.info("Scraped federations CRIC")
         else:
-            logger.error("Problem scraping federations REBUS")
+            logger.error("Problem scraping federations CRIC")
 
         # then the pledges
         # can actually use same JSON raw data as before
         json_data = rebus.convert(data=raw_data,sort_field="accounting_name", append_mode=True)
         if rebus.save(file="data/scraped_rebus_pledges.json",data=json_data):
-            logger.info("Scraped pledges REBUS")
+            logger.info("Scraped pledges CRIC")
         else:
-            logger.error("Problem scraping pledges REBUS")
+            logger.error("Problem scraping pledges CRIC")
 
         # we also get datadisk information from monit Grafana
         url = config.get("credentials_monit_grafana", "url")
