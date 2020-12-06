@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 from pprint import pprint
 import json,sys
 
@@ -11,7 +9,7 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 import cPickle as pickle
 from datetime import datetime,timedelta
 import hashlib
-import ConfigParser
+import configparser
 import argparse
 
 from commonHelpers import notifications
@@ -34,7 +32,7 @@ if args.debug:
     logger.setLevel(logging.DEBUG)
 
 #do some configurations
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read("config.cfg")
 
 #get credentials
@@ -88,11 +86,11 @@ current_time = current_time - timedelta(minutes=current_time.minute % 10,
 unix = int(unix_time_nanos(current_time))
 
 #unique data point is characterised by pqueue, resource type and job status
-for site, site_result in siteResourceStats.iteritems():
+for site, site_result in siteResourceStats.items():
 
-    for prod_source, resources in site_result.iteritems():
+    for prod_source, resources in site_result.items():
 
-        for core, value in resources.iteritems():
+        for core, value in resources.items():
 
             for job_status in value.keys():
 
@@ -133,7 +131,7 @@ for site, site_result in siteResourceStats.iteritems():
                 now = datetime.now()
                 pledge_dict = federations_resources.get(atlas_site,{}).get("pledges",{})
                 pledges = pledge_dict.get(str(now.year),{}).get("Q"+str((now.month-1)//3),{}).get("atlas",{})
-                for _type, _pledge in pledges.iteritems():
+                for _type, _pledge in pledges.items():
                     pledge += "%s (%s);" % (_pledge, _type)
                     if _type == 'CPU':
                         federation_HS06_pledge = _pledge

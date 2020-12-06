@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 from pprint import pprint
 import json,sys
 import requests

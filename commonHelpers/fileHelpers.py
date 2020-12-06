@@ -1,4 +1,4 @@
-import urllib
+import urllib.request
 import json
 
 def get_json_from_file(file):
@@ -6,7 +6,7 @@ def get_json_from_file(file):
         return json.load(f)
 
 def get_json_from_url(url):
-    response = urllib.urlopen(url)
+    response = urllib.request.urlopen(url)
     data = json.load(response)
     return data
 

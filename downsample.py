@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 from pprint import pprint
 from collections import defaultdict
 import json,sys
@@ -11,7 +9,7 @@ from datetime import datetime,timedelta
 import time
 import dateutil.parser
 import hashlib
-import ConfigParser
+import configparser
 
 import logging
 from commonHelpers.logger import logger
@@ -74,7 +72,7 @@ def get_average(time_intervals, values, index):
 
 def run():
 
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read("config.cfg")
 
     password = config.get("credentials", "password")
@@ -178,7 +176,7 @@ def run():
 
         #sometimes I fuck up and then I want to kill the last measurement...
         if args.kill_last:
-            for key,value in json_body['fields'].iteritems():
+            for key,value in json_body['fields'].items():
                 json_body['fields'][key] = 0.0
 
         logger.debug(json_body)

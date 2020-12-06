@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 from pprint import pprint
 import json,sys
 
@@ -11,7 +9,7 @@ requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.
 import cPickle as pickle
 from datetime import datetime,timedelta
 import hashlib
-import ConfigParser
+import configparser
 
 import logging
 from commonHelpers.logger import logger
@@ -23,7 +21,7 @@ import Client
 from influxdb import InfluxDBClient
 import mysql.connector
 
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read("config.cfg")
 
 password = config.get("credentials", "password")

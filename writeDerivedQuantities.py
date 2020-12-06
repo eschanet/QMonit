@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 from pprint import pprint
 from collections import defaultdict
 import json,sys
@@ -14,7 +12,7 @@ from datetime import datetime,timedelta
 import time
 import dateutil.parser
 import hashlib
-import ConfigParser
+import configparser
 
 import logging
 from commonHelpers.logger import logger
@@ -148,13 +146,13 @@ def get_derived_quantities_for_keyset(rs, series, series_30d):
     return {'tags':tags, 'values':data}
 
 def get_list_to_upload(data):
-    for panda_queue, d in data.iteritems():
+    for panda_queue, d in data.items():
         if panda_queue == 'RAL-LCG2_MCORE_TEMP':
             logger.warning('We have some weird value here')
-        for prod_source, resources in d.iteritems():
-            for resource, job_states in resources.iteritems():
+        for prod_source, resources in d.items():
+            for resource, job_states in resources.items():
                 temp_data = {}
-                for job_status, job_data in job_states.iteritems():
+                for job_status, job_data in job_states.items():
                     if job_data is None:
                         continue
                     if job_status == "tags":
@@ -173,7 +171,7 @@ def get_list_to_upload(data):
                             prod_source = prod_source,
                             resource = resource))
 
-                for field, value in temp_data.iteritems():
+                for field, value in temp_data.items():
                     add_point += '''{field}={value}, '''.format(field=field, value=value)
 
                 add_point = add_point[:-2] + ''';'''
@@ -184,7 +182,7 @@ def get_list_to_upload(data):
 
 def run():
 
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read("config.cfg")
 
     password = config.get("credentials", "password")

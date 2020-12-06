@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 from pprint import pprint
 from collections import defaultdict
 import json, sys
@@ -12,7 +10,7 @@ requests.packages.urllib3.disable_warnings(
 )
 
 import argparse
-import ConfigParser
+import configparser
 
 import logging
 from commonHelpers.logger import logger
@@ -36,7 +34,7 @@ if args.debug:
 
 def run():
 
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read("config.cfg")
 
     password = config.get("credentials", "password")
