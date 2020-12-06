@@ -30,7 +30,7 @@ class RebusDict(dict):
         if not append_mode:
             return super(RebusDict, self).update(object)
         elif append_mode:
-            k,v = object.items()[0]
+            k,v = list(object.items())[0]
             if k in self:
                 self[k].append(v)
             else:

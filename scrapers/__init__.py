@@ -1,7 +1,5 @@
-from __future__ import print_function
-
 import os
-import urllib
+import urllib.request
 import json
 from requests import post
 from elasticsearch6 import Elasticsearch
@@ -97,6 +95,6 @@ class JSONScraper(Scraper):
 
         :param url: the url containing the JSON to be downloaded."""
 
-        response = urllib.urlopen(url)
+        response = urllib.request.urlopen(url)
         data = json.load(response)
         return data

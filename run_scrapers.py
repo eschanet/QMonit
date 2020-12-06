@@ -1,10 +1,8 @@
 #!/usr/bin/python
 
-from __future__ import print_function
-
 import time
 import argparse
-import ConfigParser
+import configparser
 import pprint
 
 from scrapers.agis import AGIS # EOL is near
@@ -20,7 +18,7 @@ from commonHelpers.logger import logger
 from commonHelpers import notifications
 
 #do some configurations
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read("config.cfg")
 
 logger = logger.getChild("mephisto")
@@ -146,7 +144,7 @@ def run():
 if __name__== "__main__":
     try:
         run()
-    except Exception, e:
+    except Exception as e:
         logger.error("Got error while running scrapers. " + str(e))
         msg = 'QMonit failed to run a scraper job.\n\nError:\n'+str(e)
         subj=  '[QMonit error] InfluxDB'

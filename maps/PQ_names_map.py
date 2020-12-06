@@ -19,7 +19,7 @@ class PQ_names_map(Map):
             with open(ifile) as f:
                 map = {}
                 data = json.load(f)
-                for kw,val in data.iteritems():
+                for kw,val in data.items():
                     map[val["panda_resource"]] = kw
 
                 return self.save(ofile, map)
