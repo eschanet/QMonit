@@ -94,6 +94,7 @@ def run():
         atlas_site = panda_queues[nickname]["atlas_site"]
         type = panda_queues[nickname]["type"]
         cloud = panda_queues[nickname]["cloud"]
+        country = panda_queues[nickname]["country"]
         federation = federations_resources.get(atlas_site, {}).get(
             "accounting_name", "None"
         )
@@ -135,13 +136,14 @@ def run():
             datadisk_files = 0
 
         add_point = (
-            '''INSERT INTO jobs (panda_queue, prod_source, resource) VALUES ("{panda_queue}","{prod_source}", "{resource}") ON DUPLICATE KEY UPDATE atlas_site="{atlas_site}", type="{type}", cloud="{cloud}",federation="{federation}", site_state="{site_state}", tier="{tier}",resource_factor="{resource_factor}",resource_type="{resource_type}", datadisk_name="{datadisk_name}", datadisk_occupied_gb="{datadisk_size}", datadisk_files="{datadisk_files}"'''
+            '''INSERT INTO jobs (panda_queue, prod_source, resource) VALUES ("{panda_queue}","{prod_source}", "{resource}") ON DUPLICATE KEY UPDATE atlas_site="{atlas_site}", type="{type}", country="{country}", cloud="{cloud}",federation="{federation}", site_state="{site_state}", tier="{tier}",resource_factor="{resource_factor}",resource_type="{resource_type}", datadisk_name="{datadisk_name}", datadisk_occupied_gb="{datadisk_size}", datadisk_files="{datadisk_files}"'''
             .format(
                 atlas_site=atlas_site,
                 panda_queue=panda_queue,
                 type=type,
                 prod_source=prod_source,
                 cloud=cloud,
+                country=country,
                 federation=federation,
                 site_state=site_state,
                 tier=tier,
