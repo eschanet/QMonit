@@ -24,6 +24,7 @@ from influxdb import InfluxDBClient
 import Client
 
 parser = argparse.ArgumentParser(description="Write job stats")
+parser.add_argument('-timestamp', default=None, help='Fixed timestamp to use instead of current one (UTC in YYYY-mm-dd hh:mm:ss format)')
 parser.add_argument('--debug', action='store_true', help='print debug messages')
 parser.add_argument('--testDB', action='store_true', help='Upload to test DB instead of production DB')
 parser.add_argument('--skipSubmit', action='store_true', help='do not upload to DB')
@@ -81,7 +82,7 @@ epoch = datetime.utcfromtimestamp(0)
 def unix_time_nanos(dt):
     return (dt - epoch).total_seconds() * 1e9
 
-current_time = datetime.utcnow()
+current_time = datetime.utcnow() if not args.timestamp else datetime.strptime(args.timestamp, '%Y-%m-%d %H:%M:%S')
 current_time = current_time - timedelta(minutes=current_time.minute % 10,
                              seconds=current_time.second,
                              microseconds=current_time.microsecond)
