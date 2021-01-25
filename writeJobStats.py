@@ -117,6 +117,7 @@ for site, site_result in siteResourceStats.iteritems():
                 type = panda_queues.get(queue,{}).get("type","None")
                 resource_type = panda_queues.get(queue,{}).get("resource_type","None")
                 cloud = panda_queues.get(queue,{}).get("cloud","None")
+                country = panda_queues.get(queue,{}).get("country","None")
                 site_state = panda_queues.get(queue,{}).get("status","None")
                 tier = panda_queues.get(queue,{}).get("tier","None")
                 pilot_manager = panda_queues.get(queue,{}).get("pilot_manager","None")
@@ -189,6 +190,7 @@ for site, site_result in siteResourceStats.iteritems():
                     "resource_type" : resource_type,
                     "type" : type,
                     "cloud" : cloud,
+                    "country" : country,
                     "site_state" : site_state,
                     "job_status" : job_status,
                     "tier" : tier,
