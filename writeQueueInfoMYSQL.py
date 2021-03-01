@@ -95,8 +95,8 @@ def run():
         type = panda_queues[nickname]["type"]
         cloud = panda_queues[nickname]["cloud"]
         country = panda_queues[nickname]["country"]
-        federation = federations_resources.get(atlas_site, {}).get(
-            "accounting_name", "None"
+        federation = panda_queues.get(nickname, {}).get(
+            "rc", "None"
         )
         site_state = panda_queues[nickname]["status"]
         tier = panda_queues[nickname]["tier"]

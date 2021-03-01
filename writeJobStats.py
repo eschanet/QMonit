@@ -128,7 +128,7 @@ for site, site_result in siteResourceStats.iteritems():
                 container_type = panda_queues.get(queue,{}).get("container_type","None")
 
                 #information from wlcg rebus
-                federation = federations_resources.get(atlas_site,{}).get("accounting_name","None")
+                federation = panda_queues.get(queue,{}).get("rc","None")
 
                 pledge = ""
                 federation_HS06_pledge = 0
