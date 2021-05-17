@@ -227,8 +227,8 @@ def run():
         if not args.skipSubmit:
             cursor.execute(point)
 
-#    for pq,prod_source,resource in missing_pqs:
-#        cursor.execute('DELETE FROM jobs WHERE panda_queue = "{panda_queue}" AND resource = "{resource}" AND prod_source = "{prod_source}"'.format(panda_queue=pq,resource=resource,prod_source=prod_source))
+    for pq,prod_source,resource in missing_pqs:
+        cursor.execute('DELETE FROM jobs WHERE panda_queue = "{panda_queue}" AND resource = "{resource}" AND prod_source = "{prod_source}"'.format(panda_queue=pq,resource=resource,prod_source=prod_source))
 
     if not args.skipSubmit:
         cnx.commit()
