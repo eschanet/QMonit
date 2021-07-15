@@ -55,7 +55,7 @@ class TestREBUS(JSONTest):
         original_data = fh.get_json_from_file('test/references/test_input_rebus_federation.json')
         output_data = fh.get_json_from_file('test/references/test_output_rebus_federation.json')
         rebus = REBUS()
-        my_data = rebus.convert(data=original_data,sort_field="Site")
+        my_data = rebus.convert(data=original_data,sort_field="rcsites")
         self.assertSame(output_data, my_data)
 
     def test_pledge_scraper_conversion(self):
@@ -65,7 +65,7 @@ class TestREBUS(JSONTest):
         original_data = fh.get_json_from_file('test/references/test_input_rebus_pledges.json')
         output_data = fh.get_json_from_file('test/references/test_output_rebus_pledges.json')
         rebus = REBUS()
-        my_data = rebus.convert(data=original_data,sort_field="Federation", append_mode=True)
+        my_data = rebus.convert(data=original_data,sort_field="accounting_name", append_mode=True)
         self.assertSame(output_data, my_data)
 
 class TestGrafana(JSONTest):

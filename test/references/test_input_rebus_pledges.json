@@ -1,46 +1,49 @@
-[{
-    "PledgeType": "CPU",
-    "Federation": "CH-CERN",
-    "Country": "Switzerland",
-    "PledgeUnit": "HEP-SPEC06",
-    "ALICE": 350000,
-    "ATLAS": 411000,
-    "LHCb": 86000,
-    "Tier": "Tier 0",
-    "CMS": 423000
-  },
-  {
-    "PledgeType": "CPU",
-    "Federation": "ATLAS Federation, HH/Goe",
-    "Country": "Germany",
-    "PledgeUnit": "HEP-SPEC06",
-    "ALICE": "",
-    "ATLAS": 21533,
-    "LHCb": "",
-    "Tier": "Tier 2",
-    "CMS": ""
-  },
-  {
-    "PledgeType": "Disk",
-    "Federation": "ATLAS Federation, HH/Goe",
-    "Country": "Germany",
-    "PledgeUnit": "Tbytes",
-    "ALICE": "",
-    "ATLAS": 1800,
-    "LHCb": "",
-    "Tier": "Tier 2",
-    "CMS": ""
-  },
-  {
-  "PledgeType": "Disk",
-  "Federation": {},
-  "Country": "Germany",
-  "PledgeUnit": "Tbytes",
-  "ALICE": "",
-  "ATLAS": 3600,
-  "LHCb": "",
-  "Tier": "Tier 2",
-  "CMS": ""
-},
-{}
-]
+{
+  "ES-ATLAS-T2": {
+    "accounting_name": "ATLAS Federation", 
+    "country": "Spain", 
+    "country_code": "ES", 
+    "id": 22, 
+    "infrastructure": "EGI", 
+    "monit_tag": "Spain", 
+    "name": "ES-ATLAS-T2", 
+    "pledges": {
+      "2021": {
+        "Q1": {
+          "atlas": {
+            "CPU": 46512, 
+            "Disk": 3726
+          }
+        }, 
+        "Q2": {
+          "atlas": {
+            "CPU": 46512, 
+            "Disk": 3726
+          }
+        }, 
+        "Q3": {
+          "atlas": {
+            "CPU": 46512, 
+            "Disk": 3726
+          }
+        }, 
+        "Q4": {
+          "atlas": {
+            "CPU": 46512, 
+            "Disk": 3726
+          }
+        }
+      }
+    }, 
+    "rcsites": [
+      "ifae", 
+      "UAM-LCG2", 
+      "IFIC-LCG2"
+    ], 
+    "tier_level": 2, 
+    "type": "official", 
+    "vos": [
+      "atlas"
+    ]
+  }
+}

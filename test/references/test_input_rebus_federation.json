@@ -1,20 +1,47 @@
-[{
-    "Infrastructure": "EGI",
-    "Federation": "CH-CERN",
-    "Country": "Switzerland",
-    "Site": "CERN-PROD",
-    "FederationAccountingName": "CERN-PROD",
-    "Institute Name": "CERN",
-    "Tier": "Tier 0"
-  },
-  {
-    "Infrastructure": "EGI",
-    "Federation": "Turkish Tier-2 Federation",
-    "Country": "Turkey",
-    "Site": "TR-10-ULAKBIM",
-    "FederationAccountingName": "TR-Tier2-federation",
-    "Institute Name": "TUBITAK ULAKBIM",
-    "Tier": "Tier 2"
-  },
-  {}
-]
+{
+  "US-AGLT2": {
+    "accounting_name": "Great Lakes ATLAS T2", 
+    "country": "United States", 
+    "country_code": "US", 
+    "id": 81, 
+    "infrastructure": "OSG", 
+    "monit_tag": "USA", 
+    "name": "US-AGLT2", 
+    "pledges": {
+      "2021": {
+        "Q1": {
+          "atlas": {
+            "CPU": 73000, 
+            "Disk": 6600
+          }
+        }, 
+        "Q2": {
+          "atlas": {
+            "CPU": 73000, 
+            "Disk": 6600
+          }
+        }, 
+        "Q3": {
+          "atlas": {
+            "CPU": 73000, 
+            "Disk": 6600
+          }
+        }, 
+        "Q4": {
+          "atlas": {
+            "CPU": 73000, 
+            "Disk": 6600
+          }
+        }
+      }
+    }, 
+    "rcsites": [
+      "AGLT2"
+    ], 
+    "tier_level": 2, 
+    "type": "official", 
+    "vos": [
+      "atlas"
+    ]
+  } 
+}
