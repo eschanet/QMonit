@@ -1,8 +1,17 @@
-## What is this repository?
+[![CI status](https://github.com/eschanet/QMonit/workflows/tests/badge.svg)](https://github.com/eschanet/QMonit/actions?query=workflow%3Atests)
+[![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-270/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+[![GitHub release](https://img.shields.io/github/v/release/eschanet/qmonit)](https://github.com/eschanet/qmonit/releases/)
+[![GitHub tag](https://img.shields.io/github/tag/eschanet/qmonit.svg)](https://github.com/eschanet/qmonit/tags/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-This repository gathers the various scripts and tools that are necessary for QMonit.
 
-### Monitoring
+
+# Low-latency PanDA queue monitoring
+
+This repository gathers the various scripts and tools that are necessary for QMonit &mdash; a lightweight monitoring tool for PanDA queues with a latency of only 10 minutes.
+
+# Monitoring
 
 The data in the InfluxDB instance is being visualised in [MONIT Grafana](https://monit-grafana.cern.ch/d/000000301/home?orgId=17).
 
