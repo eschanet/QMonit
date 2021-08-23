@@ -4,25 +4,33 @@ import json
 from . import JSONScraper
 
 from commonHelpers.logger import logger
+
 logger = logger.getChild(__name__)
 
+
 class AGIS(JSONScraper):
-
     def __init__(self, *args, **kwargs):
-         super(AGIS, self).__init__(*args, **kwargs)
+        super(AGIS, self).__init__(*args, **kwargs)
 
-    def convert(self, data, sort_field="panda_queue", should_be_sorted_by="panda_queue", *args, **kwargs):
+    def convert(
+        self,
+        data,
+        sort_field="panda_queue",
+        should_be_sorted_by="panda_queue",
+        *args,
+        **kwargs
+    ):
         """Convert the AGIS data to the desired format of being ordered by Panda queues
 
         :param data: data to be converted in the desired format"""
 
-        json_data={}
+        json_data = {}
 
-        if isinstance(data,dict):
-            for key,d in data.items():
+        if isinstance(data, dict):
+            for key, d in data.items():
                 if sort_field in d:
                     json_data[d[sort_field]] = d
-        elif isinstance(data,list):
+        elif isinstance(data, list):
             for d in data:
                 if sort_field in d:
                     json_data[d[sort_field]] = d

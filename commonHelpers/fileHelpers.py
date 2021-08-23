@@ -1,18 +1,21 @@
 import urllib
 import json
 
+
 def get_json_from_file(file):
     with open(file) as f:
         return json.load(f)
+
 
 def get_json_from_url(url):
     response = urllib.urlopen(url)
     data = json.load(response)
     return data
 
-def save_json_to_file(filename,data):
+
+def save_json_to_file(filename, data):
     try:
-        with open(filename, 'w') as f:
+        with open(filename, "w") as f:
             json.dump(data, f)
         return True
     except IOError:
