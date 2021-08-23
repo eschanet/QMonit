@@ -1,7 +1,7 @@
 [![CI status](https://github.com/eschanet/QMonit/workflows/tests/badge.svg)](https://github.com/eschanet/QMonit/actions?query=workflow%3Atests)
 [![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-270/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
-[![GitHub release](https://img.shields.io/github/v/release/eschanet/qmonit)](https://github.com/eschanet/qmonit/releases/)
+[![GitHub release](https://img.shields.io/github/v/release/eschanet/qmonit?include_prereleases)](https://github.com/eschanet/qmonit/releases/)
 [![GitHub tag](https://img.shields.io/github/tag/eschanet/qmonit.svg)](https://github.com/eschanet/qmonit/tags/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
